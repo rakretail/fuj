@@ -2979,7 +2979,7 @@ function exportData() {
     const ws = XLSX.utils.aoa_to_sheet(rows);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Walkins");
-    XLSX.writeFile(wb, `fuj_Report_${s}_to_${e}.xlsx`);
+    XLSX.writeFile(wb, `Fujairah_Report_${s}_to_${e}.xlsx`);
 }
 
 // Expose handlers used from inline onclick attributes
