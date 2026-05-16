@@ -3272,6 +3272,7 @@ function exportData() {
     if(filteredRecords.length === 0) return alert("No records found for the selected range.");
 
     const dailyExecutiveTotals = {};
+    const executiveTotals = {};
 
     filteredRecords.forEach(d => {
         const dt = new Date(d.timestamp);
@@ -3297,7 +3298,6 @@ function exportData() {
     });
 
     const summaryRows = [["Date", "Executive", "Total Walk-ins"]];
-    const executiveTotals = {};
     Object.keys(dailyExecutiveTotals)
         .sort((a, b) => {
             const [ad, am, ay] = a.split('/');
