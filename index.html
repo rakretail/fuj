@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,6 +63,9 @@
             --fuj-text: #1a2a2a;
             --fuj-color: #1a2a2a; 
             --shadow-soft: 0 10px 30px rgba(0, 102, 102, 0.08);
+            --up-color: #00925a;
+            --down-color: #d8344a;
+            --gold: #f7971e;
         }
         body.dark {
             --bg: #050a0a;
@@ -70,16 +74,48 @@
             --fuj-text: #ffffff;
             --primary: #00a8a8;
             --fuj-color: #ffffff; 
+            --up-color: #2fd98a;
+            --down-color: #ff6b81;
         }
         body { 
             font-family: 'Poppins', sans-serif;
-            background: var(--bg); 
+            background:
+                radial-gradient(ellipse 900px 500px at 8% -10%, rgba(0,168,168,0.10), transparent 60%),
+                radial-gradient(ellipse 900px 600px at 110% 10%, rgba(0,184,148,0.08), transparent 55%),
+                var(--bg);
+            background-attachment: fixed;
             color: var(--text-main);
             margin: 0; padding: 15px; 
             transition: background 0.3s, color 0.3s;
             overflow-x: hidden;
         }
+        body.dark {
+            background:
+                radial-gradient(ellipse 900px 500px at 8% -10%, rgba(0,210,210,0.14), transparent 60%),
+                radial-gradient(ellipse 900px 600px at 110% 10%, rgba(0,184,148,0.10), transparent 55%),
+                var(--bg);
+            background-attachment: fixed;
+        }
         .container { max-width: 1400px; margin: 0 auto; }
+        /* Gentle staggered entrance for the main sections — makes the
+           dashboard feel alive on load without touching layout logic. */
+        .container > * {
+            animation: section-rise 0.6s cubic-bezier(.2,.8,.2,1) both;
+        }
+        .container > *:nth-child(1) { animation-delay: 0.02s; }
+        .container > *:nth-child(2) { animation-delay: 0.07s; }
+        .container > *:nth-child(3) { animation-delay: 0.12s; }
+        .container > *:nth-child(4) { animation-delay: 0.17s; }
+        .container > *:nth-child(5) { animation-delay: 0.22s; }
+        .container > *:nth-child(6) { animation-delay: 0.27s; }
+        .container > *:nth-child(7) { animation-delay: 0.32s; }
+        .container > *:nth-child(8) { animation-delay: 0.37s; }
+        .container > *:nth-child(9) { animation-delay: 0.42s; }
+        .container > *:nth-child(n+10) { animation-delay: 0.46s; }
+        @keyframes section-rise {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
         header { 
             text-align: center; 
             margin-bottom: 10px; 
@@ -805,6 +841,137 @@
         .stat-card.weekly  { --accent-color: #006666; --accent-grad: linear-gradient(135deg, #004d4d, #00a8a8); }
         .stat-card.monthly { --accent-color: #f7971e; --accent-grad: linear-gradient(135deg, #f7971e, #ffd86b); }
         body.dark .stat-card { border-color: rgba(255,255,255,0.06); }
+        .stat-card .stat-delta {
+            display: inline-flex; align-items: center; gap: 3px;
+            margin-top: 6px; padding: 2px 9px; border-radius: 999px;
+            font-size: 0.66rem; font-weight: 800;
+            position: relative; z-index: 1;
+        }
+        .stat-card .stat-delta.up   { background: rgba(0,146,90,0.14); color: var(--up-color); }
+        .stat-card .stat-delta.down { background: rgba(216,52,74,0.14); color: var(--down-color); }
+        .stat-card .stat-delta.flat { background: rgba(120,120,120,0.14); color: #6b7280; }
+
+        /* ============================================================
+           NEW: Growth & Forecast insight strip — MoM/WoW growth, run-rate
+           projection, and average pace. Client-side derived from the
+           same historyData the charts already use; no schema changes.
+           ============================================================ */
+        .insights-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+        .insight-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 16px 18px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(0,102,102,0.08);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+        .insight-card:hover { transform: translateY(-3px); box-shadow: 0 16px 32px rgba(0,102,102,0.16); }
+        body.dark .insight-card { border-color: rgba(255,255,255,0.06); }
+        .insight-card .ic-top {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .insight-card .ic-label {
+            font-size: 0.66rem; font-weight: 800; letter-spacing: 1.2px;
+            text-transform: uppercase; opacity: 0.55;
+        }
+        .insight-card .ic-icon {
+            width: 30px; height: 30px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.92rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            box-shadow: 0 6px 14px rgba(0,102,102,0.25);
+        }
+        .insight-card .ic-val {
+            font-size: 1.7rem; font-weight: 800; letter-spacing: -0.5px;
+            line-height: 1.05;
+            display: flex; align-items: baseline; gap: 8px;
+        }
+        .insight-card .ic-val .ic-chip {
+            font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;
+        }
+        .insight-card .ic-val .ic-chip.up   { background: rgba(0,146,90,0.14); color: var(--up-color); }
+        .insight-card .ic-val .ic-chip.down { background: rgba(216,52,74,0.14); color: var(--down-color); }
+        .insight-card .ic-val .ic-chip.flat { background: rgba(120,120,120,0.14); color: #6b7280; }
+        .insight-card .ic-sub {
+            margin-top: 6px; font-size: 0.72rem; font-weight: 600; opacity: 0.62;
+        }
+        .insight-card.forecast .ic-icon { background: linear-gradient(135deg, var(--gold), #ffd86b); }
+
+        /* ============================================================
+           NEW: Team Performance table — per-executive contribution,
+           pace, and best day. Sits under the trend chart.
+           ============================================================ */
+        .team-perf-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(0,102,102,0.08);
+            padding: 18px 20px 14px;
+            margin-bottom: 25px;
+        }
+        body.dark .team-perf-card { border-color: rgba(255,255,255,0.06); }
+        .team-perf-head {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 10px; flex-wrap: wrap; margin-bottom: 14px;
+        }
+        .team-perf-title {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 1rem; font-weight: 800; color: var(--primary);
+        }
+        .team-perf-title .tp-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 30px; height: 30px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), #00b894);
+            color: #fff; font-size: 0.9rem;
+            box-shadow: 0 6px 14px rgba(0,102,102,0.25);
+        }
+        .team-perf-sub { font-size: 0.72rem; opacity: 0.6; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .tp-table { display: flex; flex-direction: column; gap: 8px; }
+        .tp-row {
+            display: grid;
+            grid-template-columns: minmax(0,1.4fr) minmax(90px,0.8fr) minmax(80px,0.7fr) minmax(120px,1.6fr) minmax(90px,0.9fr);
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(0,102,102,0.04);
+            border: 1px solid rgba(0,102,102,0.06);
+        }
+        .tp-row.tp-header {
+            background: transparent; border: none;
+            font-size: 0.64rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.8px; opacity: 0.5; padding: 0 12px;
+        }
+        body.dark .tp-row { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); }
+        .tp-name { font-weight: 700; font-size: 0.92rem; display: flex; align-items: center; gap: 8px; min-width: 0; }
+        .tp-name .tp-avatar {
+            width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff; font-size: 0.66rem; font-weight: 800;
+        }
+        .tp-total { font-weight: 800; font-size: 1rem; color: var(--primary); text-align: right; }
+        .tp-avg { font-weight: 700; font-size: 0.85rem; opacity: 0.75; text-align: right; }
+        .tp-contribution { display: flex; align-items: center; gap: 8px; min-width: 0; }
+        .tp-bar-track { flex: 1; height: 8px; border-radius: 999px; background: rgba(0,102,102,0.08); overflow: hidden; }
+        body.dark .tp-bar-track { background: rgba(255,255,255,0.08); }
+        .tp-bar-fill { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.6s cubic-bezier(.2,.8,.2,1); }
+        .tp-pct { font-size: 0.72rem; font-weight: 800; color: var(--primary); min-width: 34px; text-align: right; }
+        .tp-best { font-size: 0.76rem; font-weight: 700; opacity: 0.75; text-align: right; white-space: nowrap; }
+        .tp-empty { text-align: center; padding: 20px 10px; opacity: 0.55; font-size: 0.85rem; font-weight: 600; }
+        @media (max-width: 720px) {
+            .tp-row { grid-template-columns: minmax(0,1.6fr) minmax(70px,0.8fr) minmax(100px,1.2fr); }
+            .tp-row .tp-avg, .tp-row .tp-best, .tp-header .tp-avg-h, .tp-header .tp-best-h { display: none; }
+        }
         .executives { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 30px; }
         .card {
             background: var(--card-bg);
@@ -1653,6 +1820,7 @@
             <h3>Daily</h3>
             <span class="stat-num" id="daily">0</span>
             <div class="stat-foot">Today's walk-ins</div>
+            <div id="daily-delta"></div>
         </div>
         <div class="stat-card weekly">
             <div class="stat-icon-wrap">📅</div>
@@ -1686,6 +1854,9 @@
         </div>
     </div>
 
+    <!-- NEW: Growth & Forecast insight strip — momentum at a glance. -->
+    <div class="insights-row" id="insightsRow"></div>
+
     <div class="executives" id="grid"></div>
 
     <!-- Charts now appear directly under the executive grid (more important than the log) -->
@@ -1700,6 +1871,24 @@
         <div class="chart-kpis" id="chartKpis"></div>
         <div class="chart-canvas-wrap">
             <canvas id="walkinChart"></canvas>
+        </div>
+    </div>
+
+    <!-- NEW: Team Performance — per-executive pace, contribution share, best day. -->
+    <div class="team-perf-card">
+        <div class="team-perf-head">
+            <div class="team-perf-title"><span class="tp-icon">👥</span><span>Team Performance</span></div>
+            <div class="team-perf-sub">Month to date · sorted by walk-ins</div>
+        </div>
+        <div class="tp-table" id="teamPerfTable">
+            <div class="tp-row tp-header">
+                <div>Executive</div>
+                <div class="tp-avg-h" style="text-align:right;">Avg/Day</div>
+                <div style="text-align:right;">Total</div>
+                <div>Share of Team</div>
+                <div class="tp-best-h" style="text-align:right;">Best Day</div>
+            </div>
+            <div id="teamPerfRows"></div>
         </div>
     </div>
 
@@ -2278,7 +2467,205 @@ function syncWalkins() {
         renderShiftHeatmap(historyData);
         renderMonthlyLeaderboard(historyData);
         renderActivityLog();
+        const growth = computeGrowthInsights(historyData);
+        renderGrowthInsights(growth);
+        renderDailyDelta(growth);
+        renderTeamPerformance(computeTeamPerformance(historyData));
     });
+}
+
+function renderDailyDelta(g) {
+    const el = document.getElementById('daily-delta');
+    if (!el) return;
+    if (g.yesterdayTotal === 0 && g.todayTotal === 0) { el.innerHTML = ''; return; }
+    const cls = g.todayPct > 3 ? 'up' : g.todayPct < -3 ? 'down' : 'flat';
+    const arrow = g.todayPct > 3 ? '▲' : g.todayPct < -3 ? '▼' : '▬';
+    el.innerHTML = `<span class="stat-delta ${cls}">${arrow} ${Math.abs(g.todayPct)}% vs yesterday</span>`;
+}
+
+// =====================================================================
+//  NEW: Growth & Forecast insights
+//  Derives month-over-month growth, week-over-week growth, today vs
+//  yesterday, average daily pace, and a run-rate projection for the
+//  current month — all from the same historyData array already synced
+//  from Firebase. No new writes, no schema changes.
+// =====================================================================
+function _sumInRange(data, start, end) {
+    let total = 0;
+    data.forEach(e => {
+        const ts = e && e.timestamp;
+        if (ts == null) return;
+        if (ts >= start && ts < end) total += (+e.count || 0);
+    });
+    return Math.max(0, total);
+}
+
+function computeGrowthInsights(data) {
+    const now = new Date();
+    const msDay = 86400000;
+
+    // --- Month-over-month ---
+    const startThisMonth = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+    const startNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1).getTime();
+    const startLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1).getTime();
+    const daysInThisMonth = Math.round((startNextMonth - startThisMonth) / msDay);
+    const daysElapsed = Math.min(daysInThisMonth, Math.floor((now.getTime() - startThisMonth) / msDay) + 1);
+
+    const thisMonthTotal = _sumInRange(data, startThisMonth, Math.min(now.getTime() + 1, startNextMonth));
+    const lastMonthTotal = _sumInRange(data, startLastMonth, startThisMonth);
+    const momPct = lastMonthTotal === 0
+        ? (thisMonthTotal > 0 ? 100 : 0)
+        : Math.round(((thisMonthTotal - lastMonthTotal) / lastMonthTotal) * 100);
+
+    // --- Week-over-week (rolling 7 days vs prior 7 days) ---
+    const endOfToday = new Date(now); endOfToday.setHours(23, 59, 59, 999);
+    const weekStart = endOfToday.getTime() - 7 * msDay + 1;
+    const prevWeekStart = weekStart - 7 * msDay;
+    const thisWeekTotal = _sumInRange(data, weekStart, endOfToday.getTime() + 1);
+    const prevWeekTotal = _sumInRange(data, prevWeekStart, weekStart);
+    const wowPct = prevWeekTotal === 0
+        ? (thisWeekTotal > 0 ? 100 : 0)
+        : Math.round(((thisWeekTotal - prevWeekTotal) / prevWeekTotal) * 100);
+
+    // --- Today vs yesterday ---
+    const startToday = new Date(now); startToday.setHours(0, 0, 0, 0);
+    const startYesterday = startToday.getTime() - msDay;
+    const todayTotal = _sumInRange(data, startToday.getTime(), startToday.getTime() + msDay);
+    const yesterdayTotal = _sumInRange(data, startYesterday, startToday.getTime());
+    const todayPct = yesterdayTotal === 0
+        ? (todayTotal > 0 ? 100 : 0)
+        : Math.round(((todayTotal - yesterdayTotal) / yesterdayTotal) * 100);
+
+    // --- Average daily pace + run-rate projection for month end ---
+    const avgPerDay = daysElapsed > 0 ? Math.round((thisMonthTotal / daysElapsed) * 10) / 10 : 0;
+    const projectedMonthTotal = Math.round(avgPerDay * daysInThisMonth);
+
+    return {
+        momPct, thisMonthTotal, lastMonthTotal,
+        wowPct, thisWeekTotal, prevWeekTotal,
+        todayPct, todayTotal, yesterdayTotal,
+        avgPerDay, projectedMonthTotal, daysElapsed, daysInThisMonth
+    };
+}
+
+function _trendChip(pct) {
+    const cls = pct > 3 ? 'up' : pct < -3 ? 'down' : 'flat';
+    const arrow = pct > 3 ? '▲' : pct < -3 ? '▼' : '▬';
+    return `<span class="ic-chip ${cls}">${arrow} ${Math.abs(pct)}%</span>`;
+}
+
+function renderGrowthInsights(g) {
+    const el = document.getElementById('insightsRow');
+    if (!el) return;
+
+    const cards = [
+        {
+            icon: '📆', label: 'Month vs Last Month', val: g.thisMonthTotal, chip: _trendChip(g.momPct),
+            sub: `${g.lastMonthTotal} last month · ${g.daysElapsed}/${g.daysInThisMonth} days in`
+        },
+        {
+            icon: '🗓️', label: 'This Week vs Last Week', val: g.thisWeekTotal, chip: _trendChip(g.wowPct),
+            sub: `${g.prevWeekTotal} in the prior 7 days`
+        },
+        {
+            icon: '🔁', label: 'Today vs Yesterday', val: g.todayTotal, chip: _trendChip(g.todayPct),
+            sub: `${g.yesterdayTotal} walk-ins yesterday`
+        },
+        {
+            icon: '⚙️', label: 'Average Daily Pace', val: g.avgPerDay, chip: '',
+            sub: 'Walk-ins per day, month to date'
+        },
+        {
+            icon: '🔮', label: 'Projected Month Total', val: g.projectedMonthTotal, chip: '', forecast: true,
+            sub: `At the current pace of ${g.avgPerDay}/day`
+        }
+    ];
+
+    el.innerHTML = cards.map(c => `
+        <div class="insight-card${c.forecast ? ' forecast' : ''}">
+            <div class="ic-top">
+                <span class="ic-label">${c.label}</span>
+                <span class="ic-icon">${c.icon}</span>
+            </div>
+            <div class="ic-val">${c.val}${c.chip}</div>
+            <div class="ic-sub">${c.sub}</div>
+        </div>
+    `).join('');
+}
+
+// =====================================================================
+//  NEW: Team Performance table
+//  Ranks active executives by this-month walk-ins, and surfaces average
+//  pace on active days, share of total team walk-ins, and each rep's
+//  single best day this month — good coaching + staffing signals.
+// =====================================================================
+function computeTeamPerformance(data) {
+    const now = new Date();
+    const startThisMonth = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+    const startNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1).getTime();
+
+    const perExec = {};
+    executives.forEach(name => {
+        perExec[name] = { name, total: 0, activeDays: new Set(), byDay: {} };
+    });
+
+    data.forEach(e => {
+        const ts = e && e.timestamp;
+        const name = e && e.executive;
+        if (ts == null || !name || !(ts >= startThisMonth && ts < startNextMonth)) return;
+        const c = +e.count || 0;
+        if (!perExec[name]) perExec[name] = { name, total: 0, activeDays: new Set(), byDay: {} };
+        perExec[name].total += c;
+        const dayKey = new Date(ts).toDateString();
+        perExec[name].byDay[dayKey] = (perExec[name].byDay[dayKey] || 0) + c;
+    });
+
+    const rows = Object.values(perExec).map(r => {
+        const total = Math.max(0, r.total);
+        const dayEntries = Object.entries(r.byDay).filter(([, v]) => v > 0);
+        const activeDayCount = dayEntries.length;
+        const avgPerActiveDay = activeDayCount > 0 ? Math.round((total / activeDayCount) * 10) / 10 : 0;
+        let bestDay = null, bestVal = 0;
+        dayEntries.forEach(([dayKey, v]) => { if (v > bestVal) { bestVal = v; bestDay = dayKey; } });
+        const bestDayLabel = bestDay
+            ? new Date(bestDay).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })
+            : '—';
+        return { name: r.name, total, avgPerActiveDay, bestVal, bestDayLabel };
+    });
+
+    const teamTotal = rows.reduce((a, r) => a + r.total, 0) || 1;
+    rows.forEach(r => { r.pct = Math.round((r.total / teamTotal) * 100); });
+    rows.sort((a, b) => b.total - a.total);
+
+    return rows;
+}
+
+function renderTeamPerformance(rows) {
+    const wrap = document.getElementById('teamPerfRows');
+    if (!wrap) return;
+
+    if (!rows || rows.length === 0) {
+        wrap.innerHTML = `<div class="tp-empty">No walk-ins logged this month yet. Performance stats will appear here in real time.</div>`;
+        return;
+    }
+
+    wrap.innerHTML = rows.map(r => {
+        const initials = String(r.name).split(/\s+/).map(p => p[0]).slice(0, 2).join('').toUpperCase() || '?';
+        const safeName = String(r.name).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const bestLabel = r.bestVal > 0 ? `${r.bestVal} · ${r.bestDayLabel}` : '—';
+        return `
+            <div class="tp-row">
+                <div class="tp-name"><span class="tp-avatar">${initials}</span>${safeName}</div>
+                <div class="tp-avg">${r.avgPerActiveDay}</div>
+                <div class="tp-total">${r.total}</div>
+                <div class="tp-contribution">
+                    <span class="tp-bar-track"><span class="tp-bar-fill" style="width:${r.pct}%;"></span></span>
+                    <span class="tp-pct">${r.pct}%</span>
+                </div>
+                <div class="tp-best">${bestLabel}</div>
+            </div>
+        `;
+    }).join('');
 }
 
 // =====================================================================
