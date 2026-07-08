@@ -1068,12 +1068,32 @@
             padding-right: 4px;
         }
         #activityLog .al-list::-webkit-scrollbar { width: 6px; }
+        #activityLog .al-delete-btn {
+            flex-shrink: 0;
+            width: 28px; height: 28px;
+            border-radius: 9px;
+            border: 1px solid rgba(216,52,74,0.25);
+            background: rgba(216,52,74,0.08);
+            color: var(--down-color, #d8344a);
+            font-size: 0.85rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            opacity: 0.75;
+            transition: all 0.15s ease;
+            font-family: inherit;
+        }
+        #activityLog .al-delete-btn:hover {
+            opacity: 1;
+            background: rgba(216,52,74,0.16);
+            transform: scale(1.06);
+        }
+        body.dark #activityLog .al-delete-btn { border-color: rgba(255,107,129,0.3); background: rgba(255,107,129,0.1); }
         #activityLog .al-list::-webkit-scrollbar-thumb {
             background: rgba(0,102,102,0.3); border-radius: 6px;
         }
         .al-row {
             display: grid;
-            grid-template-columns: auto 1fr auto;
+            grid-template-columns: auto 1fr auto auto;
             align-items: center;
             gap: 12px;
             padding: 10px 14px;
@@ -1082,6 +1102,7 @@
             border-left: 3px solid var(--primary);
             font-size: 0.88rem;
         }
+        .al-row .al-time { text-align: right; }
         .al-row.minus { border-left-color: #ff4757; background: rgba(255,71,87,0.05); }
         .al-row.proxy { background: linear-gradient(90deg, rgba(255,216,107,0.18), rgba(0,102,102,0.04)); border-left-color: #f7971e; }
         .al-icon {
@@ -2424,7 +2445,7 @@ function syncWalkins() {
 
         snap.forEach(child => {
             const val = child.val(); 
-            historyData.push(val);
+            historyData.push({ ...val, _key: child.key });
             const recordDate = new Date(val.timestamp);
             if(recordDate.toDateString() === now.toDateString()) {
                 d += val.count;
@@ -2701,6 +2722,18 @@ function fmtFullDate(ts) {
     return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
 }
 
+// Small hardening helper: escape text before it's injected via innerHTML,
+// so executive/manager names (or any user-entered string) can never break
+// out of HTML content or attribute context.
+function escapeHtml(str) {
+    return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 function renderActivityLog() {
     const wrap = document.getElementById('activityLog');
     if (!wrap) return;
@@ -2743,22 +2776,63 @@ function renderActivityLog() {
         const action = isMinus
             ? `removed <strong>${Math.abs(cnt)}</strong> walk-in${Math.abs(cnt) === 1 ? '' : 's'} from`
             : `logged <strong>${cnt}</strong> walk-in${cnt === 1 ? '' : 's'} for`;
-        const proxyTag = isProxy ? `<span class="al-tag" title="${who} logged on behalf of ${target}">PROXY</span>` : '';
+        const safeWho = escapeHtml(who);
+        const safeTarget = escapeHtml(target);
+        const proxyTag = isProxy ? `<span class="al-tag" title="${safeWho} logged on behalf of ${safeTarget}">PROXY</span>` : '';
         const rowClass = `al-row${isMinus ? ' minus' : ''}${isProxy ? ' proxy' : ''}`;
+        // Data attributes (not inline onclick strings) so names with quotes,
+        // apostrophes, or other special characters can never break out of
+        // the HTML/JS context. A single delegated listener (see below)
+        // reads these back and confirms before deleting.
+        const deleteBtn = ev._key
+            ? `<button class="al-delete-btn" title="Delete this entry"
+                   data-action="delete-activity"
+                   data-key="${escapeHtml(ev._key)}"
+                   data-who="${safeWho}"
+                   data-target="${safeTarget}"
+                   data-cnt="${cnt}">🗑</button>`
+            : '';
         return `
             <div class="${rowClass}">
-                <div class="al-icon">${initials}</div>
+                <div class="al-icon">${escapeHtml(initials)}</div>
                 <div class="al-text">
-                    <span class="al-who">${who}</span>
+                    <span class="al-who">${safeWho}</span>
                     <span class="al-action"> ${action} </span>
-                    <span class="al-target">${target}</span>${proxyTag}
+                    <span class="al-target">${safeTarget}</span>${proxyTag}
                 </div>
                 <div class="al-time">
                     <span>${fmtClockTime(ev.timestamp)} · ${fmtFullDate(ev.timestamp)}</span>
                     <span class="al-rel">${relativeTime(ev.timestamp)}</span>
                 </div>
+                ${deleteBtn}
             </div>`;
     }).join('');
+}
+
+// Delegated click handler for activity-log delete buttons — attached once,
+// works for all rows even after renderActivityLog() re-renders the list.
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action="delete-activity"]');
+    if (!btn) return;
+    deleteActivityEntry(btn.dataset.key, btn.dataset.who, btn.dataset.target, Number(btn.dataset.cnt));
+});
+
+// NEW: Manager-only hard delete of a single activity-log / walk-in entry.
+// Removes the exact Firebase record by its push key, so daily/weekly/
+// monthly totals, charts, and leaderboards all recompute automatically
+// via the existing syncWalkins() listener — no manual count adjustment
+// needed. Guarded by isManager() since only managers can see the log.
+async function deleteActivityEntry(key, who, target, cnt) {
+    if (!isManager() || !key) return;
+    const cntLabel = `${cnt > 0 ? '+' : ''}${cnt}`;
+    const ok = confirm(`Delete this activity entry?\n\n${who} → ${target} (${cntLabel})\n\nThis will permanently remove it and update all totals. This cannot be undone.`);
+    if (!ok) return;
+    try {
+        await window.dbRemove(window.dbRef(window.db, window.basePath + "walkins/" + key));
+    } catch (err) {
+        console.error('Failed to delete activity entry:', err);
+        alert('Could not delete this entry. Please check your connection and try again.');
+    }
 }
 
 // Refresh the relative timestamps every 30s so "2m ago" stays accurate
