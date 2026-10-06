@@ -1708,6 +1708,292 @@
         .current-user-chip .dot {
             width: 8px; height: 8px; border-radius: 50%; background: #00c46a;
         }
+    
+        /* =====================================================================
+           ENHANCEMENT LAYER (v2) — navigation, target tracker, analysis studio,
+           calendar, records, executive drill-down, toasts. All classes are
+           prefixed "wx-" so nothing here collides with the original styles.
+           ===================================================================== */
+        :root {
+            --wx-line: rgba(0,102,102,0.10);
+            --wx-soft: rgba(0,102,102,0.05);
+            --wx-muted: #5d7272;
+            --wx-track: rgba(0,102,102,0.09);
+        }
+        body.dark {
+            --wx-line: rgba(255,255,255,0.08);
+            --wx-soft: rgba(255,255,255,0.04);
+            --wx-muted: #8fb0b0;
+            --wx-track: rgba(255,255,255,0.08);
+        }
+
+        /* ---------- global polish ---------- */
+        .stat-num, .count, .today-num, .lb-count, .tp-total, .tp-avg, .ic-val,
+        .wx-num, #time { font-variant-numeric: tabular-nums; }
+        button:focus-visible, select:focus-visible, input:focus-visible, [role="button"]:focus-visible {
+            outline: 3px solid var(--accent); outline-offset: 2px;
+        }
+        ::selection { background: rgba(0,168,168,0.25); }
+        * { scrollbar-width: thin; scrollbar-color: rgba(0,128,128,0.35) transparent; }
+        body.dark #adminPanel input[type="text"] {
+            background: #0a1414; color: var(--text-main); border-color: rgba(255,255,255,0.14) !important;
+        }
+        .peak-and-board, #wxGoal, #grid, .chart-wrapper, #wxStudio, #wxCalRow, #wxRecCard, #activityLog, .footer-export {
+            scroll-margin-top: 78px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+
+        /* ---------- sticky section nav ---------- */
+        .wx-nav {
+            position: sticky; top: 8px; z-index: 40;
+            display: flex; align-items: center; gap: 10px;
+            margin: 6px 0 18px; padding: 7px 8px 7px 10px;
+            background: color-mix(in srgb, var(--card-bg) 86%, transparent);
+            -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+            border: 1px solid var(--wx-line); border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,60,60,0.10);
+        }
+        .wx-nav-links { display: flex; gap: 4px; overflow-x: auto; flex: 1; scrollbar-width: none; }
+        .wx-nav-links::-webkit-scrollbar { display: none; }
+        .wx-nav-links button {
+            flex: 0 0 auto; border: none; background: transparent; cursor: pointer;
+            font-family: inherit; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.3px;
+            color: var(--text-main); opacity: 0.62; padding: 8px 14px; border-radius: 999px;
+            transition: background 0.2s, opacity 0.2s, color 0.2s;
+        }
+        .wx-nav-links button:hover { opacity: 1; background: var(--wx-soft); }
+        .wx-nav-links button.active {
+            opacity: 1; color: #fff;
+            background: linear-gradient(135deg, var(--primary), #00b894);
+            box-shadow: 0 4px 12px rgba(0,102,102,0.28);
+        }
+        .wx-sync {
+            flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px;
+            font-size: 0.7rem; font-weight: 700; color: var(--wx-muted);
+            padding: 6px 12px; border-radius: 999px; background: var(--wx-soft); white-space: nowrap;
+        }
+        .wx-sync i { width: 8px; height: 8px; border-radius: 50%; background: #00c46a; box-shadow: 0 0 0 3px rgba(0,196,106,0.18); }
+        .wx-sync.offline i { background: #ff4757; box-shadow: 0 0 0 3px rgba(255,71,87,0.18); }
+        @media (max-width: 560px) { .wx-sync span { display: none; } .wx-sync { padding: 8px; } }
+
+        /* ---------- shared card + heading ---------- */
+        .wx-card {
+            background: var(--card-bg); border-radius: 24px; box-shadow: var(--shadow-soft);
+            border: 1px solid var(--wx-line); padding: 20px 22px; margin-bottom: 25px;
+            position: relative;
+        }
+        .wx-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+        .wx-title { display: inline-flex; align-items: center; gap: 10px; margin: 0; font-size: 1rem; font-weight: 800; color: var(--primary); }
+        .wx-title .wx-ic {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; border-radius: 10px; color: #fff; font-size: 0.95rem;
+            background: linear-gradient(135deg, var(--primary), #00b894);
+            box-shadow: 0 6px 14px rgba(0,102,102,0.25);
+        }
+        .wx-sub { font-size: 0.72rem; font-weight: 600; color: var(--wx-muted); letter-spacing: 0.4px; }
+        .wx-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 0.68rem; font-weight: 800; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+        .wx-chip.up   { background: rgba(0,146,90,0.14);  color: var(--up-color); }
+        .wx-chip.down { background: rgba(216,52,74,0.14); color: var(--down-color); }
+        .wx-chip.flat { background: rgba(120,120,120,0.14); color: var(--wx-muted); }
+        .wx-chip.gold { background: rgba(247,151,30,0.16); color: #b96a00; }
+        body.dark .wx-chip.gold { color: #ffc266; }
+        .wx-btn {
+            font-family: inherit; font-size: 0.74rem; font-weight: 700; cursor: pointer;
+            border: 1px solid var(--wx-line); background: var(--wx-soft); color: var(--primary);
+            padding: 8px 14px; border-radius: 999px; transition: background 0.2s, transform 0.15s;
+        }
+        .wx-btn:hover { background: rgba(0,168,168,0.14); }
+        .wx-btn:active { transform: scale(0.97); }
+        .wx-btn.solid { background: linear-gradient(135deg, var(--primary), #00b894); color: #fff; border-color: transparent; }
+        .wx-empty { padding: 22px 10px; text-align: center; font-size: 0.82rem; font-weight: 600; color: var(--wx-muted); }
+
+        /* ---------- monthly target ---------- */
+        .wx-goal { display: grid; grid-template-columns: 170px 1fr; gap: 26px; align-items: center; }
+        .wx-ring { position: relative; width: 170px; height: 170px; }
+        .wx-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .wx-ring .trk { fill: none; stroke: var(--wx-track); stroke-width: 12; }
+        .wx-ring .val { fill: none; stroke: url(#wxRingGrad); stroke-width: 12; stroke-linecap: round; transition: stroke-dashoffset 0.9s cubic-bezier(.2,.8,.2,1); }
+        .wx-ring-mid { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .wx-ring-mid b { font-size: 2.1rem; font-weight: 800; letter-spacing: -1px; line-height: 1; color: var(--primary); }
+        .wx-ring-mid span { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--wx-muted); margin-top: 6px; }
+        .wx-goal-msg { font-size: 0.92rem; font-weight: 600; line-height: 1.5; margin: 0 0 14px; }
+        .wx-pace { position: relative; height: 12px; border-radius: 999px; background: var(--wx-track); margin: 4px 0 26px; }
+        .wx-pace-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.9s cubic-bezier(.2,.8,.2,1); }
+        .wx-pace-mark { position: absolute; top: -5px; bottom: -5px; width: 3px; border-radius: 2px; background: var(--gold); transform: translateX(-1px); }
+        .wx-pace-mark::after {
+            content: attr(data-label); position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+            font-size: 0.62rem; font-weight: 700; white-space: nowrap; color: var(--wx-muted);
+        }
+        .wx-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+        .wx-tile { background: var(--wx-soft); border: 1px solid var(--wx-line); border-radius: 16px; padding: 12px 14px; min-width: 0; }
+        .wx-tile .l { font-size: 0.62rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--wx-muted); }
+        .wx-tile .v { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.4px; line-height: 1.2; margin-top: 4px; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; overflow-wrap: anywhere; }
+        .wx-tile .v.sm { font-size: 1.05rem; }
+        .wx-tile .s { font-size: 0.68rem; font-weight: 600; color: var(--wx-muted); margin-top: 3px; }
+        @media (max-width: 720px) {
+            .wx-goal { grid-template-columns: 1fr; justify-items: center; gap: 16px; }
+            .wx-goal > div:last-child { width: 100%; }
+            .wx-ring { width: 150px; height: 150px; }
+        }
+
+        /* ---------- analysis studio ---------- */
+        .wx-range { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 999px; background: var(--wx-soft); border: 1px solid var(--wx-line); }
+        .wx-range button {
+            border: none; background: transparent; font-family: inherit; cursor: pointer;
+            font-size: 0.72rem; font-weight: 700; padding: 6px 12px; border-radius: 999px; color: var(--text-main); opacity: 0.65;
+        }
+        .wx-range button.active { opacity: 1; color: #fff; background: var(--primary); }
+        .wx-custom { display: none; align-items: center; gap: 8px; flex-wrap: wrap; margin: -4px 0 14px; font-size: 0.74rem; font-weight: 600; color: var(--wx-muted); }
+        .wx-custom.show { display: flex; }
+        .wx-custom input, .wx-input {
+            font-family: inherit; font-size: 0.8rem; padding: 8px 12px; border-radius: 12px;
+            border: 1px solid var(--wx-line); background: var(--card-bg); color: var(--text-main);
+        }
+        .wx-takeaways { list-style: none; margin: 16px 0 4px; padding: 14px 16px; border-radius: 16px; background: linear-gradient(135deg, rgba(0,168,168,0.08), rgba(247,151,30,0.07)); border: 1px solid var(--wx-line); display: grid; gap: 7px; }
+        .wx-takeaways li { font-size: 0.82rem; font-weight: 500; line-height: 1.45; padding-left: 20px; position: relative; }
+        .wx-takeaways li::before { content: '›'; position: absolute; left: 4px; top: -1px; font-weight: 800; color: var(--primary); font-size: 1rem; }
+        .wx-takeaways b { font-weight: 700; }
+        .wx-grid2 { display: grid; grid-template-columns: 1.5fr 1fr; gap: 18px; margin-top: 18px; }
+        .wx-panel { border: 1px solid var(--wx-line); border-radius: 18px; padding: 14px 16px; min-width: 0; }
+        .wx-panel h4 { margin: 0 0 2px; font-size: 0.8rem; font-weight: 800; }
+        .wx-panel .wx-sub { display: block; margin-bottom: 10px; }
+        .wx-canvas { position: relative; height: 230px; }
+        .wx-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.68rem; font-weight: 600; color: var(--wx-muted); margin-top: 8px; }
+        .wx-legend i { display: inline-block; width: 12px; height: 8px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
+        .wx-bars { display: grid; gap: 8px; }
+        .wx-bar { display: grid; grid-template-columns: minmax(70px, 130px) 1fr auto; align-items: center; gap: 10px; font-size: 0.78rem; font-weight: 600; }
+        .wx-bar.click { cursor: pointer; border-radius: 10px; padding: 3px 4px; margin: -3px -4px; }
+        .wx-bar.click:hover { background: var(--wx-soft); }
+        .wx-bar .n { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .wx-bar .t { height: 10px; border-radius: 999px; background: var(--wx-track); overflow: hidden; }
+        .wx-bar .t i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.7s cubic-bezier(.2,.8,.2,1); }
+        .wx-bar.top .t i { background: linear-gradient(90deg, var(--gold), #ffd86b); }
+        .wx-bar .x { font-variant-numeric: tabular-nums; font-weight: 800; white-space: nowrap; display: inline-flex; gap: 6px; align-items: center; }
+        .wx-bar .x small { font-weight: 600; color: var(--wx-muted); font-size: 0.68rem; }
+        @media (max-width: 900px) { .wx-grid2 { grid-template-columns: 1fr; } }
+
+        /* ---------- calendar + records ---------- */
+        .wx-calwrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 26px; align-items: stretch; }
+        .wx-calcol { display: flex; flex-direction: column; min-width: 0; }
+        .wx-cal-legend { display: flex; align-items: center; gap: 5px; margin-top: 14px; font-size: 0.64rem; font-weight: 700; color: var(--wx-muted); }
+        .wx-cal-legend i { width: 18px; height: 10px; border-radius: 3px; display: inline-block; }
+        .wx-cal-legend i[data-i="1"] { background: rgba(0,168,168,0.16); }
+        .wx-cal-legend i[data-i="2"] { background: rgba(0,168,168,0.32); }
+        .wx-cal-legend i[data-i="3"] { background: rgba(0,150,150,0.52); }
+        .wx-cal-legend i[data-i="4"] { background: rgba(0,118,118,0.80); }
+        .wx-cal-legend i[data-i="5"] { background: linear-gradient(135deg, #006666, #f7971e); }
+        .wx-cal-key { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; }
+        .wx-cal-legend i.t { width: 12px; height: 12px; background: transparent; border: 2px solid var(--gold); box-sizing: border-box; }
+        @media (max-width: 900px) { .wx-calwrap { grid-template-columns: 1fr; gap: 0; } }
+        .wx-cal-nav { display: inline-flex; align-items: center; gap: 6px; }
+        .wx-cal-nav b { min-width: 124px; text-align: center; font-size: 0.86rem; }
+        .wx-cal-nav button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--wx-line); background: var(--wx-soft); color: var(--primary); font-size: 1rem; cursor: pointer; font-family: inherit; }
+        .wx-cal-nav button:disabled { opacity: 0.3; cursor: default; }
+        .wx-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+        .wx-cal .h { text-align: center; font-size: 0.62rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--wx-muted); padding-bottom: 2px; }
+        .wx-day {
+            height: 56px; border-radius: 12px; border: 2px solid transparent; cursor: pointer;
+            font-family: inherit; color: var(--text-main); background: var(--wx-soft);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 2px;
+            transition: transform 0.15s;
+        }
+        .wx-day:hover:not(:disabled) { transform: scale(1.05); }
+        .wx-day small { font-size: 0.6rem; font-weight: 700; opacity: 0.6; }
+        .wx-day b { font-size: 0.95rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1; }
+        .wx-day:disabled { opacity: 0.35; cursor: default; }
+        .wx-day[data-i="1"] { background: rgba(0,168,168,0.16); }
+        .wx-day[data-i="2"] { background: rgba(0,168,168,0.32); }
+        .wx-day[data-i="3"] { background: rgba(0,150,150,0.52); color: #fff; }
+        .wx-day[data-i="4"] { background: rgba(0,118,118,0.80); color: #fff; }
+        .wx-day[data-i="5"] { background: linear-gradient(135deg, #006666, #f7971e); color: #fff; }
+        .wx-day.today { border-color: var(--gold); }
+        .wx-day.sel { border-color: var(--text-main); }
+        .wx-daydetail { display: flex; flex-direction: column; min-width: 0; padding-left: 26px; border-left: 1px dashed var(--wx-line); }
+        .wx-daydetail .wx-hours { margin-top: auto; padding-top: 14px; height: 70px; flex: 0 0 auto; }
+        .wx-daydetail .wx-bars { margin-bottom: 14px; }
+        @media (max-width: 900px) { .wx-daydetail { padding-left: 0; border-left: none; margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--wx-line); } }
+        @media (max-width: 480px) { .wx-day { height: 46px; } }
+        .wx-daydetail h4 { margin: 0 0 10px; font-size: 0.86rem; font-weight: 800; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .wx-hours { display: flex; align-items: flex-end; gap: 3px; height: 54px; margin: 12px 0 2px; }
+        .wx-hours i { flex: 1; min-height: 2px; border-radius: 3px 3px 0 0; background: var(--primary); opacity: 0.85; }
+        .wx-hours i.z { background: var(--wx-track); }
+        .wx-hours-x { display: flex; justify-content: space-between; font-size: 0.6rem; font-weight: 700; color: var(--wx-muted); }
+        .wx-records { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+        @media (max-width: 1100px) { .wx-records { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (max-width: 520px) { .wx-records { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+        /* ---------- executive cards (added rank, sparkline, share) ---------- */
+        .card { position: relative; transition: transform 0.22s ease, box-shadow 0.22s ease; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 16px 32px rgba(0,102,102,0.16); }
+        .card h3 { cursor: pointer; margin-top: 12px; }
+        .card h3:hover { color: var(--primary); }
+        .card.wx-first { border-bottom-color: var(--gold); }
+        .wx-rank {
+            position: absolute; top: 10px; left: 12px; font-size: 0.64rem; font-weight: 800; letter-spacing: 0.4px;
+            padding: 2px 8px; border-radius: 999px; background: var(--wx-soft); color: var(--wx-muted);
+        }
+        .wx-rank.r1 { background: linear-gradient(135deg, var(--gold), #ffd86b); color: #4a2c00; }
+        .wx-extra { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; margin: 0 4px 10px; }
+        .wx-spark { display: flex; align-items: flex-end; gap: 3px; height: 26px; flex: 1; }
+        .wx-spark i { flex: 1; min-height: 2px; border-radius: 2px; background: var(--primary); opacity: 0.45; }
+        .wx-spark i:last-child { opacity: 1; }
+        .wx-spark i.z { background: var(--wx-track); opacity: 1; }
+        .wx-share { font-size: 0.64rem; font-weight: 700; color: var(--wx-muted); white-space: nowrap; text-align: right; line-height: 1.25; }
+        .wx-share b { display: block; font-size: 0.82rem; color: var(--text-main); }
+        .card.wx-busy .controls { position: relative; pointer-events: none; }
+        .card.wx-busy .controls > * { visibility: hidden; }
+        .card.wx-busy .controls::after {
+            content: 'Checking location…'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            font-size: 0.74rem; font-weight: 700; color: var(--primary); animation: wx-pulse 1.1s ease-in-out infinite;
+        }
+        @keyframes wx-pulse { 50% { opacity: 0.45; } }
+        .tp-row:not(.tp-header) .tp-name, .lb-name { cursor: pointer; }
+        .tp-row:not(.tp-header) .tp-name:hover { color: var(--primary); }
+
+        /* ---------- activity search / export extras ---------- */
+        .wx-al-search { width: 100%; box-sizing: border-box; margin: 0 0 12px; }
+        .wx-csv-btn { margin-top: 10px; }
+
+        /* ---------- modal ---------- */
+        .wx-backdrop {
+            position: fixed; inset: 0; z-index: 1200; display: none; align-items: center; justify-content: center;
+            background: rgba(2,20,20,0.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 16px;
+        }
+        .wx-backdrop.show { display: flex; animation: wx-fade 0.2s ease; }
+        .wx-modal {
+            width: 100%; max-width: 620px; max-height: 90vh; overflow-y: auto; box-sizing: border-box;
+            background: var(--card-bg); color: var(--text-main); border-radius: 26px; padding: 22px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.35); border: 1px solid var(--wx-line);
+            animation: wx-pop 0.28s cubic-bezier(.2,.9,.3,1.1);
+        }
+        @keyframes wx-fade { from { opacity: 0; } }
+        @keyframes wx-pop { from { opacity: 0; transform: translateY(14px) scale(0.97); } }
+        .wx-modal-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+        .wx-avatar { width: 52px; height: 52px; flex: 0 0 auto; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 1.1rem; background: linear-gradient(135deg, var(--primary), #00b894); }
+        .wx-modal-head h3 { margin: 0; font-size: 1.2rem; font-weight: 800; overflow-wrap: anywhere; }
+        .wx-x { margin-left: auto; width: 36px; height: 36px; flex: 0 0 auto; border-radius: 50%; border: none; cursor: pointer; background: var(--wx-soft); color: var(--text-main); font-size: 1.1rem; }
+        .wx-m-sec { margin: 18px 0 8px; font-size: 0.66rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--wx-muted); }
+        .wx-days30 { display: flex; align-items: flex-end; gap: 2px; height: 80px; }
+        .wx-days30 i { flex: 1; min-height: 2px; border-radius: 3px 3px 0 0; background: var(--primary); }
+        .wx-days30 i.z { background: var(--wx-track); }
+        .wx-days30 i.mx { background: var(--gold); }
+        .wx-suggest { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 18px; }
+
+        /* ---------- toasts ---------- */
+        .wx-toasts { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 4000; display: flex; flex-direction: column; gap: 8px; align-items: center; width: calc(100% - 24px); max-width: 440px; pointer-events: none; }
+        .wx-toast {
+            pointer-events: auto; display: flex; align-items: center; gap: 12px; width: 100%; box-sizing: border-box;
+            background: #0f2424; color: #eafafa; padding: 12px 14px 12px 16px; border-radius: 16px;
+            font-size: 0.84rem; font-weight: 600; box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+            border-left: 5px solid #00c46a; animation: wx-pop 0.25s ease;
+        }
+        .wx-toast.err { border-left-color: #ff4757; }
+        .wx-toast.info { border-left-color: var(--gold); }
+        .wx-toast span { flex: 1; }
+        .wx-toast button { flex: 0 0 auto; border: none; cursor: pointer; font-family: inherit; font-weight: 800; font-size: 0.74rem; letter-spacing: 0.6px; text-transform: uppercase; color: #5ff0f0; background: rgba(255,255,255,0.1); padding: 7px 12px; border-radius: 10px; }
+        .wx-toast.out { opacity: 0; transform: translateY(8px); transition: 0.25s; }
     </style>
 </head>
 <body>
@@ -1766,9 +2052,9 @@
     <header>
         <div class="fuj-left">RAK</div>
         <div class="top-controls">
-            <button class="btn-tool" onclick="toggleFullScreen()">⛶</button>
-            <button class="btn-tool" onclick="toggleDark()">🌓</button>
-            <button class="btn-tool" onclick="openAdmin()">⚙️</button>
+            <button class="btn-tool" onclick="toggleFullScreen()" aria-label="Toggle full screen" title="Full screen">⛶</button>
+            <button class="btn-tool" onclick="toggleDark()" aria-label="Toggle dark mode" title="Dark mode">🌓</button>
+            <button class="btn-tool" onclick="openAdmin()" aria-label="Open admin tools" title="Admin tools">⚙️</button>
         </div>
         <h2 class="showroom-title">Fujairah Showroom</h2>
 
@@ -1800,6 +2086,21 @@
             <div class="clk-progress"><span class="clk-progress-fill" id="clk-progress-fill"></span></div>
         </div>
     </header>
+
+    <!-- v2: sticky section navigation + live sync status -->
+    <nav class="wx-nav" aria-label="Sections">
+        <div class="wx-nav-links" id="wxNavLinks">
+            <button type="button" data-target=".peak-and-board" class="active">Overview</button>
+            <button type="button" data-target="#wxGoal">Target</button>
+            <button type="button" data-target="#grid">Team</button>
+            <button type="button" data-target=".chart-wrapper">Trends</button>
+            <button type="button" data-target="#wxStudio">Analysis</button>
+            <button type="button" data-target="#wxCalRow">Calendar</button>
+            <button type="button" data-target="#activityLog" id="wxNavLog" style="display:none;">Log</button>
+            <button type="button" data-target=".footer-export">Export</button>
+        </div>
+        <div class="wx-sync" id="wxSync" title="Last data sync"><i></i><span id="wxSyncText">Connecting…</span></div>
+    </nav>
 
     <!-- ENHANCED: Peak Activity + Monthly Leaderboard side-by-side row.
          Stacks on screens narrower than 820px. -->
@@ -1854,6 +2155,38 @@
         </div>
     </div>
 
+
+    <!-- v2: Monthly target tracker — progress ring, pace marker, required run-rate, projection -->
+    <div class="wx-card" id="wxGoal">
+        <div class="wx-head">
+            <h3 class="wx-title"><span class="wx-ic">🎯</span><span>Monthly Target</span></h3>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <span id="wxGoalStatus"></span>
+                <button type="button" class="wx-btn" id="wxGoalEdit" style="display:none;" onclick="WX.editTarget()">Set target</button>
+            </div>
+        </div>
+        <div class="wx-goal">
+            <div class="wx-ring">
+                <svg viewBox="0 0 120 120" aria-hidden="true">
+                    <defs><linearGradient id="wxRingGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#00a8a8"/><stop offset="1" stop-color="#f7971e"/>
+                    </linearGradient></defs>
+                    <circle class="trk" cx="60" cy="60" r="52"/>
+                    <circle class="val" id="wxRingVal" cx="60" cy="60" r="52" stroke-dasharray="326.73" stroke-dashoffset="326.73"/>
+                </svg>
+                <div class="wx-ring-mid"><b id="wxRingPct">—</b><span id="wxRingLbl">of target</span></div>
+            </div>
+            <div>
+                <p class="wx-goal-msg" id="wxGoalMsg">Loading…</p>
+                <div class="wx-pace" id="wxPace" style="display:none;">
+                    <div class="wx-pace-fill" id="wxPaceFill" style="width:0%"></div>
+                    <div class="wx-pace-mark" id="wxPaceMark" data-label="Expected by today"></div>
+                </div>
+                <div class="wx-tiles" id="wxGoalTiles"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- NEW: Walk-in comparison strip — Last 7 days vs prior 7 days, or Last 30 vs prior 30. -->
     <div class="compare-card">
         <div class="compare-head">
@@ -1889,6 +2222,55 @@
         <div class="chart-kpis" id="chartKpis"></div>
         <div class="chart-canvas-wrap">
             <canvas id="walkinChart"></canvas>
+        </div>
+    </div>
+
+
+    <!-- v2: Analysis Studio — pick any period; KPIs, takeaways, trend, hourly, weekday and executive breakdowns -->
+    <div class="wx-card" id="wxStudio">
+        <div class="wx-head">
+            <h3 class="wx-title"><span class="wx-ic">🔬</span><span>Analysis Studio</span></h3>
+            <div class="wx-range" id="wxRange" role="group" aria-label="Analysis period">
+                <button type="button" data-r="7">7 days</button>
+                <button type="button" data-r="14">14 days</button>
+                <button type="button" data-r="30" class="active">30 days</button>
+                <button type="button" data-r="mtd">This month</button>
+                <button type="button" data-r="lm">Last month</button>
+                <button type="button" data-r="90">90 days</button>
+                <button type="button" data-r="custom">Custom</button>
+            </div>
+        </div>
+        <div class="wx-custom" id="wxCustom">
+            <span>From</span><input type="date" id="wxFrom">
+            <span>to</span><input type="date" id="wxTo">
+        </div>
+        <div class="wx-sub" id="wxRangeLabel" style="margin-bottom:12px;"></div>
+        <div class="wx-tiles" id="wxKpis"></div>
+        <ul class="wx-takeaways" id="wxTakeaways"></ul>
+        <div class="wx-grid2">
+            <div class="wx-panel">
+                <h4>Daily walk-ins</h4>
+                <span class="wx-sub">Bars are daily totals; the line is the 7-day moving average</span>
+                <div class="wx-canvas"><canvas id="wxDailyChart"></canvas></div>
+                <div class="wx-legend"><span><i style="background:var(--primary)"></i>Daily total</span><span><i style="background:var(--gold)"></i>7-day average</span></div>
+            </div>
+            <div class="wx-panel">
+                <h4>By executive</h4>
+                <span class="wx-sub">Share of the period · change vs previous period · tap a name for detail</span>
+                <div class="wx-bars" id="wxExecBars"></div>
+            </div>
+        </div>
+        <div class="wx-grid2">
+            <div class="wx-panel">
+                <h4>Hour of day</h4>
+                <span class="wx-sub">Average walk-ins per day in each hour</span>
+                <div class="wx-canvas"><canvas id="wxHourChart"></canvas></div>
+            </div>
+            <div class="wx-panel">
+                <h4>Day of week</h4>
+                <span class="wx-sub">Average per day, busiest highlighted · today excluded while in progress</span>
+                <div class="wx-bars" id="wxDowBars"></div>
+            </div>
         </div>
     </div>
 
@@ -1937,6 +2319,35 @@
         </div>
     </div>
 
+
+    <!-- v2: Month calendar with day drill-down (full width, two aligned columns) -->
+    <div class="wx-card" id="wxCalRow">
+        <div class="wx-head">
+            <h3 class="wx-title"><span class="wx-ic">🗓</span><span>Calendar</span></h3>
+            <div class="wx-cal-nav">
+                <button type="button" aria-label="Previous month" onclick="WX.calMove(-1)">‹</button>
+                <b id="wxCalTitle"></b>
+                <button type="button" aria-label="Next month" id="wxCalNext" onclick="WX.calMove(1)">›</button>
+            </div>
+        </div>
+        <div class="wx-calwrap">
+            <div class="wx-calcol">
+                <div class="wx-cal" id="wxCal"></div>
+                <div class="wx-cal-legend"><span>Quiet</span><i data-i="1"></i><i data-i="2"></i><i data-i="3"></i><i data-i="4"></i><i data-i="5"></i><span>Peak</span><span class="wx-cal-key"><i class="t"></i>Today</span></div>
+            </div>
+            <div class="wx-daydetail" id="wxDayDetail"></div>
+        </div>
+    </div>
+
+    <!-- v2: All-time records, one aligned row across the page -->
+    <div class="wx-card" id="wxRecCard">
+        <div class="wx-head">
+            <h3 class="wx-title"><span class="wx-ic">🏆</span><span>Records &amp; Streaks</span></h3>
+            <span class="wx-sub" id="wxRecSub"></span>
+        </div>
+        <div class="wx-records" id="wxRecords"></div>
+    </div>
+
     <!-- Manager-only activity log (hidden for executives) — moved BELOW the chart
          so the visual KPIs and trend chart get top priority. -->
     <div id="activityLog" style="display:none;">
@@ -1951,6 +2362,7 @@
                
             </div>
         </div>
+        <input type="search" class="wx-input wx-al-search" id="wxAlSearch" placeholder="Search the log by name…" aria-label="Search activity log">
         <div class="al-list" id="al-list"></div>
     </div>
 
@@ -1972,6 +2384,7 @@
             <span class="fe-export-ic">📊</span>
             EXPORT TO EXCEL
         </button>
+        <div><button type="button" class="wx-btn wx-csv-btn" onclick="WX.exportCsv()">Download the same range as CSV</button></div>
     </div>
 
     <!-- NEW: Session bar (Change PIN + Logout) moved here from header -->
@@ -2489,6 +2902,7 @@ function syncWalkins() {
         renderGrowthInsights(growth);
         renderDailyDelta(growth);
         renderTeamPerformance(computeTeamPerformance(historyData));
+        if (window.WX) WX.refresh(); // v2: target, analysis studio, calendar, records, card extras
     });
 }
 
@@ -2838,14 +3252,10 @@ async function deleteActivityEntry(key, who, target, cnt) {
 // Refresh the relative timestamps every 30s so "2m ago" stays accurate
 setInterval(() => { if (isManager()) renderActivityLog(); }, 30000);
 
-function update(name, val) { 
+function update(name, val) {
     if(lockedUsers[name]) return;
 
-    // ============================================================
-    //  NEW: Auto-attach the logged-in executive + pin to each entry
-    //  This makes the count tied to who actually pressed +/- and
-    //  satisfies Firebase rules that validate against validPins.
-    // ============================================================
+    // Auto-attach the logged-in executive + pin to each entry (unchanged).
     const loggedInExec = getCurrentExec();
     const loggedInPin = getCurrentPin();
     if (!loggedInExec || !loggedInPin) {
@@ -2855,38 +3265,49 @@ function update(name, val) {
         return;
     }
 
-    // ============================================================
-    //  Permission rules:
-    //   - Managers: may log walk-ins for ANY executive
-    //   - Executives: may only log for their OWN card
-    // ============================================================
+    // Managers may log for anyone; executives only for their own card (unchanged).
     if (!isManager() && name !== loggedInExec) {
-        alert(`You are logged in as "${loggedInExec}". You can only update your own walk-ins.`);
+        WX.toast(`You are logged in as "${loggedInExec}". You can only update your own walk-ins.`, { type: "err" });
         return;
     }
 
-    if (!navigator.geolocation) { alert("Geolocation not supported."); return; }
+    if (!navigator.geolocation) { WX.toast("Geolocation is not supported on this device.", { type: "err" }); return; }
+
+    // v2: show a "Checking location…" state on the card while GPS resolves,
+    // and block double-taps so one press can never log twice.
+    if (WX.isBusy(name)) return;
+    WX.setBusy(name, true);
 
     navigator.geolocation.getCurrentPosition(
         (pos) => {
+            WX.setBusy(name, false);
             const dist = calculateDistance(pos.coords.latitude, pos.coords.longitude, showroomLat, showroomLon);
             if (dist <= allowedRadiusKM) {
-                // UPDATE: Pushing to stores/fuj/walkins
-                // The card the user pressed is `name` (the executive whose count
-                // changes). We also record `submittedBy` and `pin` so server-side
-                // rules can validate against /validPins/{pin}.
-                window.dbPush(window.dbRef(window.db, window.basePath + "walkins"), { 
-                    executive: name, 
-                    count: val, 
+                const pushed = window.dbPush(window.dbRef(window.db, window.basePath + "walkins"), {
+                    executive: name,
+                    count: val,
                     timestamp: Date.now(),
                     submittedBy: loggedInExec,
                     pin: loggedInPin
                 });
+                const key = pushed && pushed.key;
+                Promise.resolve(pushed).then(() => {
+                    if (navigator.vibrate) navigator.vibrate(15);
+                    WX.toast(`${val > 0 ? "+" + val : val} logged for ${name}`, {
+                        actionLabel: "Undo",
+                        onAction: () => WX.undoEntry(key, name, val, loggedInExec, loggedInPin)
+                    });
+                }).catch(() => {
+                    WX.toast("Could not save. Check your connection and try again.", { type: "err" });
+                });
             } else {
-                alert(`Access Denied: You are ${dist.toFixed(2)}km away. You must be at Fujairah Showroom.`);
+                WX.toast(`Access denied: you are ${dist.toFixed(2)} km away. You must be at Fujairah Showroom.`, { type: "err", ms: 6000 });
             }
-        }, 
-        (err) => alert("Location Error: Please ensure GPS is ON and permission is granted."), 
+        },
+        (err) => {
+            WX.setBusy(name, false);
+            WX.toast("Location error: please make sure GPS is on and permission is granted.", { type: "err", ms: 6000 });
+        },
         { enableHighAccuracy: true, timeout: 10000 }
     );
 }
@@ -3555,7 +3976,7 @@ function updateDateTime(){
 }
 setInterval(updateDateTime, 1000);
 
-function toggleDark(){ document.body.classList.toggle("dark"); setTimeout(() => { renderChart(); renderCompareChart(); }, 50); }
+function toggleDark(){ document.body.classList.toggle("dark"); if (window.WX) WX.saveTheme(); setTimeout(() => { renderChart(); renderCompareChart(); if (window.WX) WX.refresh(); }, 50); }
 function toggleFullScreen() { if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
 function openAdmin() {
     // ============================================================
@@ -3993,6 +4414,758 @@ window.setActivityFilter = setActivityFilter;
                 .catch(err => console.log('Service Worker failed', err));
         });
     }
+</script>
+
+
+<!-- v2: shared modal + toast host -->
+<div class="wx-backdrop" id="wxBackdrop"><div class="wx-modal" id="wxModal" role="dialog" aria-modal="true"></div></div>
+<div class="wx-toasts" id="wxToasts" aria-live="polite"></div>
+
+<script>
+// =====================================================================
+//  ENHANCEMENT LAYER (v2)
+//  Everything below is additive. It reads the same `historyData`,
+//  `executives` and `lockedUsers` the original code maintains, and is
+//  re-run from syncWalkins() / renderGrid() via WX.refresh().
+// =====================================================================
+(function () {
+    'use strict';
+
+    const $ = id => document.getElementById(id);
+    const MS_DAY = 86400000;
+    const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const DOW_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const THEME_KEY = 'walkin_theme';
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const pad = n => String(n).padStart(2, '0');
+    const dkey = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    const keyDate = k => { const p = k.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); };
+    const startOfDay = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+    const fmtShort = d => d.toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+    const fmtLong = d => d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    const r1 = n => Math.round(n * 10) / 10;
+    const num = n => Number(n).toLocaleString();
+    const hourLabel = h => `${pad(h)}:00–${pad((h + 1) % 24)}:00`;
+    const initials = n => String(n).split(/\s+/).map(p => p[0]).slice(0, 2).join('').toUpperCase() || '?';
+    const cssVar = n => getComputedStyle(document.body).getPropertyValue(n).trim();
+
+    const S = {
+        range: '30', target: null, targetBound: false,
+        calY: new Date().getFullYear(), calM: new Date().getMonth(), calSel: dkey(new Date()),
+        busy: {}, charts: {}
+    };
+    let IDX = { days: {}, first: null };
+
+    // ---------- theme persistence ----------
+    try {
+        const saved = localStorage.getItem(THEME_KEY);
+        if (saved === 'dark') document.body.classList.add('dark');
+    } catch (e) { /* storage unavailable: default theme */ }
+
+    // ---------- index: one pass over historyData ----------
+    function buildIndex() {
+        const days = {};
+        let first = null;
+        (historyData || []).forEach(e => {
+            const ts = +e.timestamp;
+            if (!ts) return;
+            const c = +e.count || 0;
+            const dt = new Date(ts);
+            const k = dkey(dt);
+            const o = days[k] || (days[k] = { total: 0, execs: {}, hours: new Array(24).fill(0), n: 0, minus: 0, proxy: 0 });
+            o.total += c;
+            o.hours[dt.getHours()] += c;
+            o.n++;
+            if (c < 0) o.minus++;
+            if (e.submittedBy && e.executive && e.submittedBy !== e.executive) o.proxy++;
+            if (e.executive) o.execs[e.executive] = (o.execs[e.executive] || 0) + c;
+            if (!first || k < first) first = k;
+        });
+        IDX = { days, first };
+    }
+    const dayTotal = k => Math.max(0, (IDX.days[k] && IDX.days[k].total) || 0);
+    const execDay = (k, name) => Math.max(0, (IDX.days[k] && IDX.days[k].execs[name]) || 0);
+
+    function rangeStats(start, end) {
+        const out = { start, end, keys: [], series: [], total: 0, execs: {}, hours: new Array(24).fill(0),
+                      dowSum: new Array(7).fill(0), dowCnt: new Array(7).fill(0), best: null, active: 0, n: 0, minus: 0, proxy: 0 };
+        // Today is still in progress, so it is left out of weekday averages
+        // (a half-finished day would make its weekday look quieter than it is).
+        const todayK = dkey(new Date());
+        for (let d = startOfDay(start); d <= end; d = addDays(d, 1)) {
+            const k = dkey(d), o = IDX.days[k], v = dayTotal(k);
+            out.keys.push(k); out.series.push(v); out.total += v;
+            if (k !== todayK) { out.dowSum[d.getDay()] += v; out.dowCnt[d.getDay()]++; }
+            if (v > 0) out.active++;
+            if (v > 0 && (!out.best || v > out.best.v)) out.best = { k, v };
+            if (o) {
+                out.n += o.n; out.minus += o.minus; out.proxy += o.proxy;
+                o.hours.forEach((x, h) => out.hours[h] += x);
+                Object.keys(o.execs).forEach(n => out.execs[n] = (out.execs[n] || 0) + o.execs[n]);
+            }
+        }
+        out.days = out.keys.length;
+        Object.keys(out.execs).forEach(n => { out.execs[n] = Math.max(0, out.execs[n]); });
+        return out;
+    }
+
+    function pctChange(curr, prev) {
+        if (!prev) return curr > 0 ? null : 0;   // null = no baseline to compare with
+        return Math.round(((curr - prev) / prev) * 100);
+    }
+    function chip(pct, suffix) {
+        if (pct === null) return `<span class="wx-chip flat">new</span>`;
+        const cls = pct > 3 ? 'up' : pct < -3 ? 'down' : 'flat';
+        const arrow = pct > 3 ? '▲' : pct < -3 ? '▼' : '▬';
+        return `<span class="wx-chip ${cls}">${arrow} ${Math.abs(pct)}%${suffix ? ' ' + suffix : ''}</span>`;
+    }
+    function tile(label, value, sub, small) {
+        return `<div class="wx-tile"><div class="l">${label}</div><div class="v wx-num${small ? ' sm' : ''}">${value}</div>${sub ? `<div class="s">${sub}</div>` : ''}</div>`;
+    }
+
+    // ---------- toasts ----------
+    function toast(msg, opts) {
+        opts = opts || {};
+        const host = $('wxToasts');
+        if (!host) return;
+        const el = document.createElement('div');
+        el.className = 'wx-toast' + (opts.type ? ' ' + opts.type : '');
+        const span = document.createElement('span');
+        span.textContent = msg;
+        el.appendChild(span);
+        let timer;
+        const close = () => { clearTimeout(timer); el.classList.add('out'); setTimeout(() => el.remove(), 260); };
+        if (opts.actionLabel && opts.onAction) {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.textContent = opts.actionLabel;
+            b.onclick = () => { close(); opts.onAction(); };
+            el.appendChild(b);
+        }
+        host.appendChild(el);
+        while (host.children.length > 3) host.firstChild.remove();
+        timer = setTimeout(close, opts.ms || (opts.actionLabel ? 6000 : 3500));
+    }
+
+    // ---------- +/- busy state and undo ----------
+    function setBusy(name, on) {
+        if (on) S.busy[name] = true; else delete S.busy[name];
+        const card = $('card-' + name);
+        if (card) card.classList.toggle('wx-busy', !!on);
+    }
+    function undoEntry(key, name, val, exec, pin) {
+        const reverse = () => window.dbPush(window.dbRef(window.db, window.basePath + 'walkins'),
+            { executive: name, count: -val, timestamp: Date.now(), submittedBy: exec, pin: pin });
+        // Prefer removing the entry outright; if database rules do not allow
+        // this user to delete, fall back to logging the opposite count.
+        const attempt = key
+            ? Promise.resolve(window.dbRemove(window.dbRef(window.db, window.basePath + 'walkins/' + key))).catch(reverse)
+            : Promise.resolve(reverse());
+        attempt.then(() => toast(`Undone for ${name}`, { type: 'info' }))
+               .catch(() => toast('Could not undo. Please correct it manually.', { type: 'err' }));
+    }
+
+    // ---------- forecast (weekday-adjusted) ----------
+    function forecast() {
+        const now = new Date(), today = startOfDay(now);
+        const y = now.getFullYear(), m = now.getMonth();
+        const dim = new Date(y, m + 1, 0).getDate();
+        const elapsed = today.getDate();
+        const sums = new Array(7).fill(0), cnt = new Array(7).fill(0);
+        for (let i = 1; i <= 56; i++) {
+            const d = addDays(today, -i), k = dkey(d);
+            if (!IDX.first || k < IDX.first) break;
+            sums[d.getDay()] += dayTotal(k); cnt[d.getDay()]++;
+        }
+        let mtd = 0;
+        for (let d = 1; d <= elapsed; d++) mtd += dayTotal(dkey(new Date(y, m, d)));
+        const pace = elapsed ? mtd / elapsed : 0;
+        const expect = dow => cnt[dow] >= 2 ? sums[dow] / cnt[dow] : pace;
+        let rest = 0;
+        for (let d = elapsed + 1; d <= dim; d++) rest += expect(new Date(y, m, d).getDay());
+        const todaySoFar = dayTotal(dkey(today));
+        const todayRest = Math.max(0, expect(today.getDay()) - todaySoFar);
+        let lastMonth = 0;
+        const lmDays = new Date(y, m, 0).getDate();
+        for (let d = 1; d <= lmDays; d++) lastMonth += dayTotal(dkey(new Date(y, m - 1, d)));
+        return { mtd, dim, elapsed, pace, projected: Math.round(mtd + todayRest + rest), lastMonth, expect };
+    }
+
+    // ---------- monthly target ----------
+    function bindTarget() {
+        if (S.targetBound || !window.dbOnValue || !window.basePath) return;
+        S.targetBound = true;
+        const local = () => { try { const v = +localStorage.getItem(window.STORE_ID + '_monthlyTarget'); return v > 0 ? v : null; } catch (e) { return null; } };
+        S.target = local();
+        try {
+            window.dbOnValue(window.dbRef(window.db, window.basePath + 'settings/monthlyTarget'), snap => {
+                const v = +snap.val();
+                S.target = v > 0 ? v : local();
+                renderGoal();
+            }, () => { S.target = local(); renderGoal(); });
+        } catch (e) { /* keep local value */ }
+    }
+    function saveTarget(v) {
+        v = Math.round(+v);
+        if (!(v > 0)) { toast('Enter a target greater than zero.', { type: 'err' }); return; }
+        S.target = v;
+        try { localStorage.setItem(window.STORE_ID + '_monthlyTarget', String(v)); } catch (e) {}
+        renderGoal();
+        closeModal();
+        Promise.resolve(window.dbSet(window.dbRef(window.db, window.basePath + 'settings/monthlyTarget'), v))
+            .then(() => toast(`Monthly target set to ${num(v)}`))
+            .catch(() => toast('Target saved on this device only. The database rules blocked the shared save.', { type: 'info', ms: 7000 }));
+    }
+    function editTarget() {
+        const f = forecast();
+        const sug = [];
+        if (f.lastMonth > 0) { sug.push(['Match last month', f.lastMonth]); sug.push(['Last month +10%', Math.round(f.lastMonth * 1.1)]); }
+        if (f.projected > 0) sug.push(['Current projection', f.projected]);
+        openModal(`
+            <div class="wx-modal-head"><div class="wx-avatar">🎯</div><div><h3>Monthly target</h3><div class="wx-sub">Total walk-ins the showroom aims for this month</div></div>
+                <button class="wx-x" type="button" aria-label="Close" onclick="WX.closeModal()">✕</button></div>
+            <input class="wx-input" id="wxTargetInput" type="number" min="1" inputmode="numeric" style="width:100%; box-sizing:border-box; font-size:1.2rem; font-weight:700;" value="${S.target || ''}" placeholder="e.g. 600">
+            <div class="wx-suggest">${sug.map(s => `<button type="button" class="wx-btn" onclick="document.getElementById('wxTargetInput').value=${s[1]}">${s[0]} · ${num(s[1])}</button>`).join('')}</div>
+            <button type="button" class="wx-btn solid" style="width:100%; padding:14px; font-size:0.9rem;" onclick="WX.saveTarget(document.getElementById('wxTargetInput').value)">Save target</button>`);
+        setTimeout(() => { const i = $('wxTargetInput'); if (i) i.focus(); }, 60);
+    }
+    function renderGoal() {
+        if (!$('wxGoal')) return;
+        const f = forecast(), T = S.target;
+        const manager = typeof isManager === 'function' && isManager();
+        const editBtn = $('wxGoalEdit');
+        editBtn.style.display = manager ? '' : 'none';
+        editBtn.textContent = T ? 'Edit target' : 'Set target';
+        const C = 326.73;
+        const remDays = f.dim - f.elapsed + 1;   // including today
+        const tiles = [];
+        if (!T) {
+            $('wxRingPct').textContent = num(f.mtd);
+            $('wxRingLbl').textContent = 'this month';
+            $('wxRingVal').style.strokeDashoffset = C * (1 - Math.min(1, f.elapsed / f.dim));
+            $('wxPace').style.display = 'none';
+            $('wxGoalStatus').innerHTML = '';
+            $('wxGoalMsg').innerHTML = manager
+                ? 'No target set yet. Set one to track progress, the daily run-rate you need, and whether the month is on course.'
+                : 'No monthly target has been set yet. A manager can add one.';
+            tiles.push(tile('Month to date', num(f.mtd), `Day ${f.elapsed} of ${f.dim}`));
+            tiles.push(tile('Pace', r1(f.pace), 'walk-ins per day'));
+            tiles.push(tile('Projected', num(f.projected), 'weekday-adjusted'));
+            tiles.push(tile('Last month', num(f.lastMonth), 'full month total'));
+        } else {
+            const pct = f.mtd / T, remaining = Math.max(0, T - f.mtd);
+            const need = remDays > 0 ? remaining / remDays : remaining;
+            const expected = T * f.elapsed / f.dim;
+            const gap = Math.round(f.mtd - expected);
+            $('wxRingPct').textContent = Math.round(pct * 100) + '%';
+            $('wxRingLbl').textContent = 'of target';
+            $('wxRingVal').style.strokeDashoffset = C * (1 - Math.min(1, pct));
+            $('wxPace').style.display = '';
+            $('wxPaceFill').style.width = Math.min(100, pct * 100) + '%';
+            $('wxPaceMark').style.left = Math.min(100, (f.elapsed / f.dim) * 100) + '%';
+            let status, msg;
+            if (f.mtd >= T) {
+                status = '<span class="wx-chip up">✓ Target reached</span>';
+                msg = `Target reached with ${remDays - 1} day${remDays - 1 === 1 ? '' : 's'} to spare. Everything from here is a bonus.`;
+            } else if (f.projected >= T) {
+                status = '<span class="wx-chip up">▲ On track</span>';
+                msg = `On course to finish around <b>${num(f.projected)}</b>, about ${num(f.projected - T)} above target. Keep averaging <b>${r1(need)}</b> a day.`;
+            } else if (f.projected >= T * 0.9) {
+                status = '<span class="wx-chip gold">● Close</span>';
+                msg = `Projected to finish at <b>${num(f.projected)}</b>, just ${num(T - f.projected)} short. The team needs <b>${r1(need)}</b> a day (currently ${r1(f.pace)}).`;
+            } else {
+                status = '<span class="wx-chip down">▼ Behind</span>';
+                msg = `Projected to finish at <b>${num(f.projected)}</b>, ${num(T - f.projected)} short of target. Closing the gap needs <b>${r1(need)}</b> a day against a current ${r1(f.pace)}.`;
+            }
+            $('wxGoalStatus').innerHTML = status;
+            $('wxGoalMsg').innerHTML = msg;
+            tiles.push(tile('Month to date', num(f.mtd), gap === 0 ? 'exactly on pace for today' : `${gap > 0 ? '+' : '−'}${num(Math.abs(gap))} vs expected by today`));
+            tiles.push(tile('Target', num(T), `Day ${f.elapsed} of ${f.dim}`));
+            tiles.push(tile('Remaining', num(remaining), `${remDays} day${remDays === 1 ? '' : 's'} left incl. today`));
+            tiles.push(tile('Needed / day', r1(need), `current pace ${r1(f.pace)}`));
+            tiles.push(tile('Projected', num(f.projected), 'weekday-adjusted'));
+            tiles.push(tile('Last month', num(f.lastMonth), 'full month total'));
+        }
+        $('wxGoalTiles').innerHTML = tiles.join('');
+    }
+
+    // ---------- analysis studio ----------
+    function getRange() {
+        const today = startOfDay(new Date());
+        const y = today.getFullYear(), m = today.getMonth();
+        if (S.range === 'mtd') return [new Date(y, m, 1), today, 'This month to date'];
+        if (S.range === 'lm') return [new Date(y, m - 1, 1), new Date(y, m, 0), 'Last month'];
+        if (S.range === 'custom') {
+            const a = $('wxFrom').value, b = $('wxTo').value;
+            if (a && b && a <= b) return [keyDate(a), keyDate(b) > today ? today : keyDate(b), 'Custom period'];
+            return [addDays(today, -29), today, 'Pick a valid From and To date (showing last 30 days)'];
+        }
+        const n = +S.range || 30;
+        return [addDays(today, -(n - 1)), today, `Last ${n} days`];
+    }
+    function setRange(r) {
+        S.range = r;
+        document.querySelectorAll('#wxRange button').forEach(b => b.classList.toggle('active', b.dataset.r === r));
+        $('wxCustom').classList.toggle('show', r === 'custom');
+        if (r === 'custom' && !$('wxFrom').value) {
+            const t = startOfDay(new Date());
+            $('wxFrom').value = dkey(addDays(t, -29)); $('wxTo').value = dkey(t);
+        }
+        renderStudio();
+    }
+    function hoursOrder(hours) {
+        const list = [];
+        for (let h = 8; h < 24; h++) list.push(h);
+        for (let h = 0; h < 8; h++) if (hours[h] > 0 || h === 0) list.push(h);
+        return list;
+    }
+    function drawChart(id, config) {
+        if (typeof Chart === 'undefined') return;
+        if (S.charts[id]) S.charts[id].destroy();
+        S.charts[id] = new Chart($(id), config);
+    }
+    function chartBase() {
+        const dark = document.body.classList.contains('dark');
+        const tick = dark ? '#9dbcbc' : '#5d7272';
+        const grid = dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,102,102,0.08)';
+        return {
+            tick, grid,
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0f2424', padding: 10, cornerRadius: 10, titleFont: { family: 'Poppins', weight: '700' }, bodyFont: { family: 'Poppins' } } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: tick, font: { family: 'Poppins', size: 10 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 9 } },
+                    y: { beginAtZero: true, grid: { color: grid }, border: { display: false }, ticks: { color: tick, font: { family: 'Poppins', size: 10 }, precision: 0, maxTicksLimit: 5 } }
+                }
+            }
+        };
+    }
+    function renderStudio() {
+        if (!$('wxStudio')) return;
+        const [start, end, label] = getRange();
+        const cur = rangeStats(start, end);
+        const prev = rangeStats(addDays(start, -cur.days), addDays(start, -1));
+        const hasPrev = IDX.first && dkey(prev.end) >= IDX.first;
+        const totalPct = hasPrev ? pctChange(cur.total, prev.total) : null;
+        $('wxRangeLabel').textContent = `${label} · ${fmtShort(start)} – ${fmtShort(end)} · ${cur.days} day${cur.days === 1 ? '' : 's'}` +
+            (hasPrev ? ` · compared with ${fmtShort(prev.start)} – ${fmtShort(prev.end)}` : ' · no earlier data to compare');
+
+        const primary = cssVar('--primary') || '#006666', gold = cssVar('--gold') || '#f7971e';
+
+        if (cur.total === 0) {
+            $('wxKpis').innerHTML = '';
+            $('wxTakeaways').innerHTML = '<li>No walk-ins were recorded in this period. Try a wider range.</li>';
+        }
+
+        // ranked execs
+        const execRows = Object.keys(cur.execs).map(n => ({ n, v: cur.execs[n], p: prev.execs[n] || 0 }))
+            .filter(r => r.v > 0 || r.p > 0).sort((a, b) => b.v - a.v);
+        const top = execRows[0];
+
+        // hours
+        const order = hoursOrder(cur.hours);
+        const hourAvg = order.map(h => r1(Math.max(0, cur.hours[h]) / cur.days));
+        let bh = -1, bhv = 0;
+        cur.hours.forEach((v, h) => { if (v > bhv) { bhv = v; bh = h; } });
+
+        // weekday
+        const dowAvg = cur.dowSum.map((s, i) => cur.dowCnt[i] ? s / cur.dowCnt[i] : 0);
+        const dowUsable = dowAvg.map((v, i) => ({ i, v, c: cur.dowCnt[i] })).filter(x => x.c > 0);
+        const dowMax = dowUsable.reduce((a, b) => b.v > a.v ? b : a, { i: -1, v: 0 });
+        const dowMin = dowUsable.reduce((a, b) => b.v < a.v ? b : a, { i: -1, v: Infinity });
+        const weSum = cur.dowSum[6] + cur.dowSum[0], weCnt = cur.dowCnt[6] + cur.dowCnt[0];
+        const wdCnt = cur.dowCnt[1] + cur.dowCnt[2] + cur.dowCnt[3] + cur.dowCnt[4] + cur.dowCnt[5];
+        const wdSum = cur.dowSum[1] + cur.dowSum[2] + cur.dowSum[3] + cur.dowSum[4] + cur.dowSum[5];
+        const avg = cur.days ? cur.total / cur.days : 0;
+
+        if (cur.total > 0) {
+            const k = [];
+            k.push(tile('Total walk-ins', num(cur.total) + (hasPrev ? chip(totalPct) : ''), hasPrev ? `previous period ${num(prev.total)}` : 'no earlier period'));
+            k.push(tile('Daily average', r1(avg), `${cur.active} of ${cur.days} days had walk-ins`));
+            k.push(tile('Best day', cur.best ? num(cur.best.v) : '—', cur.best ? fmtLong(keyDate(cur.best.k)) : ''));
+            k.push(tile('Busiest hour', bh >= 0 ? hourLabel(bh) : '—', bh >= 0 ? `${r1(bhv / cur.days)} per day on average` : '', true));
+            k.push(tile('Top executive', top ? esc(top.n) : '—', top ? `${num(top.v)} walk-ins · ${Math.round(top.v / cur.total * 100)}% of total` : '', true));
+            k.push(tile('Weekend share', weCnt && wdCnt && (weSum + wdSum) ? Math.round(weSum / (weSum + wdSum) * 100) + '%' : '—',
+                weCnt && wdCnt ? `Sat–Sun ${r1(weSum / weCnt)}/day · weekdays ${r1(wdSum / wdCnt)}/day` : 'needs weekdays and weekends'));
+            k.push(tile('Entries logged', num(cur.n), `${cur.minus} correction${cur.minus === 1 ? '' : 's'} · ${cur.proxy} logged by someone else`));
+            $('wxKpis').innerHTML = k.join('');
+
+            // takeaways — every line is computed from the period above
+            const t = [];
+            if (hasPrev && totalPct !== null) {
+                t.push(totalPct > 3 ? `Traffic is <b>up ${totalPct}%</b> on the previous ${cur.days} days (${num(cur.total)} vs ${num(prev.total)}).`
+                    : totalPct < -3 ? `Traffic is <b>down ${Math.abs(totalPct)}%</b> on the previous ${cur.days} days (${num(cur.total)} vs ${num(prev.total)}).`
+                    : `Traffic is <b>flat</b> against the previous ${cur.days} days (${num(cur.total)} vs ${num(prev.total)}).`);
+            }
+            if (cur.days >= 14 && dowUsable.length >= 5 && dowMax.i >= 0 && avg > 0 && dowMax.i !== dowMin.i) {
+                t.push(`<b>${DOW_LONG[dowMax.i]}</b> is the busiest day at ${r1(dowMax.v)} walk-ins on average, ${Math.round((dowMax.v / avg - 1) * 100)}% above the daily mean. <b>${DOW_LONG[dowMin.i]}</b> is the quietest at ${r1(dowMin.v)}.`);
+            }
+            if (bh >= 0) {
+                const sorted = cur.hours.map((v, h) => ({ v, h })).sort((a, b) => b.v - a.v).slice(0, 3).filter(x => x.v > 0);
+                const share = Math.round(sorted.reduce((a, x) => a + x.v, 0) / Math.max(1, cur.hours.reduce((a, v) => a + Math.max(0, v), 0)) * 100);
+                t.push(`The top ${sorted.length} hour${sorted.length === 1 ? '' : 's'} (${sorted.map(x => pad(x.h) + ':00').join(', ')}) bring in <b>${share}%</b> of all walk-ins, so floor cover matters most then.`);
+            }
+            if (execRows.length >= 3) {
+                const two = execRows[0].v + execRows[1].v;
+                t.push(`<b>${esc(execRows[0].n)}</b> and <b>${esc(execRows[1].n)}</b> account for ${Math.round(two / cur.total * 100)}% of walk-ins across ${execRows.filter(r => r.v > 0).length} active executives.`);
+            }
+            if (hasPrev) {
+                const movers = execRows.filter(r => r.p >= 5 && r.v >= 0).map(r => ({ n: r.n, d: pctChange(r.v, r.p) })).sort((a, b) => b.d - a.d);
+                if (movers.length && movers[0].d >= 15) t.push(`Biggest improvement: <b>${esc(movers[0].n)}</b>, up ${movers[0].d}% on the previous period.`);
+                const last = movers[movers.length - 1];
+                if (movers.length > 1 && last.d <= -15) t.push(`Largest drop: <b>${esc(last.n)}</b>, down ${Math.abs(last.d)}% on the previous period.`);
+            }
+            if (cur.days - cur.active > 0 && cur.days >= 7) t.push(`${cur.days - cur.active} day${cur.days - cur.active === 1 ? '' : 's'} in this period had no walk-ins recorded.`);
+            if (cur.n >= 20 && cur.minus / cur.n >= 0.1) t.push(`${Math.round(cur.minus / cur.n * 100)}% of entries were corrections (minus taps), which is high enough to be worth a reminder on logging.`);
+            $('wxTakeaways').innerHTML = t.map(x => `<li>${x}</li>`).join('') || '<li>Not enough data in this period for takeaways yet.</li>';
+        }
+
+        // exec bars
+        const maxE = top ? Math.max(top.v, 1) : 1;
+        $('wxExecBars').innerHTML = execRows.length ? execRows.map((r, i) => `
+            <div class="wx-bar click${i === 0 && r.v > 0 ? ' top' : ''}" role="button" tabindex="0" data-exec="${esc(r.n)}">
+                <span class="n" title="${esc(r.n)}">${esc(r.n)}</span>
+                <span class="t"><i style="width:${Math.max(2, r.v / maxE * 100)}%"></i></span>
+                <span class="x">${num(r.v)} <small>${cur.total ? Math.round(r.v / cur.total * 100) : 0}%</small>${hasPrev ? chip(pctChange(r.v, r.p)) : ''}</span>
+            </div>`).join('') : '<div class="wx-empty">No walk-ins in this period</div>';
+
+        // weekday bars (Mon-first reads more naturally for a working week)
+        const dOrder = [1, 2, 3, 4, 5, 6, 0];
+        const dMax = Math.max(...dowAvg, 0.0001);
+        $('wxDowBars').innerHTML = dOrder.map(i => `
+            <div class="wx-bar${i === dowMax.i && dowMax.v > 0 ? ' top' : ''}">
+                <span class="n">${DOW_LONG[i]}</span>
+                <span class="t"><i style="width:${cur.dowCnt[i] ? Math.max(2, dowAvg[i] / dMax * 100) : 0}%"></i></span>
+                <span class="x">${cur.dowCnt[i] ? r1(dowAvg[i]) : '—'} <small>${cur.dowCnt[i] ? '× ' + cur.dowCnt[i] : ''}</small></span>
+            </div>`).join('');
+
+        // daily chart with 7-day moving average
+        const ma = cur.keys.map(k => {
+            const d = keyDate(k); let s = 0, c = 0;
+            for (let i = 0; i < 7; i++) { const kk = dkey(addDays(d, -i)); if (IDX.first && kk >= IDX.first) { s += dayTotal(kk); c++; } }
+            return c ? r1(s / c) : null;
+        });
+        const base = chartBase();
+        const o1 = base.options;
+        o1.plugins.tooltip.callbacks = { title: items => fmtLong(keyDate(cur.keys[items[0].dataIndex])) };
+        drawChart('wxDailyChart', {
+            data: {
+                labels: cur.keys.map(k => fmtShort(keyDate(k))),
+                datasets: [
+                    { type: 'line', label: '7-day average', data: ma, borderColor: gold, backgroundColor: gold, borderWidth: 2.5, pointRadius: 0, pointHoverRadius: 4, tension: 0.35, spanGaps: true, order: 1 },
+                    { type: 'bar', label: 'Walk-ins', data: cur.series, backgroundColor: primary, hoverBackgroundColor: cssVar('--accent') || '#00d2d2', borderRadius: 4, maxBarThickness: 26, order: 2 }
+                ]
+            },
+            options: o1
+        });
+        const base2 = chartBase();
+        const hMax = Math.max(...hourAvg, 0);
+        base2.options.plugins.tooltip.callbacks = { title: items => hourLabel(order[items[0].dataIndex]), label: it => ` ${it.parsed.y} per day on average` };
+        drawChart('wxHourChart', {
+            type: 'bar',
+            data: { labels: order.map(h => pad(h)), datasets: [{ label: 'Avg per day', data: hourAvg, backgroundColor: hourAvg.map(v => v === hMax && hMax > 0 ? gold : primary), borderRadius: 4, maxBarThickness: 22 }] },
+            options: base2.options
+        });
+    }
+
+    // ---------- calendar ----------
+    function calMove(step) {
+        const d = new Date(S.calY, S.calM + step, 1);
+        const now = new Date();
+        if (d > new Date(now.getFullYear(), now.getMonth(), 1)) return;
+        S.calY = d.getFullYear(); S.calM = d.getMonth();
+        const sel = keyDate(S.calSel);
+        if (sel.getFullYear() !== S.calY || sel.getMonth() !== S.calM) S.calSel = null;
+        renderCalendar();
+    }
+    function renderCalendar() {
+        if (!$('wxCal')) return;
+        const now = new Date(), todayK = dkey(now);
+        const first = new Date(S.calY, S.calM, 1);
+        const dim = new Date(S.calY, S.calM + 1, 0).getDate();
+        $('wxCalTitle').textContent = first.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+        $('wxCalNext').disabled = S.calY === now.getFullYear() && S.calM === now.getMonth();
+        let max = 0, total = 0;
+        for (let d = 1; d <= dim; d++) { const v = dayTotal(dkey(new Date(S.calY, S.calM, d))); max = Math.max(max, v); total += v; }
+        const bucket = v => { if (!v || !max) return 0; const r = v / max; return r >= 0.999 ? 5 : r >= 0.75 ? 4 : r >= 0.5 ? 3 : r >= 0.25 ? 2 : 1; };
+        const cells = DOW.map(d => `<div class="h">${d}</div>`);
+        for (let i = 0; i < first.getDay(); i++) cells.push('<div></div>');
+        for (let d = 1; d <= dim; d++) {
+            const k = dkey(new Date(S.calY, S.calM, d)), v = dayTotal(k), future = k > todayK;
+            cells.push(`<button type="button" class="wx-day${k === todayK ? ' today' : ''}${k === S.calSel ? ' sel' : ''}" data-i="${bucket(v)}" data-k="${k}" ${future ? 'disabled' : ''} aria-label="${fmtLong(keyDate(k))}: ${v} walk-ins"><small>${d}</small><b>${future ? '' : v}</b></button>`);
+        }
+        $('wxCal').innerHTML = cells.join('');
+        renderDayDetail(total);
+    }
+    function renderDayDetail(monthTotal) {
+        const el = $('wxDayDetail');
+        if (!S.calSel) { el.innerHTML = `<div class="wx-sub">Month total: <b>${num(monthTotal)}</b> walk-ins. Tap a day to see who logged what and when.</div>`; return; }
+        const k = S.calSel, d = keyDate(k), o = IDX.days[k], v = dayTotal(k);
+        const f = forecast(), typical = f.expect(d.getDay());
+        const isToday = k === dkey(new Date());
+        const cmp = isToday ? '<span class="wx-chip gold">in progress</span>'
+            : typical > 0 ? chip(pctChange(v, typical), `vs typical ${DOW[d.getDay()]}`) : '';
+        let html = `<h4>${fmtLong(d)} <span class="wx-chip flat">${num(v)} walk-in${v === 1 ? '' : 's'}</span>${v > 0 || typical > 0 ? cmp : ''}</h4>`;
+        if (!o || v === 0) { el.innerHTML = html + '<div class="wx-sub">No walk-ins recorded on this day.</div>'; return; }
+        const rows = Object.keys(o.execs).map(n => ({ n, v: Math.max(0, o.execs[n]) })).filter(r => r.v > 0).sort((a, b) => b.v - a.v);
+        const mx = rows.length ? rows[0].v : 1;
+        html += `<div class="wx-bars">${rows.map(r => `<div class="wx-bar click" role="button" tabindex="0" data-exec="${esc(r.n)}"><span class="n">${esc(r.n)}</span><span class="t"><i style="width:${r.v / mx * 100}%"></i></span><span class="x">${r.v} <small>${Math.round(r.v / v * 100)}%</small></span></div>`).join('')}</div>`;
+        const order = hoursOrder(o.hours), hm = Math.max(...order.map(h => o.hours[h]), 1);
+        html += `<div class="wx-hours">${order.map(h => { const x = Math.max(0, o.hours[h]); return `<i class="${x ? '' : 'z'}" style="height:${x ? Math.max(8, x / hm * 100) : 4}%" title="${hourLabel(h)}: ${x}"></i>`; }).join('')}</div>
+                 <div class="wx-hours-x"><span>${pad(order[0])}:00</span><span>by hour</span><span>${pad(order[order.length - 1])}:59</span></div>`;
+        el.innerHTML = html;
+    }
+
+    // ---------- records ----------
+    function renderRecords() {
+        if (!$('wxRecords')) return;
+        const keys = Object.keys(IDX.days).sort();
+        if (!keys.length) { $('wxRecords').innerHTML = '<div class="wx-empty" style="grid-column:1/-1;">No history yet</div>'; $('wxRecSub').textContent = ''; return; }
+        const today = startOfDay(new Date());
+        let all = 0, bestDay = null; const weeks = {}, months = {};
+        let execBest = null;
+        keys.forEach(k => {
+            const v = dayTotal(k), d = keyDate(k); all += v;
+            if (!bestDay || v > bestDay.v) bestDay = { k, v };
+            const wk = dkey(addDays(d, -d.getDay())); weeks[wk] = (weeks[wk] || 0) + v;
+            const mk = k.slice(0, 7); months[mk] = (months[mk] || 0) + v;
+            const ex = IDX.days[k].execs;
+            Object.keys(ex).forEach(n => { if (!execBest || ex[n] > execBest.v) execBest = { n, v: ex[n], k }; });
+        });
+        const pick = obj => Object.keys(obj).reduce((a, k) => (!a || obj[k] > a.v) ? { k, v: obj[k] } : a, null);
+        const bw = pick(weeks), bm = pick(months);
+        const firstD = keyDate(IDX.first);
+        const tracked = Math.round((today - firstD) / MS_DAY) + 1;
+        // streaks of consecutive days with at least one walk-in
+        let longest = 0, run = 0;
+        for (let d = firstD; d <= today; d = addDays(d, 1)) { if (dayTotal(dkey(d)) > 0) { run++; longest = Math.max(longest, run); } else run = 0; }
+        let current = 0;
+        let c = dayTotal(dkey(today)) > 0 ? today : addDays(today, -1);
+        while (dayTotal(dkey(c)) > 0) { current++; c = addDays(c, -1); }
+        const bwStart = bw ? keyDate(bw.k) : null;
+        const bmDate = bm ? new Date(+bm.k.slice(0, 4), +bm.k.slice(5, 7) - 1, 1) : null;
+        $('wxRecSub').textContent = `Since ${fmtShort(firstD)} ${firstD.getFullYear()}`;
+        $('wxRecords').innerHTML = [
+            tile('Best day', bestDay && bestDay.v ? num(bestDay.v) : '—', bestDay && bestDay.v ? fmtLong(keyDate(bestDay.k)) : ''),
+            tile('Best week', bw ? num(bw.v) : '—', bw ? `${fmtShort(bwStart)} – ${fmtShort(addDays(bwStart, 6))}` : ''),
+            tile('Best month', bm ? num(bm.v) : '—', bm ? bmDate.toLocaleDateString(undefined, { month: 'long', year: 'numeric' }) : ''),
+            tile('Best individual day', execBest && execBest.v > 0 ? num(execBest.v) : '—', execBest && execBest.v > 0 ? `${esc(execBest.n)} · ${fmtShort(keyDate(execBest.k))}` : ''),
+            tile('Current streak', current + (current === 1 ? ' day' : ' days'), `longest ${longest} day${longest === 1 ? '' : 's'} in a row`),
+            tile('All-time total', num(all), `${r1(all / tracked)} per day over ${num(tracked)} days`)
+        ].join('');
+    }
+
+    // ---------- executive cards ----------
+    function monthExecTotals() {
+        const now = new Date(), y = now.getFullYear(), m = now.getMonth(), out = {};
+        for (let d = 1; d <= now.getDate(); d++) {
+            const o = IDX.days[dkey(new Date(y, m, d))];
+            if (o) Object.keys(o.execs).forEach(n => out[n] = (out[n] || 0) + o.execs[n]);
+        }
+        Object.keys(out).forEach(n => out[n] = Math.max(0, out[n]));
+        return out;
+    }
+    function enhanceGrid() {
+        if (typeof executives === 'undefined' || !executives.length) return;
+        const today = startOfDay(new Date()), todayK = dkey(today);
+        const mt = monthExecTotals();
+        const team = executives.reduce((a, n) => a + (mt[n] || 0), 0);
+        const ranked = executives.filter(n => (mt[n] || 0) > 0).sort((a, b) => mt[b] - mt[a]);
+        executives.forEach(name => {
+            const card = $('card-' + name);
+            if (!card) return;
+            // Keep counts correct after a grid re-render (e.g. an Active/Off-duty
+            // toggle used to blank them until the next walk-in arrived).
+            const cEl = $('count-' + name), dEl = $('daily-count-' + name);
+            if (cEl) cEl.innerText = mt[name] || 0;
+            if (dEl) dEl.innerText = execDay(todayK, name);
+            card.classList.toggle('wx-busy', !!S.busy[name]);
+            const rank = ranked.indexOf(name) + 1;
+            card.classList.toggle('wx-first', rank === 1);
+            let badge = card.querySelector('.wx-rank');
+            if (!badge) { badge = document.createElement('span'); badge.className = 'wx-rank'; card.prepend(badge); }
+            badge.className = 'wx-rank' + (rank === 1 ? ' r1' : '');
+            badge.textContent = rank ? '#' + rank : '–';
+            badge.title = rank ? `Rank ${rank} this month` : 'No walk-ins this month yet';
+            let extra = card.querySelector('.wx-extra');
+            if (!extra) {
+                extra = document.createElement('div'); extra.className = 'wx-extra';
+                const controls = card.querySelector('.controls');
+                card.insertBefore(extra, controls);
+            }
+            const vals = [];
+            for (let i = 6; i >= 0; i--) vals.push(execDay(dkey(addDays(today, -i)), name));
+            const mx = Math.max(...vals, 1);
+            const share = team ? Math.round((mt[name] || 0) / team * 100) : 0;
+            extra.innerHTML = `<div class="wx-spark" title="Last 7 days: ${vals.join(', ')}">${vals.map(v => `<i class="${v ? '' : 'z'}" style="height:${v ? Math.max(12, v / mx * 100) : 8}%"></i>`).join('')}</div>
+                               <div class="wx-share"><b>${share}%</b>of team</div>`;
+            const h3 = $('label-' + name);
+            if (h3) { h3.setAttribute('role', 'button'); h3.setAttribute('tabindex', '0'); h3.dataset.exec = name; h3.title = `${name}: tap for details`; }
+        });
+    }
+
+    // ---------- executive drill-down ----------
+    function openExec(name) {
+        const now = new Date(), today = startOfDay(now), y = now.getFullYear(), m = now.getMonth();
+        const sum = (a, b) => { let s = 0; for (let d = a; d <= b; d = addDays(d, 1)) s += execDay(dkey(d), name); return s; };
+        const todayV = execDay(dkey(today), name);
+        const week = sum(addDays(today, -today.getDay()), today);
+        const mtd = sum(new Date(y, m, 1), today);
+        const lastM = sum(new Date(y, m - 1, 1), new Date(y, m, 0));
+        const lastMSame = sum(new Date(y, m - 1, 1), new Date(y, m - 1, Math.min(today.getDate(), new Date(y, m, 0).getDate())));
+        const mt = monthExecTotals();
+        const list = (typeof executives !== 'undefined' ? executives : []);
+        const team = list.reduce((a, n) => a + (mt[n] || 0), 0);
+        const ranked = list.filter(n => (mt[n] || 0) > 0).sort((a, b) => mt[b] - mt[a]);
+        const rank = ranked.indexOf(name) + 1;
+        let active = 0;
+        for (let d = new Date(y, m, 1); d <= today; d = addDays(d, 1)) if (execDay(dkey(d), name) > 0) active++;
+        let best = null, total = 0;
+        Object.keys(IDX.days).forEach(k => { const v = execDay(k, name); total += v; if (v > 0 && (!best || v > best.v)) best = { k, v }; });
+        const hours = new Array(24).fill(0), dowS = new Array(7).fill(0), dowC = new Array(7).fill(0);
+        const from30 = addDays(today, -29).getTime();
+        (historyData || []).forEach(e => { if (e.executive === name && +e.timestamp >= from30) hours[new Date(+e.timestamp).getHours()] += (+e.count || 0); });
+        let ph = -1, phv = 0; hours.forEach((v, h) => { if (v > phv) { phv = v; ph = h; } });
+        const vals = [];
+        for (let i = 29; i >= 0; i--) { const d = addDays(today, -i), v = execDay(dkey(d), name); vals.push({ d, v }); dowS[d.getDay()] += v; dowC[d.getDay()]++; }
+        const mx = Math.max(...vals.map(x => x.v), 1);
+        let streak = 0, c = todayV > 0 ? today : addDays(today, -1);
+        while (execDay(dkey(c), name) > 0) { streak++; c = addDays(c, -1); }
+        const off = typeof lockedUsers !== 'undefined' && lockedUsers[name];
+        const dAvg = dowS.map((s, i) => dowC[i] ? s / dowC[i] : 0), dMax = Math.max(...dAvg, 0.0001);
+        const share = team ? Math.round(mtd / team * 100) : 0;
+        openModal(`
+            <div class="wx-modal-head">
+                <div class="wx-avatar">${esc(initials(name))}</div>
+                <div><h3>${esc(name)}</h3>
+                    <div class="wx-sub">${off ? '<span class="wx-chip down">Off duty</span>' : '<span class="wx-chip up">Active</span>'}
+                    ${rank ? `<span class="wx-chip ${rank === 1 ? 'gold' : 'flat'}">Rank #${rank} of ${list.length}</span>` : ''}</div></div>
+                <button class="wx-x" type="button" aria-label="Close" onclick="WX.closeModal()">✕</button>
+            </div>
+            <div class="wx-tiles">
+                ${tile('Today', num(todayV), '')}
+                ${tile('This week', num(week), 'since Sunday')}
+                ${tile('Month to date', num(mtd) + (lastMSame ? chip(pctChange(mtd, lastMSame)) : ''), lastMSame ? `${num(lastMSame)} at this point last month` : `${share}% of the team`)}
+                ${tile('Last month', num(lastM), 'full month')}
+                ${tile('Share of team', share + '%', 'month to date')}
+                ${tile('Avg / active day', active ? r1(mtd / active) : '—', `${active} active day${active === 1 ? '' : 's'} this month`)}
+                ${tile('Best day', best ? num(best.v) : '—', best ? fmtLong(keyDate(best.k)) : '')}
+                ${tile('Peak hour', ph >= 0 ? hourLabel(ph) : '—', 'last 30 days', true)}
+                ${tile('Streak', streak + (streak === 1 ? ' day' : ' days'), 'consecutive days with a walk-in')}
+                ${tile('All-time', num(total), 'walk-ins logged')}
+            </div>
+            <div class="wx-m-sec">Last 30 days</div>
+            <div class="wx-days30">${vals.map(x => `<i class="${x.v ? (x.v === mx ? 'mx' : '') : 'z'}" style="height:${x.v ? Math.max(6, x.v / mx * 100) : 3}%" title="${fmtLong(x.d)}: ${x.v}"></i>`).join('')}</div>
+            <div class="wx-hours-x" style="margin-top:4px;"><span>${fmtShort(vals[0].d)}</span><span>peak ${mx > 1 || vals.some(x => x.v) ? mx : 0} in a day</span><span>Today</span></div>
+            <div class="wx-m-sec">Average by weekday (last 30 days)</div>
+            <div class="wx-bars">${[1, 2, 3, 4, 5, 6, 0].map(i => `<div class="wx-bar${dAvg[i] === dMax && dAvg[i] > 0 ? ' top' : ''}"><span class="n">${DOW_LONG[i]}</span><span class="t"><i style="width:${dAvg[i] / dMax * 100}%"></i></span><span class="x">${r1(dAvg[i])}</span></div>`).join('')}</div>`);
+    }
+
+    // ---------- modal ----------
+    function openModal(html) { $('wxModal').innerHTML = html; $('wxBackdrop').classList.add('show'); $('wxModal').scrollTop = 0; }
+    function closeModal() { $('wxBackdrop').classList.remove('show'); }
+
+    // ---------- activity search ----------
+    function applyLogSearch() {
+        const inp = $('wxAlSearch'), list = $('al-list');
+        if (!inp || !list) return;
+        const q = inp.value.trim().toLowerCase();
+        list.querySelectorAll('.al-row').forEach(r => { r.style.display = !q || r.textContent.toLowerCase().includes(q) ? '' : 'none'; });
+    }
+
+    // ---------- CSV export ----------
+    function exportCsv() {
+        const s = $('startDate').value, e = $('endDate').value;
+        if (!s || !e) { toast('Pick a From and To date first.', { type: 'err' }); return; }
+        const q = v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`;
+        const rows = [['Executive', 'Count', 'Date', 'Time', 'Submitted By'].join(',')];
+        (historyData || []).slice().sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0)).forEach(d => {
+            const dt = new Date(d.timestamp), k = dkey(dt);
+            if (k < s || k > e) return;
+            rows.push([q(d.executive), d.count, k, `${pad(dt.getHours())}:${pad(dt.getMinutes())}:${pad(dt.getSeconds())}`, q(d.submittedBy)].join(','));
+        });
+        if (rows.length === 1) { toast('No records in that date range.', { type: 'info' }); return; }
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob(['﻿' + rows.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
+        a.download = `walkins_${window.STORE_ID || 'store'}_${s}_to_${e}.csv`;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+        toast(`Exported ${rows.length - 1} records as CSV`);
+    }
+
+    // ---------- master refresh ----------
+    function refresh() {
+        try {
+            buildIndex();
+            bindTarget();
+            enhanceGrid();
+            renderGoal();
+            renderStudio();
+            renderCalendar();
+            renderRecords();
+            applyLogSearch();
+            const manager = typeof isManager === 'function' && isManager();
+            const navLog = $('wxNavLog'); if (navLog) navLog.style.display = manager ? '' : 'none';
+            const t = new Date();
+            $('wxSyncText').textContent = `Synced ${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`;
+        } catch (err) { console.error('Enhancement layer refresh failed', err); }
+    }
+
+    // ---------- wiring ----------
+    // Re-decorate cards whenever the original grid is re-rendered.
+    const _renderGrid = window.renderGrid;
+    if (typeof _renderGrid === 'function') {
+        window.renderGrid = function () { _renderGrid.apply(this, arguments); try { buildIndex(); enhanceGrid(); } catch (e) { console.error(e); } };
+    }
+    document.addEventListener('click', e => {
+        const ex = e.target.closest('[data-exec]');
+        if (ex) { openExec(ex.dataset.exec); return; }
+        const tp = e.target.closest('.tp-row:not(.tp-header) .tp-name');
+        if (tp) { const n = Array.from(tp.childNodes).filter(x => x.nodeType === 3).map(x => x.textContent).join('').trim(); if (n) openExec(n); return; }
+        const lb = e.target.closest('.lb-name');
+        if (lb) { const n = Array.from(lb.childNodes).filter(x => x.nodeType === 3).map(x => x.textContent).join('').trim(); if (n) openExec(n); return; }
+        const day = e.target.closest('.wx-day');
+        if (day && !day.disabled) { S.calSel = day.dataset.k; renderCalendar(); return; }
+        const rb = e.target.closest('#wxRange button');
+        if (rb) { setRange(rb.dataset.r); return; }
+        const nav = e.target.closest('#wxNavLinks button');
+        if (nav) { const t = document.querySelector(nav.dataset.target); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+        if (e.target.id === 'wxBackdrop') closeModal();
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeModal();
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[data-exec]')) { e.preventDefault(); openExec(e.target.dataset.exec); }
+    });
+    ['wxFrom', 'wxTo'].forEach(id => { const el = $(id); if (el) el.addEventListener('change', renderStudio); });
+    const search = $('wxAlSearch');
+    if (search) search.addEventListener('input', applyLogSearch);
+    const alList = $('al-list');
+    if (alList && 'MutationObserver' in window) new MutationObserver(applyLogSearch).observe(alList, { childList: true });
+
+    // highlight the section currently in view
+    if ('IntersectionObserver' in window) {
+        const btns = Array.from(document.querySelectorAll('#wxNavLinks button'));
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(en => {
+                if (!en.isIntersecting) return;
+                btns.forEach(b => b.classList.toggle('active', document.querySelector(b.dataset.target) === en.target));
+            });
+        }, { rootMargin: '-15% 0px -70% 0px' });
+        btns.forEach(b => { const t = document.querySelector(b.dataset.target); if (t) io.observe(t); });
+    }
+    const setOnline = () => { const s = $('wxSync'); if (!s) return; s.classList.toggle('offline', !navigator.onLine); if (!navigator.onLine) $('wxSyncText').textContent = 'Offline'; };
+    window.addEventListener('online', setOnline); window.addEventListener('offline', setOnline); setOnline();
+    // roll the "today" views over at midnight and keep relative figures fresh
+    setInterval(() => { if (window.__appBooted) refresh(); }, 5 * 60 * 1000);
+
+    window.WX = {
+        refresh, toast, setBusy, isBusy: n => !!S.busy[n], undoEntry,
+        editTarget, saveTarget, calMove, openExec, closeModal, exportCsv,
+        saveTheme: () => { try { localStorage.setItem(THEME_KEY, document.body.classList.contains('dark') ? 'dark' : 'light'); } catch (e) {} }
+    };
+})();
 </script>
 
 <footer style="text-align:center; padding:20px; color:#888; font-size:13px; background: var(--card-bg); border-radius: 0 0 35px 35px;"> 
