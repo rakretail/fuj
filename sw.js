@@ -1,18 +1,4 @@
-/* ==================================================================
-   Showroom Tracker — service worker
-   ------------------------------------------------------------------
-   Pages (index.html, manifest) are ALWAYS fetched fresh from the
-   server. The saved copy is used only when the device is offline.
-   That is what lets a newly uploaded index.html reach every device
-   on its own — no cache clearing, no reinstalling the app.
-
-   Icons, fonts and the chart/Excel/Firebase libraries are cached
-   for speed and offline use. Live Firebase data is never touched.
-
-   You do NOT need to edit this file when you publish a new version
-   of the page. Upload it once, next to index.html.
-   ================================================================== */
-const SW_VERSION = "2026.10.15-1";
+const SW_VERSION = "2026.10.15-2";
 const CACHE = "showroom-" + SW_VERSION;
 
 // Third-party files that are safe to cache (they use fixed, versioned URLs).
@@ -37,7 +23,7 @@ self.addEventListener("fetch", event => {
     if (/(^|\.)firebaseio\.com$|(^|\.)firebasedatabase\.app$|(^|\.)googleapis\.com$/.test(url.hostname) && url.hostname !== "fonts.googleapis.com") return;
 
     if (url.origin === self.location.origin) {
-        if (url.searchParams.has("_vc")) return;                       // the page's own update check goes straight to the server
+        if (url.searchParams.has("_vc") || url.searchParams.has("_")) return;   // the pages' own update checks go straight to the server
         const accept = req.headers.get("accept") || "";
         const isPage = req.mode === "navigate" || accept.includes("text/html") || /\.(html?|json|webmanifest)$/i.test(url.pathname) || url.pathname.endsWith("/");
         if (url.pathname.endsWith("/sw.js")) return;
