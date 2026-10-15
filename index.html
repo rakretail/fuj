@@ -11,9 +11,9 @@
      Keep sw.js next to this file — it makes sure pages are always
      fetched fresh and only uses the saved copy when offline.
      ============================================================ -->
-<meta name="app-version" content="2026.10.15-3">
+<meta name="app-version" content="2026.10.15-2">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>Fujairah Showroom . Tracker</title>
+<title>Fujairah Showroom · Tracker</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#006666">
 <link rel="apple-touch-icon" href="rakwalkin.png">
@@ -57,7 +57,7 @@
 <style>
 :root{
     --primary:#006666; --primary-2:#00a88f; --accent:#00c2b8; --amber:#f59e0b;
-    --walk:#0d9488; --phone:#6366f1; --sale:#d97706;
+    --walk:#0d9488; --phone:#6366f1;
     --bg:#f1f6f6; --card:#ffffff; --text:#0f2727; --muted:#5f7979;
     --line:rgba(0,80,80,.10); --soft:rgba(0,102,102,.055);
     --up:#0a9f6a; --down:#e0425a;
@@ -67,7 +67,7 @@
 }
 body.dark{
     --primary:#19b8b0; --primary-2:#0f8f86; --accent:#3fe0d4;
-    --walk:#2dd4bf; --phone:#8b8cff; --sale:#fbbf24;
+    --walk:#2dd4bf; --phone:#8b8cff;
     --bg:#071111; --card:#0f1c1c; --text:#e4f3f2; --muted:#8aa9a7;
     --line:rgba(255,255,255,.08); --soft:rgba(255,255,255,.05);
     --up:#2dd4a0; --down:#ff7088;
@@ -278,83 +278,7 @@ body.is-loading #heroToday{background:linear-gradient(90deg,rgba(255,255,255,.1)
 .ctl.phone .ctl-num{color:var(--phone)}
 .ctl-num small{font-size:.6rem;font-weight:700;color:var(--muted);margin-left:3px}
 
-/* ---------- Sales & conversion ---------- */
-.ctl.sale{background:rgba(217,119,6,.08)}
-.ctl.sale .ctl-mid{text-align:left;padding-left:12px}
-.ctl.sale .ctl-num{color:var(--sale)}
-.ctl.sale button{background:var(--sale);box-shadow:0 4px 10px -4px var(--sale)}
-body.dark .ctl.sale button{color:#3d2600}
-.kpis.sales .kpi{--kc:var(--sale)}
-.kpi-amt{display:flex;align-items:baseline;gap:6px;min-width:0}
-.kpi-unit{font-size:.8rem;font-weight:800;color:var(--muted);letter-spacing:.5px}
-body.sales-loading .kpis.sales .kpi-num{color:transparent!important;border-radius:8px;background:linear-gradient(90deg,var(--soft) 25%,var(--line) 50%,var(--soft) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite}
-.sales-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px}
-.sales-row>.panel{margin-bottom:16px}
-.sellers{display:flex;flex-direction:column;gap:7px}
-.seller{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 11px;border-radius:13px;background:var(--soft)}
-.seller.is-me{outline:1.5px solid rgba(0,168,168,.4)}
-.seller .lb-rank{width:28px;height:28px}
-.seller b{display:block;font-size:.88rem;line-height:1.25;overflow-wrap:anywhere}
-.seller small{display:block;font-size:.66rem;color:var(--muted);font-weight:600}
-.seller strong{color:var(--sale);font-weight:800;font-size:.92rem;white-space:nowrap}
-.conv-bar{height:5px;border-radius:999px;background:var(--line);margin-top:5px;overflow:hidden}
-.conv-bar i{display:block;height:100%;background:var(--sale);border-radius:999px;transition:width .5s}
-.sale-list{display:flex;flex-direction:column;gap:7px;max-height:380px;overflow-y:auto;padding-right:2px}
-.sale-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:12px;padding:9px 12px;border-radius:13px;background:var(--soft);border-left:3px solid var(--sale)}
-.sale-ic{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--sale);font-size:.9rem}
-.sale-txt{min-width:0;font-size:.85rem;line-height:1.35}
-.sale-txt b{font-weight:700;overflow-wrap:anywhere}
-.sale-txt small{display:block;color:var(--muted);font-size:.7rem;font-weight:600}
-.sale-amt{font-weight:800;color:var(--sale);font-size:1rem;white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
-.sale-amt small{display:block;font-size:.66rem;color:var(--muted);font-weight:600}
-.src-tag{display:inline-block;font-size:.56rem;font-weight:800;letter-spacing:.4px;padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:1px;color:#fff;background:var(--walk)}
-.src-tag.phone{background:var(--phone)}
-.panel-note{font-size:.78rem;color:#9a5b00;font-weight:600;padding:10px 12px;background:rgba(245,158,11,.13);border-radius:12px;margin-bottom:12px}
-body.dark .panel-note{color:#fbbf24}
-.score td.cs{color:var(--sale)}
-/* Sale modal */
-.sale-for{margin:-4px 0 6px;font-size:.86rem;color:var(--muted)}
-.sale-for b{color:var(--text)}
-.amt-wrap{display:flex;align-items:center;gap:10px;border:2px solid var(--line);border-radius:14px;padding:4px 14px;background:var(--soft);transition:border-color .2s}
-.amt-wrap:focus-within{border-color:var(--sale)}
-.amt-wrap span{font-weight:800;color:var(--muted);font-size:.9rem}
-.amt-wrap input{flex:1;min-width:0;border:none;background:transparent;outline:none;font-size:1.8rem;font-weight:800;color:var(--text);padding:8px 0;font-variant-numeric:tabular-nums;font-family:inherit}
-.src-pick{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.src-pick button{padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--text);font-weight:700;cursor:pointer;font-size:.88rem;font-family:inherit;transition:.15s}
-.src-pick button.active[data-src="walkin"]{border-color:var(--walk);background:rgba(13,148,136,.1);color:var(--walk)}
-.src-pick button.active[data-src="phone"]{border-color:var(--phone);background:rgba(99,102,241,.1);color:var(--phone)}
-.modal-card label small{text-transform:none;letter-spacing:0;font-weight:600}
-.btn.sale{background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 8px 18px -8px #d97706}
-.modal-card.sale-card{max-width:560px}
-.inv-lines{display:flex;flex-direction:column;gap:8px}
-.inv-line{display:grid;grid-template-columns:22px minmax(0,1.15fr) minmax(0,1fr) 34px;gap:8px;align-items:center}
-.inv-no{width:22px;height:22px;border-radius:7px;background:rgba(217,119,6,.12);color:var(--sale);font-size:.7rem;font-weight:800;display:grid;place-items:center}
-.inv-line .amt-wrap{padding:2px 10px;border-radius:12px}
-.inv-line .amt-wrap span{font-size:.72rem}
-.inv-line .amt-wrap input{font-size:1.25rem;padding:7px 0}
-.ref-wrap{display:flex;align-items:center;min-width:0;border:2px solid var(--line);border-radius:12px;background:var(--soft);overflow:hidden;transition:border-color .2s}
-.ref-wrap:focus-within{border-color:var(--sale)}
-.inv-kind{border:none;background:rgba(217,119,6,.12);color:var(--sale);font-weight:800;font-size:.74rem;padding:12px 4px 12px 8px;outline:none;cursor:pointer;font-family:inherit;border-right:1px solid var(--line)}
-.inv-ref{flex:1;min-width:0;border:none;background:transparent;outline:none;color:var(--text);font-weight:700;font-size:.9rem;padding:11px 10px;font-family:inherit}
-.inv-del{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;font-weight:800;font-family:inherit}
-.inv-del:hover{border-color:var(--down);color:var(--down)}
-.inv-line .inv-del[hidden]{display:block!important;visibility:hidden}
-.inv-add{margin-top:8px;width:100%;padding:10px;border-radius:12px;border:1.5px dashed var(--sale);background:rgba(217,119,6,.06);color:var(--sale);font-weight:800;font-size:.82rem;cursor:pointer;font-family:inherit}
-.inv-add:hover{background:rgba(217,119,6,.12)}
-.inv-total{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--soft);font-size:.78rem;font-weight:700;color:var(--muted)}
-.inv-total b{font-size:1.2rem;color:var(--sale);font-weight:800;font-variant-numeric:tabular-nums}
-.sale-edited{margin:12px 0 0;font-size:.74rem;color:var(--muted);background:var(--soft);padding:8px 10px;border-radius:10px;line-height:1.45}
-.sale-acts{display:flex;gap:6px}
-.src-tag.edited{background:var(--muted)}
-.src-tag.multi{background:var(--sale)}
-@media (max-width:720px){
-    .inv-line{grid-template-columns:22px minmax(0,1fr) 34px}
-    .inv-line .inv-del{grid-column:3;grid-row:1}
-    .inv-line .ref-wrap{grid-column:2;grid-row:2}
-}
 .btn:disabled{opacity:.6;cursor:wait;transform:none}
-@media (max-width:1000px){.sales-row{grid-template-columns:1fr;gap:0}}
-@media (max-width:720px){.sale-row{gap:9px;padding:9px 10px}.sale-ic{display:none}.sale-row{grid-template-columns:minmax(0,1fr) auto auto}}
 
 /* ---------- Optional per-store extras: section nav, studio, calendar, records, log tools ---------- */
 .secnav{grid-column:1/-1;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0 0}
@@ -494,7 +418,7 @@ body.dark .panel-note{color:#fbbf24}
 
 /* ---------- Scorecard table ---------- */
 .table-scroll{overflow-x:auto;margin:0 -6px;padding:0 6px}
-table.score{width:100%;border-collapse:separate;border-spacing:0;font-size:.84rem;min-width:1180px}
+table.score{width:100%;border-collapse:separate;border-spacing:0;font-size:.84rem;min-width:980px}
 .score th{font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:right;padding:9px 10px;cursor:pointer;white-space:nowrap;user-select:none;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:0}
 .score th:hover{color:var(--text)}
 .score th:nth-child(2),.score td:nth-child(2){text-align:left}
@@ -659,7 +583,7 @@ body.dark .pin-warn{color:#fbbf24}
 .modal-card label{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;color:var(--muted);margin:12px 0 6px;letter-spacing:.8px}
 .modal-card input.pinf{width:100%;padding:14px;font-size:1.2rem;text-align:center;font-weight:700;letter-spacing:8px;border-radius:12px;border:2px solid var(--line);background:var(--soft);color:var(--text);outline:none}
 .modal-actions{display:flex;gap:10px;margin-top:18px}.modal-actions .btn{flex:1}
-.det-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px}
+.det-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}
 .det-stat{background:var(--soft);border-radius:13px;padding:10px;text-align:center}
 .det-stat b{display:block;font-size:1.2rem;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums}
 .det-stat span{font-size:.56rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
@@ -762,29 +686,6 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
     </div>
 </div>
 
-<!-- Log / edit a sale: one customer, one or more invoices -->
-<div id="saleModal" class="modal-overlay hidden" onclick="if(event.target===this)closeSale()">
-    <div class="modal-card sale-card">
-        <h3 id="saleTitle">💰 Log a sale</h3>
-        <p class="sale-for" id="saleForLine">For <b id="saleExec">—</b></p>
-        <div id="saleExecPick" hidden><label for="saleExecSel">Executive</label><select class="field" id="saleExecSel"></select></div>
-        <label>Carts <small>— one customer can have several · each needs its Cart no. or QT no.</small></label>
-        <div class="inv-lines" id="invLines"></div>
-        <button type="button" class="inv-add" id="invAdd">＋ Add another cart</button>
-        <div class="inv-total"><span id="invCount">1 cart · 1 customer</span><b id="invTotal">AED 0</b></div>
-        <label>Customer came in by</label>
-        <div class="src-pick" id="saleSource">
-            <button type="button" data-src="walkin" class="active">🚶 Walk-in</button>
-            <button type="button" data-src="phone">📞 Phone</button>
-        </div>
-        <p class="sale-edited" id="saleEditedNote" hidden></p>
-        <div class="pin-error" id="saleError"></div>
-        <div class="modal-actions">
-            <button class="btn ghost" type="button" onclick="closeSale()">Cancel</button>
-            <button class="btn sale" type="button" id="saleSave" onclick="submitSale()">SAVE SALE</button>
-        </div>
-    </div>
-</div>
 
 <!-- Executive detail modal -->
 <div id="detailModal" class="modal-overlay hidden" onclick="if(event.target===this)closeDetail()">
@@ -822,7 +723,6 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
         <nav class="secnav" id="secNav" aria-label="Jump to section" hidden>
             <button type="button" data-target="#secOverview" class="active">Overview</button>
             <button type="button" data-target="#secTeam">Team</button>
-            <button type="button" data-target="#secSales">Sales</button>
             <button type="button" data-target="#secAnalysis">Analysis</button>
             <button type="button" data-target="#studio">Studio</button>
             <button type="button" data-target="#calPanel">Calendar</button>
@@ -869,44 +769,16 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
     <div class="panel" id="goalCard" hidden></div>
 
     <!-- Executive cards -->
-    <div class="section-label" id="secTeam" data-sec><span id="teamLabel">Team</span><em id="teamNote">Tap + to log a walk-in, a phone call or a sale · numbers are this month</em></div>
+    <div class="section-label" id="secTeam" data-sec><span id="teamLabel">Team</span><em id="teamNote">Tap + to log a walk-in or a phone inquiry · numbers are this month</em></div>
     <div class="executives" id="grid"></div>
-
-    <div class="section-label" id="secSales" data-sec><span>Sales &amp; Conversion</span><em id="salesNote">Conversion = sales ÷ inquiries</em></div>
-    <div class="panel-note" id="salesBlocked" hidden>⚠️ Sales can't be loaded or saved yet. In Firebase, the database rules need to allow read and write on <b>stores/fuj/sales</b>.</div>
-    <div class="kpis sales">
-        <div class="kpi"><div class="kpi-head"><h3>Conversions</h3><span class="kpi-ic">🤝</span></div>
-            <span class="kpi-num" id="sConv">0</span><div class="kpi-foot" id="sConvFoot"></div><div class="kpi-note" id="sConvNote"></div></div>
-        <div class="kpi"><div class="kpi-head"><h3>Conversion Rate</h3><span class="kpi-ic">🎯</span></div>
-            <span class="kpi-num" id="sRate">—</span><div class="kpi-foot" id="sRateFoot"></div><div class="kpi-note" id="sRateNote"></div></div>
-        <div class="kpi"><div class="kpi-head"><h3>Collections</h3><span class="kpi-ic">💰</span></div>
-            <div class="kpi-amt"><span class="kpi-unit">AED</span><span class="kpi-num" id="sAed">0</span></div><div class="kpi-foot" id="sAedFoot"></div><div class="kpi-note" id="sAedNote"></div></div>
-        <div class="kpi"><div class="kpi-head"><h3>Average Sale</h3><span class="kpi-ic">🧾</span></div>
-            <div class="kpi-amt"><span class="kpi-unit">AED</span><span class="kpi-num" id="sAvg">0</span></div><div class="kpi-foot" id="sAvgFoot"></div><div class="kpi-note" id="sAvgNote"></div></div>
-    </div>
-    <div class="sales-row">
-        <div class="panel">
-            <div class="panel-head"><h3 class="panel-title"><span class="ic" style="background:linear-gradient(135deg,#d97706,#f59e0b)">📊</span>Daily Collections</h3><span class="panel-sub">Bars = AED collected · line = conversion rate so far this month</span></div>
-            <div class="chart-kpis" id="salesKpis"></div>
-            <div class="chart-canvas-wrap" style="height:290px"><canvas id="salesChart"></canvas></div>
-        </div>
-        <div class="panel">
-            <div class="panel-head"><h3 class="panel-title"><span class="ic" style="background:linear-gradient(135deg,#d97706,#f59e0b)">🏆</span>Top Sellers</h3><span class="panel-sub">This month</span></div>
-            <div class="sellers" id="sellers"></div>
-        </div>
-    </div>
-    <div class="panel">
-        <div class="panel-head"><h3 class="panel-title"><span class="ic" style="background:linear-gradient(135deg,#d97706,#f59e0b)">🧾</span>Recent Sales <span class="panel-sub" id="saleCount" style="text-transform:none;letter-spacing:0"></span></h3><span class="panel-sub">Managers see everyone's · executives see their own</span></div>
-        <div class="sale-list" id="saleList"></div>
-    </div>
 
     <div class="section-label" id="secAnalysis" data-sec><span>Analysis</span></div>
 
     <div class="row3">
         <div class="panel peak">
-            <div class="panel-head"><h3 class="panel-title"><span class="ic">⚡</span>Peak Activity</h3><span class="panel-sub">Last 30 days</span></div>
+            <div class="panel-head"><h3 class="panel-title"><span class="ic">⚡</span>Peak Activity</h3><span class="panel-sub">Physical walk-ins · last 30 days</span></div>
             <div class="peak-window" id="peak-hour-val">Analyzing...</div>
-            <div class="peak-sub" id="peak-sub">Calculating busiest window from recent traffic</div>
+            <div class="peak-sub" id="peak-sub">Calculating the busiest hour from recent walk-ins</div>
             <div class="peak-meta" id="peak-meta"></div>
         </div>
         <div class="panel">
@@ -980,7 +852,7 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
         <div class="st-grid">
             <div class="st-box"><h4>Daily totals</h4><small>Bars are daily totals · the line is the 7-day average</small><div class="st-canvas"><canvas id="stDaily"></canvas></div></div>
             <div class="st-box"><h4>By executive</h4><small>Share of the period · change vs the previous period · tap a name</small><div class="st-bars" id="stExec"></div></div>
-            <div class="st-box"><h4>Hour of day</h4><small>Average per day in each hour · busiest highlighted</small><div class="st-canvas"><canvas id="stHour"></canvas></div></div>
+            <div class="st-box"><h4>Hour of day</h4><small>Physical walk-ins per day in each hour · busiest highlighted</small><div class="st-canvas"><canvas id="stHour"></canvas></div></div>
             <div class="st-box"><h4>Day of week</h4><small>Average per day · today left out while in progress</small><div class="st-bars" id="stDow"></div></div>
         </div>
     </div>
@@ -991,7 +863,7 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
     </div>
 
     <div class="panel">
-        <div class="panel-head"><h3 class="panel-title"><span class="ic">🔥</span>Shift Heatmap</h3><span class="panel-sub" id="hmSub">Walk-ins by weekday and hour · 08:00 → 00:00 · last 30 days</span></div>
+        <div class="panel-head"><h3 class="panel-title"><span class="ic">🔥</span>Shift Heatmap</h3><span class="panel-sub" id="hmSub">Physical walk-ins by weekday and hour · 08:00 → 00:00 · last 30 days</span></div>
         <div class="heatmap-scroll"><div class="heatmap-grid" id="heatmapGrid"></div></div>
         <div class="heatmap-legend"><span>Quiet</span><span class="lg"><i data-i="0"></i><i data-i="1"></i><i data-i="2"></i><i data-i="3"></i><i data-i="4"></i><i data-i="5"></i></span><span>Peak</span></div>
     </div>
@@ -1049,7 +921,7 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
         </div>
         <button class="btn wide" onclick="exportData()">📊 DOWNLOAD REPORT</button>
         <button class="btn ghost wide" id="csvBtn" type="button" onclick="exportCsv()" hidden style="margin-top:8px">⬇ Download the same range as CSV</button>
-        <p class="fe-hint">Includes a summary, every entry with its type, every sale with its amount, and daily, executive, hourly and weekday totals — split into walk-ins and phone, with conversions and collections in AED.</p>
+        <p class="fe-hint">Includes a summary, every entry with its type, and daily, executive, hourly and weekday totals split into walk-ins and phone inquiries.</p>
     </div>
 
     <div class="session-bar">
@@ -1121,7 +993,7 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
             </div>
             <div class="adm-help"><b>Permanent removal</b>
                 <ul>
-                    <li>🗑 deletes a walk-in, phone entry or sale from the records for good. Totals, charts, the leaderboard and Excel reports update straight away.</li>
+                    <li>🗑 deletes a walk-in or phone entry from the records for good. Totals, charts, the leaderboard and Excel reports update straight away.</li>
                     <li>Use it for entries that should never exist — test taps, duplicates, the wrong person. For a normal slip, the − button or <b>Undo</b> is enough.</li>
                 </ul>
             </div>
@@ -1296,10 +1168,9 @@ let managers = [];
 let lockedUsers = {};
 let settings = {};
 let historyData = [];
-let dataReady = { execs: false, walkins: false, sales: false };
-let salesData = [], salesBlocked = false;   // the live feed waits for both
+let dataReady = { execs: false, walkins: false };
 let A = null;                 // analytics snapshot, rebuilt by recompute()
-let walkinChart, compareChart, shareChart, detChart, salesChart;
+let walkinChart, compareChart, shareChart, detChart;
 let compareRange = "week";
 let trendView = "daily";
 let activityFilter = "all";
@@ -1312,21 +1183,6 @@ let AT = null;                // all-category snapshot (ticker always shows the 
 const entryType = h => h && h.type === "phone" ? "phone" : "walkin";
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-// Sales helpers. A sale without a "source" counts as a walk-in sale.
-const saleSrc = s => s && s.source === "phone" ? "phone" : "walkin";
-const NOSALE = { d: { n: 0, v: 0 }, m: { n: 0, v: 0 }, lms: { n: 0, v: 0 } };
-const aed = n => "AED " + Math.round(+n || 0).toLocaleString("en-US");
-const aedExact = n => { n = +n || 0; const f = n % 1 ? 2 : 0; return "AED " + n.toLocaleString("en-US", { minimumFractionDigits: f, maximumFractionDigits: f }); };
-const aedK = n => { n = +n || 0; const t = (x, d) => x.toFixed(d).replace(/\.0$/, "");
-    return n >= 1e6 ? t(n / 1e6, n >= 1e7 ? 0 : 1) + "M" : n >= 1e4 ? t(n / 1e3, n >= 1e5 ? 0 : 1) + "K" : Math.round(n).toLocaleString("en-US"); };
-const pctTxt = v => v == null ? "—" : r1(v * 100) + "%";
-// One sale = one converted customer. It can carry several invoices; older sales have a single amount/ref.
-const saleInvoices = s => Array.isArray(s && s.invoices) && s.invoices.length
-    ? s.invoices.map(i => ({ amount: +(i && i.amount) || 0, ref: (i && i.ref) || "", kind: (i && i.kind) || "" }))
-    : [{ amount: +(s && s.amount) || 0, ref: (s && s.ref) || "" }];
-const REF_KIND = { cart: "Cart", qt: "QT" };
-const refLabel = i => i.ref ? (REF_KIND[i.kind] ? `${REF_KIND[i.kind]} ${i.ref}` : i.ref) : "";
-const saleRefs = s => saleInvoices(s).map(refLabel).filter(Boolean).join(", ");
 function relabel(t, cat) {
     cat = cat || catFilter; if (cat === "walkin") return t;
     const [one, many] = NOUN[cat];
@@ -1623,12 +1479,6 @@ function initAppLogic() {
         dataReady.walkins = true;
         renderAll();
     });
-    window.dbOnValue(R("sales"), snap => {
-        const rows = [];
-        snap.forEach(c => { const v = c.val(); if (v) rows.push(Object.assign({ _k: c.key }, v)); });
-        salesData = rows; salesBlocked = false; dataReady.sales = true;
-        renderAll();
-    }, () => { salesData = []; salesBlocked = true; dataReady.sales = true; renderAll(); });
     window.dbOnValue(window.dbRef(window.db, ".info/connected"), snap => {
         const on = !!snap.val(), p = $("connPill");
         p.className = "pill " + (on ? "on" : "off");
@@ -1661,7 +1511,7 @@ function buildSnapshot(cat) {
         d: 0, w: 0, m: 0, ySame: 0, yTotal: 0, lwSame: 0, lmSame: 0, lmTotal: 0, total: 0,
         byDay: {}, exec: {}, hours30: Array(24).fill(0), todayHours: Array(24).fill(0), typHours: Array(24).fill(0),
         dowHour: Array.from({ length: 7 }, () => Array(24).fill(0)), hourDays: Array.from({ length: 24 }, () => new Set()),
-        typNowSum: 0, corrections: 0, proxies: 0, firstTs: Infinity,
+        typNowSum: 0, typNowW: 0, corrections: 0, proxies: 0, firstTs: Infinity,
         mix: { walkin: { d: 0, w: 0, m: 0, lm: 0, lms: 0 }, phone: { d: 0, w: 0, m: 0, lm: 0, lms: 0 } },
         typeByDay: { walkin: {}, phone: {} }, typeHours30: { walkin: Array(24).fill(0), phone: Array(24).fill(0) }, byDayNow: {}
     };
@@ -1681,6 +1531,16 @@ function buildSnapshot(cat) {
         if (ts >= sow) a.mix[ty].w += c;
         if (ts >= som) { a.mix[ty].m += c; e.mixM[ty] += c; }
         else if (ts >= solm) { a.mix[ty].lm += c; if (ts < +solm + eMonth) a.mix[ty].lms += c; }
+        // Time-of-day analysis (peak hours, heatmap, hourly charts) uses physical walk-ins only, whatever the filter:
+        // phone inquiries count in every total but don't arrive at the showroom at a set hour.
+        if (ty === "walkin") {
+            if (ts >= sod) a.todayHours[hr] += c;
+            if (ts > d30 && c > 0) { a.hours30[hr] += c; a.dowHour[dt.getDay()][hr] += c; a.hourDays[hr].add(k); e.hours[hr] += c; }
+            if (ts < sod && ts >= d56 && dt.getDay() === todayDow) {
+                a.typHours[hr] += c;
+                if (hr * 3600000 + dt.getMinutes() * 60000 + dt.getSeconds() * 1000 <= eDay) a.typNowW += c;
+            }
+        }
         if (cat !== "all" && ty !== cat) continue;
         // Each day's total up to the current clock time, so today (still in progress) is compared fairly.
         if (hr * 3600000 + dt.getMinutes() * 60000 + dt.getSeconds() * 1000 + dt.getMilliseconds() <= eDay) a.byDayNow[k] = (a.byDayNow[k] || 0) + c;
@@ -1689,7 +1549,7 @@ function buildSnapshot(cat) {
         e.byDay[k] = (e.byDay[k] || 0) + c;
         if (ts < a.firstTs) a.firstTs = ts;
 
-        if (ts >= sod) { a.d += c; e.today += c; a.todayHours[hr] += c; }
+        if (ts >= sod) { a.d += c; e.today += c; }
         else if (ts >= yest) { a.yTotal += c; if (ts < +yest + eDay) a.ySame += c; }
 
         if (ts >= sow) { a.w += c; e.week += c; }
@@ -1704,11 +1564,8 @@ function buildSnapshot(cat) {
             if (ts < +solm + eMonth) { a.lmSame += c; e.lastSame += c; }
         }
 
-        if (ts > d30 && c > 0) { a.hours30[hr] += c; a.dowHour[dt.getDay()][hr] += c; a.hourDays[hr].add(k); e.hours[hr] += c; }
-
         // "Typical" profile for today's weekday, from the previous 8 weeks.
         if (ts < sod && ts >= d56 && dt.getDay() === todayDow) {
-            a.typHours[hr] += c;
             if (hr * 3600000 + dt.getMinutes() * 60000 + dt.getSeconds() * 1000 <= eDay) a.typNowSum += c;
         }
     }
@@ -1725,6 +1582,7 @@ function buildSnapshot(cat) {
     a.dowAvg = a.dowSum.map((s, i) => a.dowOcc[i] ? s / a.dowOcc[i] : 0);
     a.histDays = a.dowOcc.reduce((x, y) => x + y, 0);
     a.typNow = a.dowOcc[todayDow] ? a.typNowSum / a.dowOcc[todayDow] : 0;
+    a.typNowW = a.dowOcc[todayDow] ? a.typNowW / a.dowOcc[todayDow] : 0;
 
     // Month-end forecast: actuals so far + the usual volume of each remaining weekday.
     const y = now.getFullYear(), mo = now.getMonth();
@@ -1755,28 +1613,6 @@ function buildSnapshot(cat) {
     for (const k in a.byDay) if (a.byDay[k] > a.record.v) a.record = { v: a.byDay[k], k };
 
     ["d", "w", "m", "ySame", "lwSame", "lmSame", "lmTotal", "last7", "prev7"].forEach(k => a[k] = Math.max(0, a[k]));
-
-    // ---------- Sales: each sale is one conversion, tagged with the channel the customer came from ----------
-    const z = () => ({ n: 0, v: 0, inv: 0 }), add = (o, v, ic) => { o.n++; o.v += v; o.inv += ic; };
-    a.sale = { d: z(), w: z(), m: z(), lm: z(), lms: z(), max: 0, byDay: {} };
-    a.saleMix = { walkin: z(), phone: z() };                     // this month, whatever filter is selected
-    for (const s of salesData) {
-        if (!s || !s.timestamp) continue;
-        const v = +s.amount || 0, ts = s.timestamp;
-        if (!(v > 0)) continue;
-        const src = saleSrc(s), e = ex(s.executive || "—"), ic = saleInvoices(s).length;
-        if (ts >= som) add(a.saleMix[src], v, ic);
-        if (cat !== "all" && src !== cat) continue;
-        const k = dkey(new Date(ts));
-        add(a.sale.byDay[k] || (a.sale.byDay[k] = z()), v, ic);
-        const es = e.sale || (e.sale = { d: z(), m: z(), lms: z() });
-        if (ts >= sod) { add(a.sale.d, v, ic); add(es.d, v, ic); }
-        if (ts >= sow) add(a.sale.w, v, ic);
-        if (ts >= som) { add(a.sale.m, v, ic); add(es.m, v, ic); if (v > a.sale.max) a.sale.max = v; }
-        else if (ts >= solm) { add(a.sale.lm, v, ic); if (ts < +solm + eMonth) { add(a.sale.lms, v, ic); add(es.lms, v, ic); } }
-    }
-    // Conversion rate = sales ÷ inquiries for the same period (and the same channel when filtered).
-    a.conv = { d: a.d > 0 ? a.sale.d.n / a.d : null, m: a.m > 0 ? a.sale.m.n / a.m : null, lms: a.lmSame > 0 ? a.sale.lms.n / a.lmSame : null };
     return a;
 }
 
@@ -1799,9 +1635,7 @@ function execStats(name) {
         name, today: Math.max(0, e.today), week: Math.max(0, e.week), d7, month, last: Math.max(0, e.last),
         lastSame: Math.max(0, e.lastSame || 0), avg: activeDays ? month / activeDays : 0, activeDays, best, streak, spark, peakH,
         share: A.m > 0 ? month / A.m : 0, byDay: e.byDay,
-        mw: Math.max(0, e.mixM.walkin), mp: Math.max(0, e.mixM.phone), tw: Math.max(0, e.mixD.walkin), tp: Math.max(0, e.mixD.phone),
-        sN: (e.sale || NOSALE).m.n, sV: (e.sale || NOSALE).m.v, sTodayN: (e.sale || NOSALE).d.n, sTodayV: (e.sale || NOSALE).d.v,
-        conv: month > 0 ? (e.sale || NOSALE).m.n / month : null
+        mw: Math.max(0, e.mixM.walkin), mp: Math.max(0, e.mixM.phone), tw: Math.max(0, e.mixD.walkin), tp: Math.max(0, e.mixD.phone)
     };
 }
 
@@ -1811,10 +1645,9 @@ function execStats(name) {
 function renderAll() {
     if (!window.__appBooted) return;
     document.body.classList.toggle("is-loading", !(dataReady.execs && dataReady.walkins));
-    document.body.classList.toggle("sales-loading", !dataReady.sales);
     document.body.dataset.cat = catFilter;
     recompute();
-    renderCatBar(); renderHero(); renderKpis(); renderGoal(); renderGrid(); renderSales();
+    renderCatBar(); renderHero(); renderKpis(); renderGoal(); renderGrid();
     renderPeakCard(); renderChannel(); renderMonthlyLeaderboard();
     renderInsights(); renderShare(); renderChart(); renderCompareChart(); renderScorecard();
     if (FEATURES.studio || FEATURES.calendar || FEATURES.records) { DIDX = buildDayIndex(); renderStudio(); renderCalendar(); renderRecords(); }
@@ -1832,15 +1665,13 @@ function renderCatBar() {
     const many = NOUN[catFilter][1];
     $("shareNoun").textContent = many;
     $("detSub").textContent = `Daily ${many} · last 30 days`;
-    $("hmSub").textContent = `${cap(many)} by weekday and hour · 08:00 → 00:00 · last 30 days`;
 }
 
 // Hero "live today" always shows both channels together.
 function renderHero() {
     const w = Math.max(0, AT.mix.walkin.d), p = Math.max(0, AT.mix.phone.d);
     animateNum($("heroToday"), w + p);
-    $("heroSplit").innerHTML = `<span>🚶 ${fmt(w)} walk-in${w === 1 ? "" : "s"}</span><span>📞 ${fmt(p)} phone</span>`
-        + (AT.sale && AT.sale.d.n ? `<span>💰 ${fmt(AT.sale.d.n)} sale${AT.sale.d.n === 1 ? "" : "s"} · ${aed(AT.sale.d.v)}</span>` : "");
+    $("heroSplit").innerHTML = `<span>🚶 ${fmt(w)} walk-in${w === 1 ? "" : "s"}</span><span>📞 ${fmt(p)} phone</span>`;
 }
 $("catSeg").addEventListener("click", e => {
     const b = e.target.closest("button[data-cat]"); if (!b || b.dataset.cat === catFilter) return;
@@ -1918,13 +1749,6 @@ function sparkSvg(vals) {
         <circle cx="${last[0]}" cy="${last[1]}" r="2.6" fill="var(--amber)"/></svg>`;
 }
 
-function saleRow(n, s) {
-    return `<div class="ctl sale">
-        <div class="ctl-mid"><span class="ctl-num">AED ${aedK(s.sV)}</span>
-            <span class="ctl-lbl" title="${s.sN} sale${s.sN === 1 ? "" : "s"} this month · ${pctTxt(s.conv)} conversion">💰 ${s.sN} sale${s.sN === 1 ? "" : "s"} · ${pctTxt(s.conv)}</span></div>
-        <button data-act="sale" data-name="${n}" aria-label="Log a sale for ${n}">+</button></div>`;
-}
-
 function ctlRow(n, type, label, month, today) {
     const what = type === "phone" ? "phone inquiry" : "walk-in";
     return `<div class="ctl ${type}">
@@ -1941,8 +1765,8 @@ function renderGrid() {
     grid.classList.toggle("solo", !manager);
     $("teamLabel").textContent = manager ? "Team" : "Your card";
     $("teamNote").textContent = manager
-        ? "Tap + to log a walk-in, a phone call or a sale · numbers are this month"
-        : "Tap + to log your walk-ins, phone calls and sales · numbers are this month";
+        ? "Tap + to log a walk-in or a phone inquiry · numbers are this month"
+        : "Tap + to log your walk-ins and phone inquiries · numbers are this month";
     if (!list.length) {
         grid.innerHTML = `<div class="empty" style="grid-column:1/-1">${manager ? "No executives yet. Add them from ⚙️ Admin." : "Your name isn't on the team list yet. Ask a manager to add you in ⚙️ Admin."}</div>`;
         return;
@@ -1953,11 +1777,11 @@ function renderGrid() {
         .sort((x, y) => (y.v - x.v) || x.n.localeCompare(y.n))
         .forEach((r, i) => { rank[r.n] = r.v > 0 ? i + 1 : 0; });
     const ready = dataReady.execs && dataReady.walkins, next = {};
-    const todayLbl = { all: "Today", walkin: "Walk-ins today", phone: "Calls today" }[catFilter];
+    const todayLbl = { all: "Today", walkin: "Walk-ins today", phone: "Phone today" }[catFilter];
 
     grid.innerHTML = list.map(name => {
         const s = execStats(name), isMe = !manager && name === me, canEdit = manager || isMe, locked = !!lockedUsers[name];
-        const n = esc(name), sig = `${s.tw}|${s.tp}|${s.sTodayN}`;
+        const n = esc(name), sig = `${s.tw}|${s.tp}`;
         next[name] = sig;
         const bump = ready && prevCard[name] !== undefined && prevCard[name] !== sig;
         const meta = [rank[name] ? `#${rank[name]} this month` : "No entries this month", s.streak > 1 ? `🔥 ${s.streak}d streak` : ""].filter(Boolean).join(" · ");
@@ -1977,7 +1801,6 @@ function renderGrid() {
             <div class="ctl-rows ${canEdit ? "" : "ro"}">
                 ${ctlRow(n, "walkin", "🚶 Walk-in", s.mw, s.tw)}
                 ${ctlRow(n, "phone", "📞 Phone", s.mp, s.tp)}
-                ${saleRow(n, s)}
             </div>
         </div>`;
     }).join("");
@@ -1988,7 +1811,6 @@ $("grid").addEventListener("click", e => {
     const name = b.dataset.name;
     if (b.dataset.act === "inc") update(name, 1, b.dataset.type);
     else if (b.dataset.act === "dec") update(name, -1, b.dataset.type);
-    else if (b.dataset.act === "sale") openSale(name);
     else if (b.dataset.act === "lock") toggleLock(name);
     else if (b.dataset.act === "detail") openDetail(name);
 });
@@ -2065,294 +1887,10 @@ function renderPeakCard() {
     const pills = [
         `📊 <strong>${v1}</strong> walk-ins in this hour`,
         `📈 Avg <strong>${r1(v1 / (A.hourDays[p1].size || 1))}</strong> / day at peak`,
-        `◔ <strong>${Math.round((v1 / total) * 100)}%</strong> of all traffic`
+        `◔ <strong>${Math.round((v1 / total) * 100)}%</strong> of all walk-ins`
     ];
     if (v2 > 0) pills.push(`🥈 Next: <strong>${hourRange(p2)}</strong>`);
-    $("peak-meta").innerHTML = pills.map(p => `<span class="peak-pill">${relabel(p)}</span>`).join("");
-}
-
-// ---------- Sales & conversion ----------
-function ptsChip(cur, prev) {
-    if (cur == null) return `<span>Needs inquiries this month</span>`;
-    if (prev == null) return `<span>No comparison with last month yet</span>`;
-    const d = r1((cur - prev) * 100), cls = d > 0 ? "up" : d < 0 ? "down" : "flat";
-    return `<span class="delta ${cls}">${d > 0 ? "▲" : d < 0 ? "▼" : "▬"} ${Math.abs(d)} pts</span> <span>vs ${pctTxt(prev)} same point last month</span>`;
-}
-
-function renderSales() {
-    const s = A.sale, c = A.conv;
-    $("salesBlocked").hidden = !salesBlocked;
-    $("salesNote").textContent = { all: "Conversion = sales ÷ all inquiries", walkin: "Walk-in sales ÷ walk-ins", phone: "Phone-sourced sales ÷ phone inquiries" }[catFilter];
-    animateNum($("sConv"), s.m.n);
-    $("sConvFoot").innerHTML = deltaChip(s.m.n, s.lms.n, "vs same point last month");
-    $("sConvNote").textContent = `${fmt(s.d.n)} today · ${fmt(s.w.n)} this week · ${fmt(s.m.inv)} cart${s.m.inv === 1 ? "" : "s"} this month`;
-    $("sRate").textContent = pctTxt(c.m);
-    $("sRateFoot").innerHTML = ptsChip(c.m, c.lms);
-    $("sRateNote").textContent = c.d != null ? `Today ${pctTxt(c.d)} — ${fmt(s.d.n)} sale${s.d.n === 1 ? "" : "s"} from ${fmt(A.d)} ${NOUN[catFilter][A.d === 1 ? 0 : 1]}` : "No inquiries logged yet today";
-    animateNum($("sAed"), s.m.v);
-    $("sAedFoot").innerHTML = deltaChip(s.m.v, s.lms.v, "vs same point last month");
-    $("sAedNote").textContent = `${aed(s.d.v)} today · ${aed(s.lm.v)} last month`;
-    const avg = s.m.n ? s.m.v / s.m.n : 0, lAvg = s.lms.n ? s.lms.v / s.lms.n : 0;
-    animateNum($("sAvg"), avg);
-    $("sAvgFoot").innerHTML = s.m.n ? deltaChip(avg, lAvg, "vs last month") : `<span>No sales yet this month</span>`;
-    $("sAvgNote").textContent = s.m.inv ? `Per customer · avg cart ${aed(s.m.v / s.m.inv)} · largest sale ${aed(s.max)}` : "";
-    renderSellers(); renderSaleList(); renderSalesChart();
-}
-
-function renderSellers() {
-    const me = getCurrentExec();
-    const rows = executives.map(n => execStats(n)).filter(r => r.sN > 0 || r.month > 0)
-        .sort((x, y) => (y.sV - x.sV) || (y.sN - x.sN) || x.name.localeCompare(y.name));
-    const maxV = Math.max(...rows.map(r => r.sV), 0);
-    $("sellers").innerHTML = rows.length ? rows.slice(0, 8).map((r, i) => `
-        <div class="seller ${r.name === me ? "is-me" : ""}">
-            <div class="lb-rank">${r.sV > 0 ? (["🥇", "🥈", "🥉"][i] || i + 1) : "–"}</div>
-            <div><b>${esc(r.name)}</b><small>${r.sN} sale${r.sN === 1 ? "" : "s"} · ${pctTxt(r.conv)} of ${fmt(r.month)} ${NOUN[catFilter][r.month === 1 ? 0 : 1]}</small>
-                <div class="conv-bar"><i style="width:${maxV ? Math.round((r.sV / maxV) * 100) : 0}%"></i></div></div>
-            <strong>${aed(r.sV)}</strong>
-        </div>`).join("") : `<div class="empty">No sales logged this month yet.</div>`;
-}
-
-function renderSaleList() {
-    const me = getCurrentExec(), mgr = isManager(), todayStart = +A.sod;
-    const rows = salesData.filter(s => s && s.timestamp && +s.amount > 0 && (mgr || s.executive === me) && (catFilter === "all" || saleSrc(s) === catFilter))
-        .sort((a, b) => b.timestamp - a.timestamp);
-    $("saleCount").textContent = `· ${rows.length} sale${rows.length === 1 ? "" : "s"}${mgr ? "" : " (yours)"}`;
-    if (!rows.length) {
-        $("saleList").innerHTML = `<div class="empty">${salesBlocked ? "Sales can't be loaded — see the note above." : "No sales logged yet. Tap 💰 + on a team card when a customer buys."}</div>`;
-        return;
-    }
-    $("saleList").innerHTML = rows.slice(0, 60).map(s => {
-        const d = new Date(s.timestamp), src = saleSrc(s), inv = saleInvoices(s), refs = saleRefs(s), k = esc(s._k);
-        const canDel = mgr || (s.executive === me && s.submittedBy === me && s.timestamp >= todayStart);
-        const by = s.submittedBy && s.submittedBy !== s.executive ? ` · logged by ${esc(s.submittedBy)}` : "";
-        const edited = s.editedBy ? ` · edited by ${esc(s.editedBy)}${s.originalAmount != null && +s.originalAmount !== +s.amount ? ` (was ${aedExact(s.originalAmount)})` : ""}` : "";
-        return `<div class="sale-row">
-            <div class="sale-ic">💰</div>
-            <div class="sale-txt"><b>${esc(s.executive || "—")}</b><span class="src-tag ${src}">${src === "phone" ? "📞 PHONE" : "🚶 WALK-IN"}</span>${inv.length > 1 ? `<span class="src-tag multi">${inv.length} CARTS</span>` : ""}${s.editedBy ? `<span class="src-tag edited">EDITED</span>` : ""}
-                <small>${d.toLocaleDateString("en-GB", { day: "2-digit", month: "short" })} · ${d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}${refs ? ` · ${esc(refs)}` : ""}${by}${edited}</small></div>
-            <div class="sale-amt">${aedExact(s.amount)}<small>${relativeTime(s.timestamp)}</small></div>
-            <div class="sale-acts">${mgr ? `<button type="button" class="adm-icon" data-edit-sale="${k}" title="Edit this sale">✏️</button>` : ""}${canDel ? `<button type="button" class="adm-icon danger" data-del-sale="${k}" title="Delete this sale">🗑</button>` : ""}</div>
-        </div>`;
-    }).join("");
-}
-$("saleList").addEventListener("click", e => {
-    const ed = e.target.closest("[data-edit-sale]"); if (ed) { editSale(ed.dataset.editSale); return; }
-    const b = e.target.closest("[data-del-sale]"); if (b) deleteSale(b.dataset.delSale);
-});
-
-function renderSalesChart() {
-    const a = A, y = a.now.getFullYear(), mo = a.now.getMonth(), today = a.now.getDate();
-    const labels = Array.from({ length: a.dim }, (_, i) => i + 1), vals = [], rate = [];
-    let cn = 0, ci = 0;
-    labels.forEach(d => {
-        if (d > today) { vals.push(null); rate.push(null); return; }
-        const k = dkey(new Date(y, mo, d)), s = a.sale.byDay[k] || { n: 0, v: 0 };
-        vals.push(Math.round(s.v)); cn += s.n; ci += Math.max(0, a.byDay[k] || 0);
-        rate.push(ci > 0 ? r1((cn / ci) * 100) : null);
-    });
-    let bi = -1; vals.forEach((v, i) => { if (v != null && v > 0 && (bi < 0 || v > vals[bi])) bi = i; });
-    $("salesKpis").innerHTML = [["Month to date", aed(a.sale.m.v)], ["Conversion", pctTxt(a.conv.m)],
-        ["Best day", bi >= 0 ? `${aed(vals[bi])} · ${a.now.toLocaleString("en-US", { month: "short" })} ${bi + 1}` : "—"]]
-        .map(k => `<span class="chip">${k[0]} <strong>${esc(k[1])}</strong></span>`).join("");
-    if (typeof Chart === "undefined") return;
-    const t = theme();
-    const opts = baseOpts(t, { legend: true, maxX: 16, tooltip: {
-        title: i => `${a.now.toLocaleString("en-US", { month: "long" })} ${i[0].label}`,
-        label: c => c.dataset.yAxisID === "y1" ? ` Conversion so far: ${c.parsed.y}%` : ` Collected: ${aed(c.parsed.y)}`
-    } });
-    opts.scales.y.ticks.callback = v => aedK(v);
-    opts.scales.y1 = { position: "right", beginAtZero: true, suggestedMax: 40, grid: { display: false }, border: { display: false },
-        ticks: { color: t.tick, callback: v => v + "%", font: { family: "Poppins", size: 11 } } };
-    salesChart = drawChart(salesChart, $("salesChart"), { type: "bar", data: { labels, datasets: [
-        { type: "bar", label: "Collections (AED)", data: vals, backgroundColor: hexA(t.sale, .85), borderRadius: 5, maxBarThickness: 22, yAxisID: "y", order: 2 },
-        { type: "line", label: "Conversion rate (month to date)", data: rate, borderColor: t.primary, backgroundColor: "transparent", borderWidth: 2.5, tension: .35, pointRadius: 0, pointHoverRadius: 5, yAxisID: "y1", order: 1, spanGaps: true }
-    ] }, options: opts });
-}
-
-// ---------- Log / edit a sale (one customer, one or more invoices) ----------
-let saleFor = null, saleEditKey = null, saleSource = "walkin", saleBusy = false;
-const MAX_INV = 10;
-
-// Accepts 4500, 4,500, 4500.5, "AED 4,500.50". Returns NaN for anything else.
-function parseAmount(raw) {
-    const t = String(raw || "").replace(/^\s*aed\s*/i, "").replace(/[,\s]/g, "");
-    if (!/^\d+(\.\d{1,2})?$/.test(t)) return NaN;
-    return Math.round(parseFloat(t) * 100) / 100;
-}
-const fmtAmtInput = v => { const f = v % 1 ? 2 : 0; return v.toLocaleString("en-US", { minimumFractionDigits: f, maximumFractionDigits: f }); };
-
-function addInvLine(amount, ref, kind, focus) {
-    const wrap = $("invLines");
-    if (wrap.children.length >= MAX_INV) { toast(`Up to ${MAX_INV} carts per sale.`); return; }
-    const row = document.createElement("div");
-    row.className = "inv-line";
-    row.innerHTML = `<span class="inv-no"></span>
-        <div class="amt-wrap"><span>AED</span><input class="inv-amt" type="text" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Cart amount in AED"></div>
-        <div class="ref-wrap"><select class="inv-kind" aria-label="Reference type"><option value="cart">Cart no.</option><option value="qt">QT no.</option></select>
-            <input class="inv-ref" type="text" maxlength="30" autocomplete="off" placeholder="Number" aria-label="Cart or QT number"></div>
-        <button type="button" class="inv-del" title="Remove this cart" aria-label="Remove this cart">✕</button>`;
-    row.querySelector(".inv-amt").value = amount > 0 ? fmtAmtInput(amount) : "";
-    row.querySelector(".inv-ref").value = ref || "";
-    row.querySelector(".inv-kind").value = kind === "qt" ? "qt" : "cart";
-    wrap.appendChild(row);
-    refreshInvLines();
-    if (focus) row.querySelector(".inv-amt").focus();
-}
-function readInvLines() {
-    return [...document.querySelectorAll("#invLines .inv-line")].map(r => {
-        const a = r.querySelector(".inv-amt"), f = r.querySelector(".inv-ref"), k = r.querySelector(".inv-kind");
-        return { row: r, raw: a.value.trim(), amount: parseAmount(a.value), kind: k.value === "qt" ? "qt" : "cart", ref: f.value.replace(/\s+/g, " ").trim().replace(/^(cart|qt)\s*(no\.?|#)?\s*/i, "").slice(0, 30) };
-    });
-}
-function refreshInvLines() {
-    const lines = readInvLines();
-    lines.forEach((l, i) => { l.row.querySelector(".inv-no").textContent = i + 1; l.row.querySelector(".inv-del").hidden = lines.length === 1; });
-    const total = lines.reduce((t, l) => t + (l.amount > 0 ? l.amount : 0), 0);
-    $("invCount").textContent = `${lines.length} cart${lines.length === 1 ? "" : "s"} · 1 customer`;
-    $("invTotal").textContent = aedExact(total);
-    $("invAdd").hidden = lines.length >= MAX_INV;
-}
-$("invAdd").addEventListener("click", () => addInvLine(0, "", "cart", true));
-$("invLines").addEventListener("click", e => { const b = e.target.closest(".inv-del"); if (b) { b.closest(".inv-line").remove(); refreshInvLines(); } });
-["input", "change"].forEach(ev => $("invLines").addEventListener(ev, () => { $("saleError").textContent = ""; refreshInvLines(); }));
-$("invLines").addEventListener("focusout", e => {
-    if (!e.target.classList.contains("inv-amt")) return;
-    const v = parseAmount(e.target.value); if (v > 0) e.target.value = fmtAmtInput(v);
-});
-$("invLines").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitSale(); } });
-
-function setSaleSource(src) {
-    saleSource = src === "phone" ? "phone" : "walkin";
-    document.querySelectorAll("#saleSource button").forEach(b => b.classList.toggle("active", b.dataset.src === saleSource));
-}
-$("saleSource").addEventListener("click", e => { const b = e.target.closest("button[data-src]"); if (b) setSaleSource(b.dataset.src); });
-
-function resetSaleForm() { $("invLines").innerHTML = ""; $("saleError").textContent = ""; $("saleEditedNote").hidden = true; }
-function showSaleModal() {
-    $("saleModal").classList.remove("hidden");
-    setTimeout(() => { const f = $("invLines").querySelector(".inv-amt"); if (f) f.focus(); }, 80);
-}
-
-function openSale(name) {
-    if (lockedUsers[name]) { toast(`${name} is off duty. A manager can switch them back to active.`, 3000); return; }
-    const who = getCurrentExec();
-    if (!who || !getCurrentPin()) { alert("Session expired. Please log in again."); clearCurrentSession(); location.reload(); return; }
-    if (!isManager() && name !== who) { toast(`You're logged in as ${who} — you can only log your own sales.`, 3000); return; }
-    if (salesBlocked) { alert(`Sales can't be saved yet: in Firebase, the database rules need to allow read and write on stores/${window.STORE_ID}/sales.`); return; }
-    saleFor = name; saleEditKey = null;
-    resetSaleForm();
-    $("saleTitle").textContent = "💰 Log a sale";
-    $("saleForLine").hidden = false; $("saleExecPick").hidden = true;
-    $("saleExec").textContent = name;
-    addInvLine(0, "", "cart");
-    setSaleSource(catFilter === "phone" ? "phone" : "walkin");
-    $("saleSave").textContent = "SAVE SALE";
-    showSaleModal();
-}
-
-// Managers can correct any sale: amounts, invoices, references, channel or the executive it belongs to.
-function editSale(key) {
-    if (!isManager()) { toast("Only managers can edit sales.", 3000); return; }
-    const s = salesData.find(x => x._k === key); if (!s) return;
-    saleEditKey = key; saleFor = s.executive || "—";
-    resetSaleForm();
-    $("saleTitle").textContent = "✏️ Edit sale";
-    $("saleForLine").hidden = true; $("saleExecPick").hidden = false;
-    const names = executives.includes(saleFor) ? executives : [saleFor, ...executives];
-    $("saleExecSel").innerHTML = names.map(n => `<option value="${esc(n)}"${n === saleFor ? " selected" : ""}>${esc(n)}</option>`).join("");
-    saleInvoices(s).forEach(i => addInvLine(i.amount, i.ref, i.kind));
-    setSaleSource(saleSrc(s));
-    const d = new Date(s.timestamp);
-    $("saleEditedNote").innerHTML = `Logged ${d.toLocaleString("en-GB", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })} by ${esc(s.submittedBy || s.executive || "—")}`
-        + (s.editedBy ? ` · last edited by ${esc(s.editedBy)} ${relativeTime(s.editedAt || Date.now())}` : "")
-        + (s.originalAmount != null && +s.originalAmount !== +s.amount ? ` · originally ${aedExact(s.originalAmount)}` : "");
-    $("saleEditedNote").hidden = false;
-    $("saleSave").textContent = "SAVE CHANGES";
-    showSaleModal();
-}
-
-function closeSale() { $("saleModal").classList.add("hidden"); saleFor = null; saleEditKey = null; maybeApplyPending(); }
-
-function submitSale() {
-    if (saleBusy || !saleFor) return;
-    const err = $("saleError"); err.textContent = "";
-    const lines = readInvLines().filter(l => l.raw !== "" || l.ref);
-    if (!lines.length) { err.textContent = "Enter the cart amount in AED and its Cart or QT number."; const f = $("invLines").querySelector(".inv-amt"); if (f) f.focus(); return; }
-    const bad = lines.find(l => !(l.amount > 0));
-    if (bad) { err.textContent = "Each cart needs an amount in AED, e.g. 4500 or 4,500.50"; bad.row.querySelector(".inv-amt").focus(); return; }
-    const noRef = lines.find(l => !l.ref);
-    if (noRef) { err.textContent = "Each cart needs its Cart no. or QT no."; noRef.row.querySelector(".inv-ref").focus(); return; }
-    const keyOf = l => `${l.kind}:${l.ref.toLowerCase()}`;
-    const twice = lines.find((l, i) => lines.findIndex(m => keyOf(m) === keyOf(l)) !== i);
-    if (twice) { err.textContent = `${REF_KIND[twice.kind]} ${twice.ref} is entered twice in this sale.`; twice.row.querySelector(".inv-ref").focus(); return; }
-    // Warn if a Cart/QT number already belongs to another sale.
-    const used = new Map();
-    salesData.forEach(x => { if (x._k !== saleEditKey) saleInvoices(x).forEach(i => { if (i.ref) used.set(`${i.kind || "cart"}:${String(i.ref).toLowerCase()}`, x); }); });
-    const clash = lines.find(l => used.has(keyOf(l)));
-    if (clash) {
-        const other = used.get(keyOf(clash));
-        if (!confirm(`${REF_KIND[clash.kind]} ${clash.ref} is already on a sale for ${other.executive} (${new Date(other.timestamp).toLocaleDateString("en-GB", { day: "2-digit", month: "short" })}). Save anyway?`)) return;
-    }
-    const invoices = lines.map(l => ({ amount: l.amount, kind: l.kind, ref: l.ref }));
-    const total = Math.round(invoices.reduce((t, i) => t + i.amount, 0) * 100) / 100;
-    if (total > 10000000) { err.textContent = "That total looks too large — please check the amounts."; return; }
-    const name = saleEditKey ? $("saleExecSel").value : saleFor;
-    const label = `${aedExact(total)}${invoices.length > 1 ? ` (${invoices.length} carts)` : ""}`;
-    if (total >= 250000 && !confirm(`Save a sale of ${label} for ${name}?`)) return;
-    if (saleEditKey) { saveSaleEdit(saleEditKey, name, invoices, total); return; }
-
-    const dup = salesData.find(s => s.executive === name && Math.abs(+s.amount - total) < 0.005 && Date.now() - s.timestamp < 10 * 60000);
-    if (dup && !confirm(`A ${aedExact(total)} sale for ${name} was already logged ${relativeTime(dup.timestamp)}. Log it again?`)) return;
-    if (!navigator.geolocation) { alert("This device can't share its location, so entries can't be verified."); return; }
-
-    const who = getCurrentExec(), pin = getCurrentPin(), btn = $("saleSave");
-    saleBusy = true; btn.disabled = true; btn.textContent = "📍 Checking location…";
-    const done = () => { saleBusy = false; btn.disabled = false; btn.textContent = "SAVE SALE"; };
-    navigator.geolocation.getCurrentPosition(pos => {
-        done();
-        const dist = calculateDistance(pos.coords.latitude, pos.coords.longitude, showroomLat, showroomLon);
-        if (dist > allowedRadiusKM) { err.textContent = `You are ${dist.toFixed(2)} km from the showroom. Sales can only be logged at Fujairah Showroom.`; return; }
-        const entry = { executive: name, amount: total, source: saleSource, invoices, timestamp: Date.now(), submittedBy: who, pin };
-        const ref2 = window.dbPush(R("sales"), entry);
-        if (ref2 && ref2.catch) ref2.catch(() => alert(`That sale was rejected by the server. In Firebase, the rules need to allow writes to stores/${window.STORE_ID}/sales.`));
-        closeSale();
-        toast(`💰 ${label} logged for ${name}`, 6000, { label: "UNDO", fn: () => {
-            let p; try { p = window.dbRemove(ref2); } catch (e) { p = Promise.reject(e); }
-            Promise.resolve(p).then(() => toast("Sale removed."), () => alert("Couldn't undo — a manager can delete it from Recent Sales."));
-        } });
-        if (navigator.vibrate) navigator.vibrate([15, 40, 15]);
-    }, e2 => {
-        done();
-        err.textContent = e2 && e2.code === 1 ? "Location permission is blocked. Allow location for this site, then try again." : "Couldn't get your location. Make sure GPS is on and try again.";
-    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 120000 });
-}
-
-// Saves a manager's correction. Keeps the original time and who logged it, and records who changed it.
-async function saveSaleEdit(key, name, invoices, total) {
-    const s = salesData.find(x => x._k === key);
-    if (!s) { closeSale(); toast("That sale no longer exists."); return; }
-    const rec = {};
-    Object.keys(s).forEach(k => { if (k !== "_k" && k !== "ref" && s[k] !== undefined) rec[k] = s[k]; });
-    Object.assign(rec, { executive: name, amount: total, source: saleSource, invoices, editedBy: getCurrentExec(), editedAt: Date.now() });
-    if (s.originalAmount == null && Math.abs(+s.amount - total) >= 0.005) rec.originalAmount = +s.amount;
-    const btn = $("saleSave");
-    saleBusy = true; btn.disabled = true; btn.textContent = "Saving…";
-    try {
-        await window.dbSet(R("sales/" + key), rec);
-        closeSale();
-        toast(`✏️ Sale updated — ${aedExact(total)} for ${name}`, 3500);
-    } catch (e) {
-        $("saleError").textContent = "Couldn't save the change. Your Firebase rules may not allow editing sales.";
-    } finally { saleBusy = false; btn.disabled = false; if (saleEditKey) btn.textContent = "SAVE CHANGES"; }
-}
-
-async function deleteSale(key) {
-    const s = salesData.find(x => x._k === key); if (!s) return;
-    const when = new Date(s.timestamp).toLocaleString("en-GB", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
-    if (!confirm(`Delete the ${aedExact(s.amount)} sale for ${s.executive} (${when})?\n\nUse this to fix a wrong amount — then log the sale again.`)) return;
-    try { await window.dbRemove(R("sales/" + key)); toast("Sale deleted"); }
-    catch (e) { alert("Couldn't delete that sale. Your Firebase rules may not allow deleting sales."); }
+    $("peak-meta").innerHTML = pills.map(p => `<span class="peak-pill">${p}</span>`).join("");
 }
 
 // ---------- Channel mix (always both channels; tap a row to filter) ----------
@@ -2401,7 +1939,7 @@ function _lbPaint(animate) {
         rowsEl.innerHTML = _lbRows.slice(start, start + LB_PAGE_SIZE).map((r, i) => {
             const rank = start + i + 1, medal = ["🥇", "🥈", "🥉"][rank - 1] || rank;
             return `<div class="lb-row ${r.name === me ? "is-me" : ""}">
-                <div class="lb-rank">${medal}</div><div class="lb-name"><span class="lb-nm">${esc(r.name)}</span>${catFilter === "all" ? `<small class="lb-split">🚶 ${r.w} walk-in · 📞 ${r.p} phone</small>` : ""}</div>
+                <div class="lb-rank">${medal}</div><div class="lb-name"><span class="lb-nm">${esc(r.name)}</span><small class="lb-split">🚶 ${r.w} walk-in · 📞 ${r.p} phone</small></div>
                 <div class="lb-count num">${r.month}</div><div title="Same point last month: ${r.last}">${deltaChip(r.month, r.last)}</div></div>`;
         }).join("");
         pagesEl.innerHTML = pages <= 1 ? "" : Array.from({ length: pages }, (_, i) => `<span class="${i === _lbPage ? "active" : ""}"></span>`).join("");
@@ -2412,9 +1950,10 @@ function _lbPaint(animate) {
 
 function renderMonthlyLeaderboard() {
     clearInterval(_lbTimer); _lbTimer = null;
-    $("lb-sub").textContent = `${A.now.toLocaleString("en-US", { month: "long" })} vs same point last month`;
-    _lbRows = executives.map(n => ({ name: n, month: Math.max(0, (A.exec[n] || {}).month || 0), last: Math.max(0, (A.exec[n] || {}).lastSame || 0),
-        w: Math.max(0, (((A.exec[n] || {}).mixM) || {}).walkin || 0), p: Math.max(0, (((A.exec[n] || {}).mixM) || {}).phone || 0) }))
+    // Always walk-ins + phone together, whichever channel filter is selected.
+    $("lb-sub").textContent = `${A.now.toLocaleString("en-US", { month: "long" })} · walk-ins + phone · vs same point last month`;
+    _lbRows = executives.map(n => { const e = AT.exec[n] || {}, mx = e.mixM || {}, w = Math.max(0, mx.walkin || 0), p = Math.max(0, mx.phone || 0);
+        return { name: n, month: w + p, last: Math.max(0, e.lastSame || 0), w, p }; })
         .sort((a, b) => (b.month - a.month) || a.name.localeCompare(b.name));
     if (!_lbRows.length) { $("leaderboardRows").innerHTML = `<div class="empty">No executives yet</div>`; $("leaderboardPages").innerHTML = ""; return; }
     _lbPaint(false);
@@ -2425,7 +1964,7 @@ function renderMonthlyLeaderboard() {
 // ---------- Smart insights ----------
 function buildInsights() {
     const a = A, out = [];
-    const add = (icon, tone, title, text) => out.push({ icon, tone, title, text });
+    const add = (icon, tone, title, text, raw) => out.push({ icon, tone, title, text, raw });
     if (a.total <= 0) return [{ icon: "🌱", tone: "info", title: "Waiting for data", text: "Insights appear here as soon as walk-ins are logged." }];
 
     if (a.last7 > 0 || a.prev7 > 0) {
@@ -2444,22 +1983,7 @@ function buildInsights() {
 
     const pm = Math.max(0, a.mix.phone.m), wm = Math.max(0, a.mix.walkin.m);
     if (catFilter === "all" && pm + wm > 0) add("📞", "info", "Channel mix (this month)",
-        `${fmt(wm)} in-store visit${wm === 1 ? "" : "s"} and ${fmt(pm)} phone call${pm === 1 ? "" : "s"} — phone is ${Math.round((pm / (pm + wm)) * 100)}% of all inquiries.`);
-    if (catFilter === "all" && pm > 0) {
-        const top = executives.map(n => ({ n, v: Math.max(0, (((a.exec[n] || {}).mixM) || {}).phone || 0) })).sort((x, y) => y.v - x.v)[0];
-        const ph = a.typeHours30.phone, pv = Math.max(...ph);
-        const txt = (top && top.v ? `${top.n} answered the most calls this month (${fmt(top.v)}). ` : "") + (pv > 0 ? `Calls peak around ${hourRange(ph.indexOf(pv))}.` : "");
-        if (txt) add("☎️", "info", "Phone lines", txt);
-    }
-    if (a.sale.m.n > 0) {
-        const cr = a.conv.m, lc = a.conv.lms;
-        add("💰", cr != null && lc != null ? (cr >= lc ? "up" : "down") : "info", "Conversion (this month)",
-            `${fmt(a.sale.m.n)} sale${a.sale.m.n === 1 ? "" : "s"} worth ${aed(a.sale.m.v)} from ${fmt(a.m)} inquiries — a ${pctTxt(cr)} conversion rate${lc != null ? ` (same point last month: ${pctTxt(lc)})` : ""}.`);
-        const best = executives.map(n => execStats(n)).filter(r => r.month >= 10 && r.conv != null && r.sN > 0).sort((x, y) => y.conv - x.conv)[0];
-        if (best) add("🏹", "info", "Best converter", `${best.name} turns ${pctTxt(best.conv)} of their inquiries into sales (${best.sN} of ${best.month}).`);
-    } else if (a.m >= 20 && dataReady.sales && !salesBlocked) {
-        add("💰", "warn", "No sales logged yet", `No sales have been logged this month. Tap 💰 + on a team card whenever a customer buys.`);
-    }
+        `${fmt(wm)} physical walk-in${wm === 1 ? "" : "s"} and ${fmt(pm)} phone inquir${pm === 1 ? "y" : "ies"} — phone is ${Math.round((pm / (pm + wm)) * 100)}% of all inquiries.`, true);
 
     add("🔮", a.lmTotal > 0 && a.forecast < a.lmTotal ? "warn" : "info", "Month-end outlook",
         `On course for about ${fmt(a.forecast)} walk-ins this month` + (a.lmTotal > 0 ? `, against ${fmt(a.lmTotal)} last month.` : ".") + ` Based on ${a.forecastMethod}.`);
@@ -2483,7 +2007,7 @@ function buildInsights() {
     if (t30 > 0) {
         let bh = 0, bs = 0;
         for (let h = 0; h <= 21; h++) { const s = a.hours30[h] + a.hours30[h + 1] + a.hours30[h + 2]; if (s > bs) { bs = s; bh = h; } }
-        add("⚡", "info", "Rush window", `${Math.round((bs / t30) * 100)}% of the last 30 days' traffic arrived between ${pad(bh)}:00 and ${pad((bh + 3) % 24)}:00. Keep the floor fully staffed then.`);
+        add("⚡", "info", "Rush window", `${Math.round((bs / t30) * 100)}% of the last 30 days' physical walk-ins arrived between ${pad(bh)}:00 and ${pad((bh + 3) % 24)}:00. Keep the floor fully staffed then.`, true);
     }
 
     const ranked = executives.map(n => ({ n, v: Math.max(0, (a.exec[n] || {}).month || 0) })).filter(x => x.v > 0).sort((x, y) => y.v - x.v);
@@ -2508,14 +2032,14 @@ function buildInsights() {
 }
 function renderInsights() {
     $("insights").innerHTML = buildInsights().map(i =>
-        `<div class="ins ${i.tone}"><span class="ins-ic">${i.icon}</span><div><b>${i.title}</b><p>${esc(relabel(i.text))}</p></div></div>`).join("");
+        `<div class="ins ${i.tone}"><span class="ins-ic">${i.icon}</span><div><b>${i.title}</b><p>${esc(i.raw ? i.text : relabel(i.text))}</p></div></div>`).join("");
 }
 
 // ---------- Chart plumbing ----------
 function theme() {
     const cs = getComputedStyle(document.body), dark = document.body.classList.contains("dark"), v = (k, d) => cs.getPropertyValue(k).trim() || d;
     return {
-        dark, primary: v("--cat", "#006666"), walk: v("--walk", "#0d9488"), phone: v("--phone", "#6366f1"), sale: v("--sale", "#d97706"), accent: v("--accent", "#00c2b8"),
+        dark, primary: v("--cat", "#006666"), walk: v("--walk", "#0d9488"), phone: v("--phone", "#6366f1"), accent: v("--accent", "#00c2b8"),
         amber: "#f59e0b", tick: dark ? "#8aa9a7" : "#5f7979", grid: dark ? "rgba(255,255,255,.06)" : "rgba(0,102,102,.08)",
         gray: dark ? "rgba(200,212,212,.5)" : "rgba(105,122,122,.55)", card: v("--card", "#fff")
     };
@@ -2618,10 +2142,10 @@ function renderChart() {
         const hrs = Array.from({ length: 17 }, (_, i) => (8 + i) % 24), occ = a.dowOcc[a.todayDow] || 0;
         labels = hrs.map(h => pad(h) + ":00");
         const todayVals = hrs.map(h => Math.max(0, a.todayHours[h]));
-        datasets = [{ type: "bar", label: "Today", data: todayVals, backgroundColor: t.primary, borderRadius: 7, maxBarThickness: 34 }];
+        datasets = [{ type: "bar", label: "Walk-ins today", data: todayVals, backgroundColor: t.primary, borderRadius: 7, maxBarThickness: 34 }];
         if (occ) datasets.push(line(`Typical ${dayNames[a.todayDow]}`, hrs.map(h => r1(a.typHours[h] / occ)), t.amber, { borderDash: [5, 4] }));
         const pk = Math.max(...todayVals, 0);
-        kpis = [["Today so far", fmt(a.d)], ["Typical by now", occ ? r1(a.typNow) : "—"], ["Busiest hour today", pk > 0 ? `${labels[todayVals.indexOf(pk)]} · ${pk}` : "—"]];
+        kpis = [["Walk-ins today", fmt(Math.max(0, a.todayHours.reduce((x, z) => x + z, 0)))], ["Typical by now", occ ? r1(a.typNowW) : "—"], ["Busiest hour today", pk > 0 ? `${labels[todayVals.indexOf(pk)]} · ${pk}` : "—"], ["Hourly view", "physical walk-ins only"]];
         opts.maxX = 9;
     }
 
@@ -2690,22 +2214,22 @@ function renderShare() {
 }
 
 // ---------- Scorecard ----------
-const SCORE_COLS = [["rank", "#"], ["name", "Executive"], ["today", "Today"], ["d7", "7 days"], ["month", "Month"], ["mw", "🚶 Walk-ins"], ["mp", "📞 Phone"], ["sN", "💰 Sales"], ["convSort", "Conv %"], ["sV", "AED"], ["last", "Last month (full)"], ["trend", "vs same point"], ["avg", "Avg / active day"], ["bestV", "Best day"], ["streak", "Streak"], ["share", "Share"]];
+const SCORE_COLS = [["rank", "#"], ["name", "Executive"], ["today", "Today"], ["d7", "7 days"], ["month", "Month"], ["mw", "🚶 Walk-ins"], ["mp", "📞 Phone"], ["last", "Last month (full)"], ["trend", "vs same point"], ["avg", "Avg / active day"], ["bestV", "Best day"], ["streak", "Streak"], ["share", "Share"]];
 function renderScorecard() {
     const me = getCurrentExec();
-    const rows = executives.map(n => { const s = execStats(n); s.bestV = s.best.v; s.convSort = s.conv == null ? -1 : s.conv; return s; });
+    const rows = executives.map(n => { const s = execStats(n); s.bestV = s.best.v; return s; });
     [...rows].sort((x, y) => (y.month - x.month) || x.name.localeCompare(y.name)).forEach((r, i) => { r.rank = i + 1; r.trend = r.lastSame > 0 ? (r.month - r.lastSame) / r.lastSame : (r.month > 0 ? 1 : 0); });
     const k = scoreSort.key;
     rows.sort((x, y) => (k === "name" ? x.name.localeCompare(y.name) : x[k] - y[k]) * scoreSort.dir || x.rank - y.rank);
     const head = `<thead><tr>${SCORE_COLS.map(c => `<th data-sort="${c[0]}" class="${c[0] === k ? "sorted" : ""}">${c[1]}${c[0] === k ? (scoreSort.dir < 0 ? " ▾" : " ▴") : ""}</th>`).join("")}</tr></thead>`;
     const body = rows.length ? rows.map(r => `<tr class="${r.name === me ? "is-me" : ""}">
         <td>${r.rank}</td><td class="nm" data-name="${esc(r.name)}">${esc(r.name)}${lockedUsers[r.name] ? ` <small>off duty</small>` : ""}</td>
-        <td>${r.today}</td><td>${r.d7}</td><td><strong style="color:var(--cat)">${r.month}</strong></td><td class="cw">${r.mw}</td><td class="cp">${r.mp}</td><td class="cs">${r.sN}</td><td>${pctTxt(r.conv)}</td><td class="cs">${r.sV ? aedK(r.sV) : "—"}</td>
+        <td>${r.today}</td><td>${r.d7}</td><td><strong style="color:var(--cat)">${r.month}</strong></td><td class="cw">${r.mw}</td><td class="cp">${r.mp}</td>
         <td>${r.last}</td><td>${deltaChip(r.month, r.lastSame)}</td><td>${r1(r.avg)}<small>${r.activeDays}d</small></td>
         <td>${r.best.k ? `${r.best.v}<small>${shortDate(r.best.k)}</small>` : "—"}</td>
         <td>${r.streak ? `🔥 ${r.streak}d` : "—"}</td>
         <td><span class="share-bar"><i><u style="width:${Math.round(r.share * 100)}%"></u></i>${Math.round(r.share * 100)}%</span></td></tr>`).join("")
-        : `<tr><td colspan="16" class="empty">No executives yet</td></tr>`;
+        : `<tr><td colspan="13" class="empty">No executives yet</td></tr>`;
     $("scoreTable").innerHTML = head + `<tbody>${body}</tbody>`;
 }
 $("scoreTable").addEventListener("click", e => {
@@ -2724,12 +2248,11 @@ function openDetail(name) {
     window.__detName = name;
     $("detName").innerHTML = `<span class="avatar" style="--av:${avColor(name)}">${esc(initials(name))}</span>${esc(name)}`;
     $("detStats").innerHTML = [["Today", s.today], ["7 days", s.d7], ["This month", s.month], ["🚶 Walk-ins (mo)", s.mw], ["📞 Phone (mo)", s.mp], ["Last month", s.last],
-        ["Avg / active day", r1(s.avg)], ["Team share", Math.round(s.share * 100) + "%"], ["Active streak", s.streak + "d"],
-        ["💰 Sales (mo)", s.sN], ["Collections (mo)", "AED " + aedK(s.sV)], ["Conversion", pctTxt(s.conv)]]
+        ["Avg / active day", r1(s.avg)], ["Team share", Math.round(s.share * 100) + "%"], ["Active streak", s.streak + "d"]]
         .map(x => `<div class="det-stat"><b>${x[1]}</b><span>${x[0]}</span></div>`).join("");
     const notes = [];
     if (s.best.k) notes.push(["Best day", `${s.best.v} on ${shortDate(s.best.k)}`]);
-    if (s.peakH >= 0) notes.push(["Busiest hour (30d)", hourRange(s.peakH)]);
+    if (s.peakH >= 0) notes.push(["Busiest walk-in hour (30d)", hourRange(s.peakH)]);
     notes.push(["vs same point last month", s.lastSame > 0 ? `${s.month >= s.lastSame ? "+" : ""}${Math.round(((s.month - s.lastSame) / s.lastSame) * 100)}%` : "—"]);
     $("detNotes").innerHTML = notes.map(n => `<span class="chip">${n[0]} <strong>${esc(n[1])}</strong></span>`).join("");
     $("detailModal").classList.remove("hidden");
@@ -2760,7 +2283,7 @@ function renderShiftHeatmap() {
         cells.push(`<div class="hm-day-label">${dayShort[d]}</div>`);
         hrs.forEach(h => {
             const v = g[d][h];
-            cells.push(`<div class="hm-cell" data-i="${bucket(v)}" title="${dayNames[d]} ${pad(h)}:00 · ${v} ${NOUN[catFilter][v === 1 ? 0 : 1]}">${v || ""}</div>`);
+            cells.push(`<div class="hm-cell" data-i="${bucket(v)}" title="${dayNames[d]} ${pad(h)}:00 · ${v} walk-in${v === 1 ? "" : "s"}">${v || ""}</div>`);
         });
     }
     grid.innerHTML = cells.join("");
@@ -2834,18 +2357,11 @@ function renderAdminEntries() {
     const day = dInp.value, q = $("admEntSearch").value.trim().toLowerCase();
     const match = (...xs) => !q || xs.some(x => String(x || "").toLowerCase().includes(q));
     const ents = historyData.filter(h => h && h.timestamp && h._key && dkey(new Date(h.timestamp)) === day && match(h.executive, h.submittedBy)).map(h => ({ kind: "entry", h }));
-    const sls = salesData.filter(s => s && s.timestamp && s._k && dkey(new Date(s.timestamp)) === day && match(s.executive, s.submittedBy, saleRefs(s))).map(s => ({ kind: "sale", h: s }));
-    const rows = [...ents, ...sls].sort((a, b) => b.h.timestamp - a.h.timestamp);
+    const rows = ents.sort((a, b) => b.h.timestamp - a.h.timestamp);
     $("admEntCount").textContent = rows.length;
     $("admEntList").innerHTML = rows.length ? rows.slice(0, 300).map(({ kind, h }) => {
         const t = new Date(h.timestamp).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
         const by = h.submittedBy && h.submittedBy !== h.executive ? ` · by ${esc(h.submittedBy)}` : "";
-        if (kind === "sale") {
-            const refs = saleRefs(h);
-            return `<div class="adm-person"><span class="avatar" style="--av:var(--sale)">AED</span>
-                <div class="adm-person-txt"><b>${esc(h.executive || "—")}</b><small>${t} · sale ${aedExact(h.amount)}${refs ? " · " + esc(refs) : ""}${by}</small></div>
-                <div class="adm-actions"><button type="button" class="adm-icon danger" data-act="del-sale" data-key="${esc(h._k)}" title="Delete this sale">🗑</button></div></div>`;
-        }
         const n = +h.count || 0, ph = entryType(h) === "phone";
         return `<div class="adm-person"><span class="avatar" style="--av:${n < 0 ? "var(--down)" : ph ? "var(--phone)" : "var(--walk)"}">${n > 0 ? "+" : ""}${n}</span>
             <div class="adm-person-txt"><b>${esc(h.executive || "—")}</b><small>${t} · ${ph ? "phone inquiry" : "walk-in"}${n < 0 ? " correction" : ""}${by}</small></div>
@@ -2882,21 +2398,17 @@ function exportCsv() {
 let DIDX = { days: {}, first: null };
 function buildDayIndex() {
     const days = {}; let first = null;
-    const get = k => days[k] || (days[k] = { total: 0, execs: {}, hours: Array(24).fill(0), n: 0, minus: 0, proxy: 0, sn: 0, sv: 0 });
+    const get = k => days[k] || (days[k] = { total: 0, execs: {}, hours: Array(24).fill(0), n: 0, minus: 0, proxy: 0 });
     for (const h of historyData) {
         if (!h || !h.timestamp) continue;
+        const c = +h.count || 0, dt = new Date(h.timestamp), k = dkey(dt), o = get(k), walk = entryType(h) === "walkin";
+        if (walk) o.hours[dt.getHours()] += c;                 // hour-of-day = physical walk-ins only
         if (catFilter !== "all" && entryType(h) !== catFilter) continue;
-        const c = +h.count || 0, dt = new Date(h.timestamp), k = dkey(dt), o = get(k);
-        o.total += c; o.hours[dt.getHours()] += c; o.n++;
+        o.total += c; o.n++;
         if (c < 0) o.minus++;
         if (h.submittedBy && h.executive && h.submittedBy !== h.executive) o.proxy++;
         if (h.executive) o.execs[h.executive] = (o.execs[h.executive] || 0) + c;
         if (!first || k < first) first = k;
-    }
-    for (const s of salesData) {
-        if (!s || !s.timestamp || !(+s.amount > 0)) continue;
-        if (catFilter !== "all" && saleSrc(s) !== catFilter) continue;
-        const o = get(dkey(new Date(s.timestamp))); o.sn++; o.sv += +s.amount;
     }
     return { days, first };
 }
@@ -2916,7 +2428,7 @@ const stHourOrder = hours => { const l = []; for (let h = 8; h < 24; h++) l.push
 
 function idxRange(start, end) {
     const out = { start, end, keys: [], series: [], total: 0, execs: {}, hours: Array(24).fill(0), dowSum: Array(7).fill(0), dowCnt: Array(7).fill(0),
-                  best: null, active: 0, n: 0, minus: 0, proxy: 0, sn: 0, sv: 0 };
+                  best: null, active: 0, n: 0, minus: 0, proxy: 0 };
     const todayK = dkey(new Date());
     for (let d = midnight(start); d <= end; d = addDays(d, 1)) {
         const k = dkey(d), o = DIDX.days[k], v = dTot(k);
@@ -2925,7 +2437,7 @@ function idxRange(start, end) {
         if (v > 0) out.active++;
         if (v > 0 && (!out.best || v > out.best.v)) out.best = { k, v };
         if (o) {
-            out.n += o.n; out.minus += o.minus; out.proxy += o.proxy; out.sn += o.sn; out.sv += o.sv;
+            out.n += o.n; out.minus += o.minus; out.proxy += o.proxy;
             o.hours.forEach((x, h) => { out.hours[h] += x; });
             for (const nm in o.execs) out.execs[nm] = (out.execs[nm] || 0) + o.execs[nm];
         }
@@ -2979,7 +2491,7 @@ function renderStudio() {
     const wdS = cur.dowSum.slice(1, 6).reduce((a, b) => a + b, 0), wdC = cur.dowCnt.slice(1, 6).reduce((a, b) => a + b, 0);
     const avg = cur.days ? cur.total / cur.days : 0;
 
-    if (cur.total <= 0 && cur.sn === 0) {
+    if (cur.total <= 0) {
         $("stKpis").innerHTML = "";
         $("stTake").innerHTML = `<li>No ${many} were recorded in this period. Try a wider range.</li>`;
     } else {
@@ -2987,10 +2499,9 @@ function renderStudio() {
             stTile(`Total ${many}`, fmt(cur.total) + (hasPrev ? " " + pchip(tp) : ""), hasPrev ? `previous period ${fmt(prev.total)}` : "no earlier period"),
             stTile("Daily average", r1(avg), `${cur.active} of ${cur.days} days had ${many}`),
             stTile("Best day", cur.best ? fmt(cur.best.v) : "—", cur.best ? fmtLongD(keyDate(cur.best.k)) : ""),
-            stTile("Busiest hour", bh >= 0 ? hourRange(bh) : "—", bh >= 0 ? `${r1(bhv / cur.days)} per day on average` : ""),
+            stTile("Busiest hour", bh >= 0 ? hourRange(bh) : "—", bh >= 0 ? `${r1(bhv / cur.days)} walk-ins per day on average` : "walk-ins only"),
             stTile("Top executive", top ? esc(top.n) : "—", top && cur.total ? `${fmt(top.v)} · ${Math.round((top.v / cur.total) * 100)}% of total` : ""),
             stTile("Weekend share", weC && wdC && (weS + wdS) ? Math.round((weS / (weS + wdS)) * 100) + "%" : "—", weC && wdC ? `Sat–Sun ${r1(weS / weC)}/day · weekdays ${r1(wdS / wdC)}/day` : "needs weekdays and weekends"),
-            stTile("Sales · conversion", `${fmt(cur.sn)} · ${cur.total > 0 ? pctTxt(cur.sn / cur.total) : "—"}`, `${aed(cur.sv)} collected${hasPrev && prev.sv ? " " + pchip(pctCh(cur.sv, prev.sv)) : ""}`),
             stTile("Entries logged", fmt(cur.n), `${cur.minus} correction${cur.minus === 1 ? "" : "s"} · ${cur.proxy} by someone else`)
         ].join("");
         const t = [];
@@ -3002,7 +2513,7 @@ function renderStudio() {
         if (bh >= 0) {
             const s3 = cur.hours.map((v, h) => ({ v, h })).sort((a, b) => b.v - a.v).slice(0, 3).filter(x => x.v > 0);
             const share = Math.round((s3.reduce((a, x) => a + x.v, 0) / Math.max(1, cur.hours.reduce((a, v) => a + Math.max(0, v), 0))) * 100);
-            t.push(`The top ${s3.length} hour${s3.length === 1 ? "" : "s"} (${s3.map(x => pad(x.h) + ":00").join(", ")}) bring in <b>${share}%</b> of all ${many}, so floor cover matters most then.`);
+            t.push(`The top ${s3.length} hour${s3.length === 1 ? "" : "s"} (${s3.map(x => pad(x.h) + ":00").join(", ")}) bring in <b>${share}%</b> of all physical walk-ins, so floor cover matters most then.`);
         }
         if (execRows.length >= 3 && cur.total > 0)
             t.push(`<b>${esc(execRows[0].n)}</b> and <b>${esc(execRows[1].n)}</b> account for ${Math.round(((execRows[0].v + execRows[1].v) / cur.total) * 100)}% of ${many} across ${execRows.filter(r => r.v > 0).length} active executives.`);
@@ -3012,7 +2523,6 @@ function renderStudio() {
             const last = mv[mv.length - 1];
             if (mv.length > 1 && last.d <= -15) t.push(`Largest drop: <b>${esc(last.n)}</b>, down ${Math.abs(last.d)}% on the previous period.`);
         }
-        if (cur.sn > 0) t.push(`${fmt(cur.sn)} sale${cur.sn === 1 ? "" : "s"} worth <b>${aed(cur.sv)}</b> — a ${pctTxt(cur.total > 0 ? cur.sn / cur.total : null)} conversion rate${hasPrev && prev.total > 0 && prev.sn > 0 ? ` (previous period ${pctTxt(prev.sn / prev.total)})` : ""}.`);
         if (cur.days - cur.active > 0 && cur.days >= 7) t.push(`${cur.days - cur.active} day${cur.days - cur.active === 1 ? "" : "s"} in this period had no ${many} recorded.`);
         if (cur.n >= 20 && cur.minus / cur.n >= 0.1) t.push(`${Math.round((cur.minus / cur.n) * 100)}% of entries were corrections (−1 taps) — worth a reminder on logging.`);
         $("stTake").innerHTML = t.map(x => `<li>${x}</li>`).join("") || "<li>Not enough data in this period for takeaways yet.</li>";
@@ -3068,8 +2578,8 @@ function renderCalendar() {
     const now = new Date(), todayK = dkey(now), first = new Date(calY, calM, 1), dim = new Date(calY, calM + 1, 0).getDate(), many = NOUN[catFilter][1];
     $("calTitle").textContent = first.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
     $("calNext").disabled = calY === now.getFullYear() && calM === now.getMonth();
-    let max = 0, total = 0, sv = 0;
-    for (let d = 1; d <= dim; d++) { const k = dkey(new Date(calY, calM, d)), v = dTot(k); max = Math.max(max, v); total += v; sv += (DIDX.days[k] || {}).sv || 0; }
+    let max = 0, total = 0;
+    for (let d = 1; d <= dim; d++) { const k = dkey(new Date(calY, calM, d)), v = dTot(k); max = Math.max(max, v); total += v; }
     const bucket = v => { if (!v || !max) return 0; const r = v / max; return r >= .999 ? 5 : r >= .75 ? 4 : r >= .5 ? 3 : r >= .25 ? 2 : 1; };
     const cells = dayShort.map(d => `<div class="cal-h">${d}</div>`);
     for (let i = 0; i < first.getDay(); i++) cells.push("<div></div>");
@@ -3079,17 +2589,17 @@ function renderCalendar() {
     }
     $("cal").innerHTML = cells.join("");
     const el = $("calDetail");
-    if (!calSel) { el.innerHTML = `<p class="panel-sub">Month total: <b>${fmt(total)}</b> ${many}${sv ? ` · ${aed(sv)} collected` : ""}. Tap a day to see who logged what and when.</p>`; return; }
+    if (!calSel) { el.innerHTML = `<p class="panel-sub">Month total: <b>${fmt(total)}</b> ${many}. Tap a day to see who logged what and when.</p>`; return; }
     const k = calSel, d = keyDate(k), o = DIDX.days[k], v = dTot(k), typ = typicalFor(d), isToday = k === todayK;
     const cmp = isToday ? `<span class="delta flat">in progress</span>` : typ > 0 ? pchip(pctCh(v, typ), `vs a typical ${dayNames[d.getDay()]}`) : "";
-    let html = `<h4>${fmtLongD(d)}</h4><div class="cal-chips"><span class="chip">${cap(many)} <strong>${fmt(v)}</strong></span>${o && o.sn ? `<span class="chip">Sales <strong>${o.sn} · ${aed(o.sv)}</strong></span>` : ""}${cmp}</div>`;
-    if (!o || (v === 0 && !o.sn)) { el.innerHTML = html + `<p class="panel-sub">No ${many} recorded on this day.</p>`; return; }
+    let html = `<h4>${fmtLongD(d)}</h4><div class="cal-chips"><span class="chip">${cap(many)} <strong>${fmt(v)}</strong></span>${cmp}</div>`;
+    if (!o || v === 0) { el.innerHTML = html + `<p class="panel-sub">No ${many} recorded on this day.</p>`; return; }
     const rows = Object.keys(o.execs).map(n => ({ n, v: Math.max(0, o.execs[n]) })).filter(r => r.v > 0).sort((a, b) => b.v - a.v);
     const mx = rows.length ? rows[0].v : 1;
     html += `<div class="st-bars">${rows.map(r => `<button type="button" class="st-bar click" data-detail="${esc(r.n)}"><span class="n">${esc(r.n)}</span><span class="t"><i style="width:${(r.v / mx) * 100}%"></i></span><span class="x">${r.v} <small>${v ? Math.round((r.v / v) * 100) : 0}%</small></span></button>`).join("")}</div>`;
     const ord = stHourOrder(o.hours), hm = Math.max(...ord.map(h => o.hours[h]), 1);
     html += `<div class="cal-hours">${ord.map(h => { const x = Math.max(0, o.hours[h]); return `<i class="${x ? "" : "z"}" style="height:${x ? Math.max(8, (x / hm) * 100) : 4}%" title="${hourRange(h)}: ${x}"></i>`; }).join("")}</div>
-        <div class="cal-hours-x"><span>${pad(ord[0])}:00</span><span>by hour</span><span>${pad(ord[ord.length - 1])}:59</span></div>`;
+        <div class="cal-hours-x"><span>${pad(ord[0])}:00</span><span>walk-ins by hour</span><span>${pad(ord[ord.length - 1])}:59</span></div>`;
     el.innerHTML = html;
 }
 
@@ -3099,7 +2609,7 @@ function renderRecords() {
     const many = NOUN[catFilter][1], keys = Object.keys(DIDX.days).sort();
     if (!DIDX.first) { $("recTiles").innerHTML = `<div class="empty" style="grid-column:1/-1">No history yet</div>`; $("recSub").textContent = ""; return; }
     const today = midnight(new Date());
-    let all = 0, bestDay = null, execBest = null, saleBest = null;
+    let all = 0, bestDay = null, execBest = null;
     const weeks = {}, months = {};
     keys.forEach(k => {
         const v = dTot(k), d = keyDate(k), o = DIDX.days[k];
@@ -3108,7 +2618,6 @@ function renderRecords() {
         const wk = dkey(addDays(d, -d.getDay())); weeks[wk] = (weeks[wk] || 0) + v;
         const mk = k.slice(0, 7); months[mk] = (months[mk] || 0) + v;
         for (const n in o.execs) if (!execBest || o.execs[n] > execBest.v) execBest = { n, v: o.execs[n], k };
-        if (o.sv > 0 && (!saleBest || o.sv > saleBest.v)) saleBest = { k, v: o.sv, n: o.sn };
     });
     const pick = obj => Object.keys(obj).reduce((a, k) => (!a || obj[k] > a.v) ? { k, v: obj[k] } : a, null);
     const bw = pick(weeks), bm = pick(months), firstD = keyDate(DIDX.first), tracked = Math.round((today - firstD) / DAY) + 1;
@@ -3123,7 +2632,6 @@ function renderRecords() {
         stTile("Best week", bw ? fmt(bw.v) : "—", bw ? `${fmtShortD(bwS)} – ${fmtShortD(addDays(bwS, 6))}` : ""),
         stTile("Best month", bm ? fmt(bm.v) : "—", bm ? bmD.toLocaleDateString("en-GB", { month: "long", year: "numeric" }) : ""),
         stTile("Best individual day", execBest && execBest.v > 0 ? fmt(execBest.v) : "—", execBest && execBest.v > 0 ? `${esc(execBest.n)} · ${fmtShortD(keyDate(execBest.k))}` : ""),
-        stTile("Best sales day", saleBest ? aed(saleBest.v) : "—", saleBest ? `${saleBest.n} sale${saleBest.n === 1 ? "" : "s"} · ${fmtShortD(keyDate(saleBest.k))}` : "no sales logged yet"),
         stTile("Current streak", current + (current === 1 ? " day" : " days"), `longest ${longest} day${longest === 1 ? "" : "s"} in a row`),
         stTile("All-time total", fmt(all), `${r1(all / tracked)} per day over ${fmt(tracked)} days`)
     ].join("");
@@ -3187,8 +2695,7 @@ function buildTicker() {
         : `✨ <span class="feed-pill blue">FRESH START</span> Clean slate today. Who's going to log the first walk-in? 🥇`);
     if (A.forecast > 0) add("forecast", `🔮 <span class="feed-pill blue">FORECAST</span> On course for about ${fmt(A.forecast)} walk-ins this month${A.lmTotal > 0 ? ` (last month: ${fmt(A.lmTotal)})` : ""}.`);
     const pd = Math.max(0, A.mix.phone.d), pmo = Math.max(0, A.mix.phone.m);
-    if (pd > 0 || pmo > 0) add("phone", `📞 <span class="feed-pill blue">PHONE LINES</span> ${fmt(pd)} phone call${s(pd)} handled today, ${fmt(pmo)} this month — every ring is a lead! ☎️`, true);
-    if (A.sale && A.sale.m.n > 0) add("sales", `💰 <span class="feed-pill gold">COLLECTIONS</span> ${aed(A.sale.m.v)} collected this month from ${fmt(A.sale.m.n)} sale${s(A.sale.m.n)}${A.conv.m != null ? ` — ${pctTxt(A.conv.m)} conversion` : ""}${A.sale.d.n ? ` · ${aed(A.sale.d.v)} today` : ""}! 🏆`, true);
+    if (pd > 0 || pmo > 0) add("phone", `📞 <span class="feed-pill blue">PHONE INQUIRIES</span> ${fmt(pd)} phone ${pd === 1 ? "inquiry" : "inquiries"} today, ${fmt(pmo)} this month — every one is a potential quotation! 📝`, true);
     const target = +settings.monthlyTarget || 0;
     if (target > 0) {
         const p = Math.round((A.m / target) * 100);
@@ -3391,7 +2898,6 @@ $("adminPanel").addEventListener("click", e => {
     else if (act === "remove-exec") deleteExecutive(name);
     else if (act === "remove-mgr") deleteManager(name);
     else if (act === "del-entry") deleteLogEntry(b.dataset.key);
-    else if (act === "del-sale") deleteSale(b.dataset.key);
 });
 
 // ---------- Target ----------
@@ -3497,7 +3003,7 @@ async function deleteManager(name) {
 }
 
 async function deleteExecutive(name) {
-    if (!confirm(`Remove ${name}?\n\nThey'll no longer be able to log in. Their past walk-ins and calls stay in every report.`)) return;
+    if (!confirm(`Remove ${name}?\n\nThey'll no longer be able to log in. Their past walk-ins and phone inquiries stay in every report.`)) return;
     try {
         const snapshot = await window.dbGet(R("executiveList"));
         const jobs = [];
@@ -3539,75 +3045,57 @@ function exportData() {
     if (!s || !e) return alert("Please select both Start and End dates");
     if (s > e) return alert("The start date is after the end date.");
     if (typeof XLSX === "undefined") return alert("The Excel library didn't load. Check your connection and reload the page.");
-    const inRange = d => d && d.timestamp && (k => k >= s && k <= e)(dkey(new Date(d.timestamp)));
-    const recs = historyData.filter(inRange).sort((a, b) => a.timestamp - b.timestamp);
-    const sRecs = salesData.filter(d => inRange(d) && +d.amount > 0).sort((a, b) => a.timestamp - b.timestamp);
-    if (!recs.length && !sRecs.length) return alert("No records found for the selected range.");
+    const recs = historyData.filter(d => d && d.timestamp && (k => k >= s && k <= e)(dkey(new Date(d.timestamp)))).sort((a, b) => a.timestamp - b.timestamp);
+    if (!recs.length) return alert("No records found for the selected range.");
 
-    const TL = { walkin: "Walk-in", phone: "Phone inquiry" }, SL = { walkin: "Walk-in", phone: "Phone" };
-    const blank = () => ({ walkin: 0, phone: 0, sn: 0, sv: 0 });
-    const money = v => Math.round(v * 100) / 100;
+    const TL = { walkin: "Walk-in", phone: "Phone inquiry" };
+    const blank = () => ({ walkin: 0, phone: 0 });
     const rows = [["Executive", "Type", "Count", "Date", "Time", "Weekday", "Submitted By"]];
-    const salesRows = [["Date", "Time", "Weekday", "Executive", "Customer came by", "Carts", "Sale total (AED)", "Cart / QT numbers", "Logged by", "Edited by", "Original amount (AED)"]];
-    const invoiceRows = [["Date", "Time", "Executive", "Customer came by", "Sale #", "Cart # in sale", "Amount (AED)", "Type", "Cart / QT no."]];
     const daily = {}, totals = {}, dayTotals = {}, hourly = Array.from({ length: 24 }, blank), dow = Array.from({ length: 7 }, blank), dowDays = Array.from({ length: 7 }, () => new Set());
-    const bySrc = { walkin: { n: 0, v: 0 }, phone: { n: 0, v: 0 } };
     let corrections = 0;
-    const slot = (k, x) => { daily[k] = daily[k] || {}; daily[k][x] = daily[k][x] || blank(); totals[x] = totals[x] || blank(); dayTotals[k] = dayTotals[k] || blank(); };
     recs.forEach(d => {
         const dt = new Date(d.timestamp), k = dkey(dt), c = +d.count || 0, ty = entryType(d), x = d.executive || "—";
         if (c < 0) corrections++;
         rows.push([x, TL[ty], c, dt.toLocaleDateString("en-GB"), dt.toLocaleTimeString("en-GB", { hour12: false }), dayNames[dt.getDay()], d.submittedBy || ""]);
-        slot(k, x); daily[k][x][ty] += c; totals[x][ty] += c; dayTotals[k][ty] += c;
+        daily[k] = daily[k] || {}; daily[k][x] = daily[k][x] || blank(); daily[k][x][ty] += c;
+        totals[x] = totals[x] || blank(); totals[x][ty] += c;
+        dayTotals[k] = dayTotals[k] || blank(); dayTotals[k][ty] += c;
         hourly[dt.getHours()][ty] += c; dow[dt.getDay()][ty] += c; dowDays[dt.getDay()].add(k);
     });
-    sRecs.forEach(d => {
-        const dt = new Date(d.timestamp), k = dkey(dt), v = +d.amount, x = d.executive || "—", src = saleSrc(d);
-        const invs = saleInvoices(d), saleNo = salesRows.length;
-        salesRows.push([dt.toLocaleDateString("en-GB"), dt.toLocaleTimeString("en-GB", { hour12: false }), dayNames[dt.getDay()], x, SL[src], invs.length, money(v), saleRefs(d), d.submittedBy || "", d.editedBy || "", d.originalAmount != null ? money(+d.originalAmount) : ""]);
-        invs.forEach((iv, n) => invoiceRows.push([dt.toLocaleDateString("en-GB"), dt.toLocaleTimeString("en-GB", { hour12: false }), x, SL[src], saleNo, n + 1, money(iv.amount), REF_KIND[iv.kind] || "", iv.ref || ""]));
-        slot(k, x);
-        [daily[k][x], totals[x], dayTotals[k], hourly[dt.getHours()], dow[dt.getDay()]].forEach(o => { o.sn++; o.sv += v; });
-        bySrc[src].n++; bySrc[src].v += v;
-    });
     const pos = v => Math.max(0, v), sum = o => pos(o.walkin) + pos(o.phone);
-    const conv = o => sum(o) ? r1((o.sn / sum(o)) * 100) : "";
     const gb = k => k.split("-").reverse().join("/");
     const gw = Object.values(totals).reduce((t, o) => t + pos(o.walkin), 0), gp = Object.values(totals).reduce((t, o) => t + pos(o.phone), 0), grand = gw + gp;
-    const gn = sRecs.length, gv = sRecs.reduce((t, d) => t + +d.amount, 0), gInv = sRecs.reduce((t, d) => t + saleInvoices(d).length, 0);
     const nDays = Object.keys(dayTotals).length || 1;
     const pct = v => grand ? r1((v / grand) * 100) : 0;
 
     let bestDay = null;
     Object.keys(dayTotals).forEach(k => { if (!bestDay || sum(dayTotals[k]) > sum(dayTotals[bestDay])) bestDay = k; });
     const summary = [
-        ["Fujairah Showroom — Inquiry & Sales Report"], [],
+        ["Fujairah Showroom — Inquiry Report"], [],
         ["From", gb(s)], ["To", gb(e)], ["Generated", new Date().toLocaleString("en-GB")], [],
-        ["Channel", "Inquiries", "Share %", "Sales", "Conversion %", "Collections (AED)"],
-        ["Walk-ins", gw, pct(gw), bySrc.walkin.n, gw ? r1((bySrc.walkin.n / gw) * 100) : "", money(bySrc.walkin.v)],
-        ["Phone", gp, pct(gp), bySrc.phone.n, gp ? r1((bySrc.phone.n / gp) * 100) : "", money(bySrc.phone.v)],
-        ["Total", grand, grand ? 100 : 0, gn, grand ? r1((gn / grand) * 100) : "", money(gv)], [],
-        ["Average sale per customer (AED)", gn ? money(gv / gn) : 0], ["Carts / QTs", gInv], ["Average cart (AED)", gInv ? money(gv / gInv) : 0],
-        ["Days with activity", nDays], ["Average inquiries per active day", r1(grand / nDays)],
+        ["Channel", "Inquiries", "Share %"],
+        ["Walk-ins", gw, pct(gw)], ["Phone inquiries", gp, pct(gp)], ["Total", grand, grand ? 100 : 0], [],
+        ["Days with activity", nDays], ["Average per active day", r1(grand / nDays)],
         ["Busiest day", bestDay ? `${gb(bestDay)} (${sum(dayTotals[bestDay])})` : "—"],
         ["Corrections (−1 entries) in range", corrections]
     ];
 
-    const dailyRows = [["Date", "Weekday", "Executive", "Walk-ins", "Phone inquiries", "Total", "Sales", "Conversion %", "Collections (AED)"]];
+    const dailyRows = [["Date", "Weekday", "Executive", "Walk-ins", "Phone inquiries", "Total"]];
     Object.keys(daily).sort().forEach(k => {
         const wd = dayNames[new Date(k + "T12:00:00").getDay()];
-        Object.keys(daily[k]).sort((a, b) => a.localeCompare(b)).forEach(x => { const o = daily[k][x]; dailyRows.push([gb(k), wd, x, pos(o.walkin), pos(o.phone), sum(o), o.sn, conv(o), money(o.sv)]); });
-        const t = dayTotals[k]; dailyRows.push([gb(k), wd, "— DAY TOTAL —", pos(t.walkin), pos(t.phone), sum(t), t.sn, conv(t), money(t.sv)]);
+        Object.keys(daily[k]).sort((a, b) => a.localeCompare(b)).forEach(x => { const o = daily[k][x]; dailyRows.push([gb(k), wd, x, pos(o.walkin), pos(o.phone), sum(o)]); });
+        const t = dayTotals[k]; dailyRows.push([gb(k), wd, "— DAY TOTAL —", pos(t.walkin), pos(t.phone), sum(t)]);
     });
-    const execRows = [["Executive", "Walk-ins", "Phone inquiries", "Total", "Share %", "Avg per day in range", "Sales", "Conversion %", "Collections (AED)", "Average sale (AED)"]];
-    Object.keys(totals).sort((a, b) => (totals[b].sv - totals[a].sv) || (sum(totals[b]) - sum(totals[a]))).forEach(x => {
-        const o = totals[x], v = sum(o); execRows.push([x, pos(o.walkin), pos(o.phone), v, pct(v), r1(v / nDays), o.sn, conv(o), money(o.sv), o.sn ? money(o.sv / o.sn) : 0]);
+    const execRows = [["Executive", "Walk-ins", "Phone inquiries", "Total", "Share %", "Avg per day in range"]];
+    Object.keys(totals).sort((a, b) => sum(totals[b]) - sum(totals[a])).forEach(x => {
+        const o = totals[x], v = sum(o); execRows.push([x, pos(o.walkin), pos(o.phone), v, pct(v), r1(v / nDays)]);
     });
-    execRows.push(["TOTAL", gw, gp, grand, grand ? 100 : 0, r1(grand / nDays), gn, grand ? r1((gn / grand) * 100) : "", money(gv), gn ? money(gv / gn) : 0]);
-    const hourRows = [["Hour", "Walk-ins", "Phone inquiries", "Total", "Share %", "Sales", "Collections (AED)"]];
-    hourly.forEach((o, h) => { const v = sum(o); if (v > 0 || o.sn) hourRows.push([hourRange(h), pos(o.walkin), pos(o.phone), v, pct(v), o.sn, money(o.sv)]); });
-    const dowRows = [["Weekday", "Walk-ins", "Phone inquiries", "Total", "Days in range", "Avg per day", "Sales", "Conversion %", "Collections (AED)"]];
-    dow.forEach((o, i) => { const v = sum(o), n = dowDays[i].size; dowRows.push([dayNames[i], pos(o.walkin), pos(o.phone), v, n, n ? r1(v / n) : 0, o.sn, conv(o), money(o.sv)]); });
+    execRows.push(["TOTAL", gw, gp, grand, grand ? 100 : 0, r1(grand / nDays)]);
+    // Hour of day is about the showroom floor, so it counts physical walk-ins only.
+    const hourRows = [["Hour", "Walk-ins", "Share of walk-ins %"]];
+    hourly.forEach((o, h) => { const v = pos(o.walkin); if (v > 0) hourRows.push([hourRange(h), v, gw ? r1((v / gw) * 100) : 0]); });
+    const dowRows = [["Weekday", "Walk-ins", "Phone inquiries", "Total", "Days in range", "Avg per day"]];
+    dow.forEach((o, i) => { const v = sum(o), n = dowDays[i].size; dowRows.push([dayNames[i], pos(o.walkin), pos(o.phone), v, n, n ? r1(v / n) : 0]); });
 
     const sheet = data => {
         const ws = XLSX.utils.aoa_to_sheet(data), cols = Math.max(...data.map(r => r.length));
@@ -3615,7 +3103,7 @@ function exportData() {
         return ws;
     };
     const wb = XLSX.utils.book_new();
-    [["Summary", summary], ["All Entries", rows], ["Sales", salesRows], ["Carts", invoiceRows], ["Daily Totals", dailyRows], ["Executive Totals", execRows], ["Hourly Breakdown", hourRows], ["Weekday Summary", dowRows]]
+    [["Summary", summary], ["All Entries", rows], ["Daily Totals", dailyRows], ["Executive Totals", execRows], ["Hourly (walk-ins)", hourRows], ["Weekday Summary", dowRows]]
         .forEach(([name, data]) => XLSX.utils.book_append_sheet(wb, sheet(data), name));
     XLSX.writeFile(wb, `Fujairah_Report_${s}_to_${e}.xlsx`);
     toast("📊 Report downloaded");
@@ -3635,7 +3123,7 @@ function exportData() {
 // Default the export range to this month.
 (document.querySelector('#exportPresets [data-preset="month"]') || { click() {} }).click();
 
-document.addEventListener("keydown", e => { if (e.key === "Escape") { closeDetail(); closeChangePin(); closeAdmin(); if (!$("saleModal").classList.contains("hidden")) closeSale(); } });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeDetail(); closeChangePin(); closeAdmin(); } });
 </script>
 </body>
 </html>
