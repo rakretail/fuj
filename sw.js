@@ -1,7 +1,3 @@
-/* RAK Walk-in Tracker · service worker (v3)
-   - Network-first for pages, so a new upload is picked up straight away; the cached copy is only used offline.
-   - Opens / focuses the app when someone taps a notification (head-office messages, inactivity alerts).
-   Put this file next to the showroom pages and retail.html (same folder as today's sw.js). */
 const CACHE = "rak-walkin-v3";
 
 self.addEventListener("install", () => self.skipWaiting());
@@ -47,7 +43,7 @@ self.addEventListener("notificationclick", e => {
 self.addEventListener("push", e => {
     let d = {};
     try { d = e.data ? e.data.json() : {}; } catch (x) { d = { body: e.data && e.data.text() }; }
-    e.waitUntil(self.registration.showNotification(d.title || "Message from head office", {
+    e.waitUntil(self.registration.showNotification(d.title || "New message", {
         body: d.body || "", icon: d.icon || "rakwalkin.png", badge: "rakwalkin.png", tag: d.tag || "push", renotify: true,
         requireInteraction: !!d.urgent, data: { url: d.url || self.registration.scope }
     }));
