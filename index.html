@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="2026.10.17-4">
+<meta name="app-version" content="3.0">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Fujairah Showroom · Tracker</title>
 <link rel="manifest" href="manifest.json">
@@ -665,6 +665,167 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
 }
 @media (max-width:360px){.executives{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}#smart-insight{animation-duration:240s!important}}
+
+/* ================================================================
+   v3 — visual refresh + new components
+   ================================================================ */
+:root{
+    --bg:#edf3f3; --r:20px; --brand-red:#c8102e;
+    --line:rgba(0,80,80,.09);
+    --shadow:0 1px 2px rgba(0,50,50,.05),0 10px 28px -10px rgba(0,60,60,.16);
+    --shadow-lg:0 2px 6px rgba(0,50,50,.07),0 22px 48px -14px rgba(0,60,60,.24);
+}
+body.dark{--bg:#061012;--line:rgba(255,255,255,.075)}
+body{background:
+    linear-gradient(rgba(0,102,102,.025) 1px,transparent 1px) 0 0/48px 48px,
+    linear-gradient(90deg,rgba(0,102,102,.025) 1px,transparent 1px) 0 0/48px 48px,
+    radial-gradient(1100px 520px at -5% -10%,rgba(0,168,143,.13),transparent 60%),
+    radial-gradient(900px 480px at 105% -5%,rgba(99,102,241,.10),transparent 60%),var(--bg);background-attachment:fixed}
+body.dark{background:
+    radial-gradient(1100px 520px at -5% -10%,rgba(0,168,143,.12),transparent 60%),
+    radial-gradient(900px 480px at 105% -5%,rgba(99,102,241,.10),transparent 60%),var(--bg);background-attachment:fixed}
+.topbar{background:rgba(237,243,243,.84)}
+.brand-txt b{background:linear-gradient(90deg,var(--text),var(--primary));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero{border-radius:26px;background:linear-gradient(120deg,#022f31 0%,#005f60 38%,#008577 72%,#00a88f 100%);background-size:200% 200%}
+.panel,.kpi,.card,.me-panel{border-radius:var(--r)}
+.panel{background:linear-gradient(180deg,var(--card) 0%,color-mix(in srgb,var(--card) 97%,var(--primary)) 100%)}
+.panel.peak{background:linear-gradient(135deg,#022f31,#006666 45%,#00897b)}
+.panel-title .ic{border-radius:12px}
+.kpi{transition:transform .2s,box-shadow .2s}
+.kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.kpi .kpi-ic{background:color-mix(in srgb,var(--kc) 14%,transparent)}
+.kpi::before{top:0;bottom:auto;left:18px;right:18px;width:auto;height:3px;border-radius:0 0 4px 4px}
+.section-label{color:var(--text);letter-spacing:1.6px;margin:30px 4px 14px}
+.section-label>span:first-child{display:inline-flex;align-items:center;gap:9px}
+.section-label>span:first-child::before{content:'';width:9px;height:9px;border-radius:2px;background:var(--brand-red)}
+.btn-tool{position:relative;border-radius:12px}
+.card{border-top:1px solid var(--line)}
+.ins{background:color-mix(in srgb,var(--tone,var(--muted)) 6%,var(--soft))}
+footer{opacity:.85}
+
+/* ---------- bell + notification panel ---------- */
+.btn-tool .bdg{position:absolute;top:-6px;right:-6px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:var(--brand-red);color:#fff;
+    font-size:.6rem;font-weight:800;display:grid;place-items:center;border:2px solid var(--bg);line-height:1;font-family:inherit}
+.btn-tool.ring{animation:ring .9s ease-in-out 2}
+@keyframes ring{0%,100%{transform:rotate(0)}15%{transform:rotate(16deg)}30%{transform:rotate(-14deg)}45%{transform:rotate(10deg)}60%{transform:rotate(-6deg)}75%{transform:rotate(3deg)}}
+.np-scrim{position:fixed;inset:0;z-index:940;background:transparent;display:none}
+.np-scrim.on{display:block}
+.np{position:fixed;top:66px;right:max(12px,calc((100vw - 1400px)/2 + 16px));z-index:950;width:min(410px,calc(100vw - 24px));max-height:min(74vh,620px);
+    display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 24px 60px -12px rgba(0,30,30,.35);overflow:hidden;animation:pop .2s ease-out}
+.np-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.np-head b{font-size:1rem;font-weight:800}
+.np-head small{display:block;font-size:.68rem;color:var(--muted);font-weight:600}
+.np-perm{margin:12px 14px 0;padding:12px 14px;border-radius:14px;background:var(--soft);font-size:.78rem;line-height:1.45;color:var(--muted);display:flex;gap:10px;align-items:flex-start}
+.np-perm b{color:var(--text)}
+.np-perm .btn{margin-top:8px}
+.np-perm.ok{background:rgba(10,159,106,.1);color:var(--up);align-items:center}
+.np-perm.warn{background:rgba(245,158,11,.12);color:#8a5200}
+body.dark .np-perm.warn{color:#fbbf24}
+.np-list{overflow-y:auto;padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;overscroll-behavior:contain}
+.np-item{all:unset;box-sizing:border-box;display:grid;grid-template-columns:38px minmax(0,1fr);gap:11px;padding:11px 12px;border-radius:14px;background:var(--soft);cursor:pointer;position:relative;border:1.5px solid transparent;transition:border-color .15s}
+.np-item:hover{border-color:var(--line)}
+.np-item.unread{background:var(--card);border-color:color-mix(in srgb,var(--brand-red) 35%,transparent);box-shadow:0 6px 16px -10px rgba(200,16,46,.5)}
+.np-item.unread::after{content:'';position:absolute;top:13px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--brand-red)}
+.np-item.idle{background:rgba(224,66,90,.08);border-color:rgba(224,66,90,.25);cursor:default}
+.np-av{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.8rem;background:linear-gradient(135deg,#006666,#00a88f)}
+.np-item.urgent .np-av,.np-item.idle .np-av{background:linear-gradient(135deg,#a50d26,#ee3a4a)}
+.np-from{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding-right:14px}
+.np-from b{font-size:.84rem;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.np-from small{font-size:.66rem;color:var(--muted);font-weight:600;white-space:nowrap}
+.np-text{margin:3px 0 0;font-size:.8rem;line-height:1.45;color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere}
+.np-meta{margin-top:5px;font-size:.64rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.np-meta .live{color:var(--up)} .np-meta .new{color:var(--brand-red)}
+@media (max-width:720px){.np{top:58px;right:12px}}
+
+/* ---------- inactivity watch (managers) ---------- */
+.watch .panel-head{margin-bottom:10px}
+.watch.calm{padding-top:14px;padding-bottom:14px}
+.watch.calm .panel-head{margin:0}
+.watch.alert{border-color:rgba(224,66,90,.35);box-shadow:0 0 0 3px rgba(224,66,90,.08),var(--shadow)}
+.watch.alert .panel-title .ic{background:linear-gradient(135deg,#c8102e,#ff5a5f);box-shadow:0 6px 14px -6px #c8102e}
+.iw-chips{display:flex;flex-wrap:wrap;gap:6px}
+.iw-chip{font-size:.66rem;font-weight:800;letter-spacing:.4px;padding:4px 10px;border-radius:999px;background:var(--soft);color:var(--muted);white-space:nowrap}
+.iw-chip.ok{background:rgba(10,159,106,.12);color:var(--up)}
+.iw-chip.bad{background:rgba(224,66,90,.12);color:var(--down)}
+.iw-chip.near{background:rgba(245,158,11,.14);color:#9a5b00}
+body.dark .iw-chip.near{color:#fbbf24}
+.iw-all{margin:0 0 10px;padding:10px 12px;border-radius:12px;background:linear-gradient(90deg,#9e0b23,#d4142f);color:#fff;font-weight:700;font-size:.82rem}
+.iw-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.iw-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 10px;align-items:center;padding:10px 12px;border-radius:14px;background:var(--soft);border-left:3px solid var(--down)}
+.iw-row.near{border-left-color:var(--amber)}
+.iw-row .avatar{width:34px;height:34px;border-radius:11px;font-size:.72rem;grid-row:1/3}
+.iw-row b{font-size:.86rem;line-height:1.2;overflow-wrap:anywhere}
+.iw-row small{grid-column:2/4;font-size:.68rem;color:var(--muted);font-weight:600;line-height:1.35}
+.iw-pill{font-size:.56rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:rgba(224,66,90,.14);color:var(--down);white-space:nowrap}
+.iw-row.near .iw-pill{background:rgba(245,158,11,.16);color:#9a5b00}
+body.dark .iw-row.near .iw-pill{color:#fbbf24}
+.iw-bar{grid-column:2/4;height:5px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:2px}
+.iw-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--amber),var(--down))}
+.iw-ok{font-size:.8rem;color:var(--muted);font-weight:600}
+.iw-skip{margin:10px 2px 0;font-size:.72rem;color:var(--muted);font-weight:600}
+.iw-skip b{color:var(--text)}
+
+/* ---------- executive's own view: card + insights side by side ---------- */
+.team-wrap{margin-bottom:8px}
+.team-wrap.solo{display:grid;grid-template-columns:minmax(300px,440px) minmax(0,1fr);gap:16px;align-items:stretch}
+.team-wrap.solo .executives.solo{grid-template-columns:minmax(0,1fr);margin:0}
+.team-wrap.solo .executives.solo .card{height:100%;justify-content:space-between}
+.team-wrap.solo .executives.solo .card-mid{flex:1;align-items:center;flex-direction:column;justify-content:center;gap:14px;padding:6px 0;
+    background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--cat) 9%,transparent),transparent 70%)}
+.team-wrap.solo .executives.solo .card-mid>div{text-align:center}
+.team-wrap.solo .executives.solo .today-num{font-size:4rem}
+.team-wrap.solo .executives.solo .spark{width:min(100%,260px);height:64px}
+@media (max-width:900px){.team-wrap.solo .executives.solo .card-mid{flex-direction:row;justify-content:space-between;align-items:flex-end;background:none;padding:0}
+    .team-wrap.solo .executives.solo .card-mid>div{text-align:left}.team-wrap.solo .executives.solo .today-num{font-size:2.6rem}
+    .team-wrap.solo .executives.solo .spark{width:150px;height:40px}}
+.me-panel{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:18px 20px;display:flex;flex-direction:column;gap:14px;min-width:0;position:relative;overflow:hidden}
+.me-panel::before{content:'';position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--cat) 16%,transparent),transparent 70%);pointer-events:none}
+.me-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;position:relative}
+.me-head small{display:block;font-size:.62rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted)}
+.me-head h3{margin:2px 0 0;font-size:1.15rem;font-weight:800;letter-spacing:-.3px}
+.me-rank{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;background:linear-gradient(135deg,#ffd86b,#f7971e);color:#4a2900;font-weight:800;font-size:.78rem;box-shadow:0 8px 18px -10px #f7971e;white-space:nowrap}
+.me-rank.none{background:var(--soft);color:var(--muted);box-shadow:none}
+.me-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;position:relative}
+.me-tile{background:var(--soft);border-radius:14px;padding:11px 13px;min-width:0}
+.me-tile>span{display:block;font-size:.58rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.me-tile>b{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:1.4rem;font-weight:800;letter-spacing:-.5px;margin:2px 0 1px;font-variant-numeric:tabular-nums;color:var(--text)}
+.me-tile>b .delta{font-size:.6rem;letter-spacing:0}
+.me-tile>small{display:block;font-size:.66rem;color:var(--muted);font-weight:600;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.me-row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:12px}
+.me-chart{background:var(--soft);border-radius:14px;padding:12px 13px;min-width:0}
+.me-chart h4,.me-notes h4{margin:0 0 8px;font-size:.68rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.me-chart h4 em{font-style:normal;color:var(--cat);letter-spacing:.2px;text-transform:none}
+.me-bars{display:flex;align-items:flex-end;gap:4px;height:92px}
+.me-bars i{flex:1;border-radius:5px 5px 2px 2px;background:color-mix(in srgb,var(--cat) 50%,transparent);min-height:3px}
+.me-bars i.t{background:linear-gradient(180deg,var(--amber),var(--cat))}
+.me-bars i.z{background:var(--line)}
+.me-x{display:flex;justify-content:space-between;gap:8px;font-size:.62rem;color:var(--muted);font-weight:700;margin-top:6px}
+.me-mix{margin-top:10px}
+.me-notes{display:flex;flex-direction:column;gap:7px;min-width:0}
+.me-note{display:flex;gap:9px;align-items:flex-start;font-size:.78rem;line-height:1.42;padding:9px 11px;border-radius:12px;background:var(--soft);font-weight:500}
+.me-note>i{font-style:normal;font-size:.95rem;line-height:1.2}
+.me-note b{color:var(--cat)}
+.me-goal{position:relative;height:8px;border-radius:999px;background:var(--soft);overflow:hidden}
+.me-goal i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--cat),var(--amber))}
+@media (max-width:1100px){.me-row{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:900px){.team-wrap.solo{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.me-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.me-panel{padding:14px}}
+
+/* ---------- install-app banner ---------- */
+#installBar{position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translate(-50%,160%);z-index:7000;width:min(580px,calc(100vw - 20px));
+    display:flex;align-items:center;gap:12px;padding:12px 12px 12px 14px;border-radius:20px;color:#fff;
+    background:linear-gradient(120deg,#022f31,#006666 60%,#00897b);box-shadow:0 22px 50px -12px rgba(0,30,30,.6);border:1px solid rgba(255,255,255,.14);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+#installBar.show{transform:translate(-50%,0)}
+#installBar .ib-ic{width:46px;height:46px;border-radius:13px;flex:none;object-fit:cover;background:rgba(255,255,255,.15);box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+#installBar .ib-txt{flex:1;min-width:0;line-height:1.3}
+#installBar .ib-txt b{display:block;font-size:.92rem;font-weight:800}
+#installBar .ib-txt small{display:block;font-size:.72rem;opacity:.85;font-weight:500}
+#installBar .ib-txt .sh{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:5px;background:rgba(255,255,255,.18);vertical-align:-5px;margin:0 2px}
+#installBar .ib-go{border:none;border-radius:12px;padding:10px 16px;background:#fff;color:#006666;font-weight:800;font-size:.8rem;cursor:pointer;white-space:nowrap;font-family:inherit}
+#installBar .ib-x{border:none;background:rgba(255,255,255,.14);color:#fff;width:32px;height:32px;border-radius:10px;cursor:pointer;font-size:1rem;flex:none;font-family:inherit}
+body.has-ib #toast{bottom:104px}
+@media (max-width:480px){#installBar{flex-wrap:wrap;align-items:flex-start}#installBar .ib-txt{flex:1 1 0}#installBar .ib-go{order:5;flex:1 1 100%;padding:11px}}
+@media print{#installBar,.np{display:none!important}}
 </style>
 </head>
 <body>
@@ -746,6 +907,7 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
         <div class="top-right">
             <span class="pill" id="connPill" title="Connection"><i></i><span>Connecting…</span></span>
             <span class="pill user" id="currentUserChip" hidden><i></i><span id="currentUserName">—</span></span>
+            <button class="btn-tool" id="bellBtn" type="button" title="Notifications" aria-label="Notifications" onclick="toggleNotif()">🔔<span class="bdg" id="bellBadge" hidden>0</span></button>
             <button class="btn-tool" title="Full screen" onclick="toggleFullScreen()">⛶</button>
             <button class="btn-tool" title="Dark mode" onclick="toggleDark()">🌓</button>
             <button class="btn-tool" title="Admin" onclick="openAdmin()">⚙️</button>
@@ -802,9 +964,15 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
     <!-- Monthly target -->
     <div class="panel" id="goalCard" hidden></div>
 
+    <!-- Inactivity watch (managers only) -->
+    <div class="panel watch" id="idleWatch" hidden></div>
+
     <!-- Executive cards -->
     <div class="section-label" id="secTeam" data-sec><span id="teamLabel">Team</span><em id="teamNote">Tap + to log a walk-in or a phone inquiry · numbers are this month</em></div>
-    <div class="executives" id="grid"></div>
+    <div class="team-wrap" id="teamWrap">
+        <div class="executives" id="grid"></div>
+        <aside class="me-panel" id="mePanel" hidden aria-label="Your insights"></aside>
+    </div>
 
     <div class="section-label" id="secAnalysis" data-sec><span>Analysis</span></div>
 
@@ -995,10 +1163,19 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
                 </form>
                 <div class="adm-list" id="managerList"></div>
             </div>
+            <div class="adm-card">
+                <div class="adm-card-head"><b>Inactivity alert</b><span class="adm-badge ok" id="idleBadge">7 h</span></div>
+                <form class="adm-add" onsubmit="saveIdleHours();return false;">
+                    <select class="field" id="idleHoursSel" aria-label="Alert after"><option value="3">3 hours</option><option value="4">4 hours</option><option value="5">5 hours</option><option value="6">6 hours</option><option value="7">7 hours</option><option value="8">8 hours</option><option value="9">9 hours</option><option value="10">10 hours</option><option value="0">Off</option></select>
+                    <button class="btn" type="submit">Save</button>
+                </form>
+                <div class="adm-help" style="margin:0">Managers and head office are alerted when an <b>on-duty</b> executive logs nothing for this many opening hours (08:00–23:00). Executives switched <b>off duty</b> are skipped, and their clock restarts when they come back on duty.</div>
+            </div>
             <div class="adm-help"><b>How it works</b>
                 <ul>
                     <li>New people log in with PIN <b>1234</b> and are asked to choose their own straight away.</li>
                     <li>The switch sets an executive <b>on or off duty</b>. Off-duty cards can't log entries.</li>
+                    <li>Off-duty executives are left out of inactivity alerts and reports.</li>
                     <li><b>🔑</b> resets a forgotten PIN back to 1234. <b>🗑</b> removes someone — their past entries stay in every report.</li>
                 </ul>
             </div>
@@ -1043,11 +1220,19 @@ body.dark #toast button{background:rgba(0,0,0,.08);color:#0f2727;border-color:rg
                 <button class="btn wide" type="button" onclick="checkForUpdate(true)">Check for updates now</button>
             </div>
             <div class="adm-help"><b>Check for updates</b>
-              
+                
             </div>
         </section>
     </div>
 </aside>
+
+<div id="npScrim" class="np-scrim" onclick="toggleNotif(false)"></div>
+<section id="notifPanel" class="np" aria-label="Notifications" hidden>
+    <div class="np-head"><div><b>Notifications</b><small>Head-office messages &amp; alerts</small></div><button class="btn-tool" type="button" onclick="toggleNotif(false)" aria-label="Close">✕</button></div>
+    <div id="npPerm"></div>
+    <div class="np-list" id="npList"></div>
+</section>
+<div id="installBar" hidden role="dialog" aria-label="Install the app"></div>
 
 <div id="toast" role="status" aria-live="polite"></div>
 
@@ -1406,6 +1591,7 @@ function unlockApp() {
     if (!window.__appBooted) { window.__appBooted = true; initAppLogic(); }
     else renderAll();
     if (getCurrentPin() === DEFAULT_PIN) setTimeout(openChangePin, 700);   // nudge off the shared default PIN
+    else setTimeout(nudgeAlerts, 2500);
 }
 
 function logout() {
@@ -1517,6 +1703,7 @@ function initAppLogic() {
 
     // Keeps "vs same time yesterday", pace and forecast honest, and rolls over at midnight.
     setInterval(renderAll, 5 * 60 * 1000);
+    setInterval(() => { renderIdleWatch(); checkIdleAlerts(); updateBell(); }, 60000);   // inactivity clock
     setInterval(() => { if (isManager()) renderActivityLog(); }, 30000);
 }
 
@@ -1677,11 +1864,12 @@ function renderAll() {
     document.body.classList.toggle("is-loading", !(dataReady.execs && dataReady.walkins));
     document.body.dataset.cat = catFilter;
     recompute();
-    renderCatBar(); renderHero(); renderKpis(); renderGoal(); renderGrid();
+    renderCatBar(); renderHero(); renderKpis(); renderGoal(); renderGrid(); renderMePanel();
     renderPeakCard(); renderChannel(); renderMonthlyLeaderboard();
     renderInsights(); renderShare(); renderChart(); renderCompareChart(); renderScorecard();
     if (FEATURES.studio || FEATURES.calendar || FEATURES.records) { DIDX = buildDayIndex(); renderStudio(); renderCalendar(); renderRecords(); }
     renderShiftHeatmap(); renderActivityLog(); updateTicker();
+    renderIdleWatch(); checkIdleAlerts(); updateBell();
     if ($("adminPanel").classList.contains("active")) renderAdmin();
 }
 
@@ -2853,6 +3041,8 @@ function onBroadcasts(v) {
         .filter(b => b && typeof b.text === "string" && b.text.trim());
     renderHqTicker();
     queueBroadcasts();
+    notifyBroadcasts();
+    updateBell();
 }
 function queueBroadcasts() {
     const seen = bcSeenSet();
@@ -2890,6 +3080,7 @@ function ackBroadcast() {
     try { window.dbSet(R(`broadcasts/${id}/seen/${who}`), Date.now()).catch(() => {}); } catch (e) {}
     bcQueue = bcQueue.filter(b => b.id !== id); bcShown = null;
     showNextBroadcast();
+    updateBell();
 }
 // Head-office line: a red "Urgent" bar directly under the Live Feed. It appears the moment a message
 // arrives (with a short flash), scrolls in from the right with a flashing URGENT label, and disappears when it expires.
@@ -2987,6 +3178,7 @@ function renderAdmin() {
     if (document.activeElement !== $("targetInput")) $("targetInput").value = settings.monthlyTarget || "";
     $("execCount").textContent = executives.length;
     $("mgrCount").textContent = managers.length;
+    renderIdleAdmin();
 
     $("unifiedExecList").innerHTML = executives.map(name => {
         const n = esc(name), locked = !!lockedUsers[name], st = snap && snap.exec[name] ? snap.exec[name] : null;
@@ -3086,6 +3278,7 @@ async function addExecutive() {
         await window.dbSet(R("executives/" + name + "/pin"), DEFAULT_PIN);
         await window.dbSet(R("validPins/" + DEFAULT_PIN), true);
         input.value = "";
+        Promise.resolve(window.dbSet(R("settings/dutyTs/" + keyOf(name)), Date.now())).catch(() => {});
         toast(`✅ ${name} added — first login PIN is 1234`, 3500);
     } catch (e) { alert("Couldn't add that person. Check the connection and try again."); }
 }
@@ -3148,7 +3341,8 @@ function toggleLock(name) {
     if (!isManager()) return;
     const next = !lockedUsers[name];
     Promise.resolve(window.dbSet(R("locks/" + name), next))
-        .then(() => toast(next ? `${name} set off duty` : `${name} is back on duty`))
+        .then(() => { toast(next ? `${name} set off duty` : `${name} is back on duty`);
+            Promise.resolve(window.dbSet(R("settings/dutyTs/" + keyOf(name)), Date.now())).catch(() => {}); })
         .catch(() => alert("Couldn't change duty status. Please try again."));
 }
 
@@ -3249,7 +3443,332 @@ function exportData() {
 // Default the export range to this month.
 (document.querySelector('#exportPresets [data-preset="month"]') || { click() {} }).click();
 
-document.addEventListener("keydown", e => { if (e.key === "Escape") { closeDetail(); closeChangePin(); closeAdmin(); } });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeDetail(); closeChangePin(); closeAdmin(); toggleNotif(false); } });
+
+// ================================================================
+//  v3 · ALERTS — head-office messages arrive as system notifications
+//  (like an email alert), the 🔔 inbox keeps them, and the app icon /
+//  tab title show how many are unread.
+// ================================================================
+const STORE_NAME = ((document.querySelector(".brand-txt b") || {}).textContent || "Showroom").trim();
+const BASE_TITLE = document.title;
+const NOTIF_ICON = "rakwalkin.png";
+const notifSupported = () => "Notification" in window;
+const notifOK = () => notifSupported() && Notification.permission === "granted";
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const isStandalone = () => { try { return matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches || navigator.standalone === true; } catch (e) { return false; } };
+
+async function sysNotify(title, body, tag, opts) {
+    opts = opts || {};
+    if (!notifOK()) return false;
+    const o = { body: String(body || "").slice(0, 300), tag, icon: NOTIF_ICON, badge: NOTIF_ICON, renotify: true, requireInteraction: !!opts.sticky, data: { url: location.href } };
+    // Desktop: a page notification (tapping it brings this window forward).
+    try {
+        const n = new Notification(title, o);
+        n.onclick = () => { try { window.focus(); } catch (e) {} n.close(); if (opts.onclick) opts.onclick(); };
+        return true;
+    } catch (e) { /* phones only allow notifications through the service worker */ }
+    try {
+        const reg = (navigator.serviceWorker && (await navigator.serviceWorker.getRegistration())) || null;
+        if (reg) { await reg.showNotification(title, Object.assign(o, { vibrate: [120, 60, 120] })); return true; }
+    } catch (e) {}
+    return false;
+}
+
+function askNotif() {
+    if (!notifSupported()) {
+        toast(isIOS ? "On iPhone/iPad, install the app first (Share → Add to Home Screen), then turn alerts on inside the app." : "This browser can't show notifications.", 5000);
+        return;
+    }
+    Promise.resolve(Notification.requestPermission()).then(p => {
+        renderNotif(); updateBell();
+        if (p === "granted") sysNotify("🔔 Alerts are on", `You'll get a notification whenever head office messages ${STORE_NAME}.`, "alerts-on");
+        else if (p === "denied") toast("Alerts are blocked. Allow notifications for this site in the browser settings.", 4500);
+    }).catch(() => {});
+}
+function testNotif() {
+    sysNotify(`📣 Test · ${STORE_NAME}`, "This is how a message from head office will appear.", "test").then(ok => { if (!ok) toast("Couldn't show a notification on this device.", 3000); });
+}
+// Once per session after login: offer to switch alerts on.
+function nudgeAlerts() {
+    try { if (sessionStorage.getItem("alerts_nudged")) return; sessionStorage.setItem("alerts_nudged", "1"); } catch (e) {}
+    if (notifSupported() && Notification.permission === "default")
+        toast("🔔 Get messages as notifications, even when this tab is in the background.", 9000, { label: "TURN ON", fn: askNotif });
+}
+
+let audioCtx = null;
+function chime() {
+    try {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        const t = audioCtx.currentTime;
+        [880, 1318].forEach((f, i) => {
+            const o = audioCtx.createOscillator(), g = audioCtx.createGain(), s = t + i * 0.16;
+            o.type = "sine"; o.frequency.value = f;
+            g.gain.setValueAtTime(0, s); g.gain.linearRampToValueAtTime(0.16, s + 0.02); g.gain.exponentialRampToValueAtTime(0.001, s + 0.38);
+            o.connect(g); g.connect(audioCtx.destination); o.start(s); o.stop(s + 0.42);
+        });
+    } catch (e) {}
+}
+function ringBell() { const b = $("bellBtn"); if (!b) return; b.classList.remove("ring"); void b.offsetWidth; b.classList.add("ring"); }
+
+// New head-office messages → one system notification each (once per device), a chime and a ringing bell.
+const LS_BC_NOTE = () => `${window.STORE_ID}_bc_notified`;
+const bcChimed = new Set();
+let bcFirstLoad = true;
+function notifyBroadcasts() {
+    let done;
+    try { done = new Set(JSON.parse(localStorage.getItem(LS_BC_NOTE()) || "[]")); } catch (e) { done = new Set(); }
+    const seen = bcSeenSet();
+    const fresh = activeBroadcasts().filter(b => !seen.has(b.id) && !bcMem.has(b.id) && !done.has(b.id));
+    const first = bcFirstLoad; bcFirstLoad = false;
+    if (!fresh.length) return;
+    const unchimed = fresh.filter(b => !bcChimed.has(b.id));
+    if (unchimed.length) { unchimed.forEach(b => bcChimed.add(b.id)); ringBell(); if (!first) { chime(); try { if (navigator.vibrate) navigator.vibrate([80, 50, 80]); } catch (e) {} } }
+    if (!notifOK()) return;
+    fresh.slice(0, 3).forEach(b => {
+        done.add(b.id);
+        sysNotify(`${b.urgent ? "🚨 URGENT · " : "📣 "}${b.from || "Head office"} → ${STORE_NAME}`, b.text, "bc-" + b.id, { sticky: !!b.urgent, onclick: showNextBroadcast });
+    });
+    try { const live = new Set(broadcasts.map(b => b.id)); localStorage.setItem(LS_BC_NOTE(), JSON.stringify([...done].filter(x => live.has(x)))); } catch (e) {}
+}
+
+// ---------- 🔔 inbox ----------
+let notifOpen = false;
+function toggleNotif(force) {
+    notifOpen = typeof force === "boolean" ? force : !notifOpen;
+    const p = $("notifPanel"), s = $("npScrim"); if (!p) return;
+    p.hidden = !notifOpen; s.classList.toggle("on", notifOpen);
+    if (notifOpen) renderNotif();
+}
+function unreadBroadcasts() { const seen = bcSeenSet(); return activeBroadcasts().filter(b => !seen.has(b.id) && !bcMem.has(b.id)); }
+function updateBell() {
+    const unread = unreadBroadcasts().length, idle = isManager() && lastIdle ? lastIdle.idle.length : 0, n = unread + idle;
+    const b = $("bellBadge");
+    if (b) { b.hidden = !n; b.textContent = n > 99 ? "99+" : n; }
+    const bt = $("bellBtn"); if (bt) bt.title = n ? `${n} notification${n === 1 ? "" : "s"}` : "Notifications";
+    document.title = (n ? `(${n}) ` : "") + BASE_TITLE;
+    try { if (navigator.setAppBadge) { if (n) navigator.setAppBadge(n); else navigator.clearAppBadge(); } } catch (e) {}
+    if (notifOpen) renderNotif();
+}
+function renderNotif() {
+    const perm = $("npPerm"), list = $("npList"); if (!perm || !list) return;
+    if (!notifSupported()) perm.innerHTML = `<div class="np-perm warn"><span>📱</span><div><b>Alerts need the installed app.</b><br>${isIOS && !isStandalone() ? "On iPhone/iPad tap Share → <b>Add to Home Screen</b>, open the app from there, then turn alerts on." : "This browser can't show notifications — messages still appear here and pop up on screen."}</div></div>`;
+    else if (Notification.permission === "granted") perm.innerHTML = `<div class="np-perm ok"><span>✓</span><div style="flex:1"><b style="color:inherit">Alerts are on for this device</b></div><button class="btn ghost sm" type="button" onclick="testNotif()">Test</button></div>`;
+    else if (Notification.permission === "denied") perm.innerHTML = `<div class="np-perm warn"><span>🔕</span><div><b>Alerts are blocked on this device.</b><br>Allow notifications for this site in the browser settings to get alerts.</div></div>`;
+    else perm.innerHTML = `<div class="np-perm"><span>🔔</span><div><b>Get alerts</b><br><br><button class="btn sm" type="button" onclick="askNotif()">Turn on alerts</button></div></div>`;
+
+    const seen = bcSeenSet(), now = Date.now(), items = [];
+    if (isManager() && lastIdle && lastIdle.lim) lastIdle.idle.forEach(r => items.push(`<div class="np-item idle"><span class="np-av">⏱</span><div><div class="np-from"><b>${esc(r.n)} — inactive</b><small>${esc(fmtIdle(r.idle))}</small></div>
+        <p class="np-text">On duty but no entry for ${esc(fmtIdle(r.idle))} (opening hours only)${r.last ? ` · last entry ${esc(bcWhen(r.last))}` : ""}.</p><div class="np-meta"><span class="new">Inactivity alert</span></div></div></div>`));
+    const all = broadcasts.slice().sort((a, b) => (+b.ts || 0) - (+a.ts || 0)).slice(0, 25);
+    all.forEach(b => {
+        const unread = (!b.until || +b.until > now) && !seen.has(b.id) && !bcMem.has(b.id), live = !b.until || +b.until > now;
+        items.push(`<button type="button" class="np-item${unread ? " unread" : ""}${b.urgent ? " urgent" : ""}" data-bc="${esc(b.id)}">
+            <span class="np-av">${esc(initials(b.from || "HQ"))}</span>
+            <div><div class="np-from"><b>${esc(b.from || "Head office")}${b.urgent ? " · Urgent" : ""}</b><small>${esc(bcWhen(b.ts))}</small></div>
+            <p class="np-text">${esc(b.text)}</p>
+            <div class="np-meta">${unread ? `<span class="new">New · tap to open</span>` : live ? `<span class="live">Live</span> · seen` : "Ended"}</div></div></button>`);
+    });
+    list.innerHTML = items.join("") || `<div class="empty">No messages yet. Messages from head office will appear here.</div>`;
+}
+document.addEventListener("click", e => {
+    const b = e.target.closest && e.target.closest("[data-bc]"); if (!b) return;
+    const id = b.dataset.bc;
+    if (unreadBroadcasts().some(x => x.id === id)) { toggleNotif(false); queueBroadcasts(); }
+});
+
+// ================================================================
+//  v3 · INACTIVITY WATCH — managers (and head office) are alerted when an
+//  ON-DUTY executive logs nothing for N opening hours (default 7).
+//  Off-duty executives are skipped, and their clock restarts when they
+//  are switched back on duty (settings/dutyTs/{name}).
+// ================================================================
+const BIZ_OPEN = 8, BIZ_CLOSE = 23, DEFAULT_IDLE_H = 7;
+const keyOf = n => String(n).replace(/[.#$\[\]\/]/g, "_");
+function idleLimitH() { const v = settings.idleHours; if (v === 0 || v === "0") return 0; return +v > 0 ? +v : DEFAULT_IDLE_H; }
+// Opening-hours time between two moments (nights don't count).
+function bizMs(from, to) {
+    if (!(to > from)) return 0;
+    let t = 0, d = new Date(from); d.setHours(0, 0, 0, 0);
+    for (let i = 0; +d < to && i < 400; i++, d = addDays(d, 1)) {
+        const o = new Date(d); o.setHours(BIZ_OPEN, 0, 0, 0);
+        const c = new Date(d); c.setHours(BIZ_CLOSE, 0, 0, 0);
+        const a = Math.max(from, +o), b = Math.min(to, +c);
+        if (b > a) t += b - a;
+    }
+    return t;
+}
+function fmtIdle(ms) {
+    const h = Math.floor(ms / 3600000), m = Math.floor((ms % 3600000) / 60000);
+    const openDay = (BIZ_CLOSE - BIZ_OPEN) * 3600000;
+    if (ms >= openDay * 1.5) { const d = Math.round(ms / openDay); return `${d} opening day${d === 1 ? "" : "s"}`; }
+    return h ? `${h}h ${pad(m)}m` : `${m}m`;
+}
+let lastIdle = null;
+function idleReport() {
+    const now = Date.now(), lim = idleLimitH() * 3600000, last = {}, duty = settings.dutyTs || {};
+    for (const h of historyData) {
+        if (!h || !h.timestamp || h.timestamp > now) continue;
+        for (const n of [h.executive, h.submittedBy]) if (n && (!last[n] || h.timestamp > last[n])) last[n] = h.timestamp;
+    }
+    const rows = executives.map(n => {
+        const off = !!lockedUsers[n], since = Math.max(last[n] || 0, +duty[keyOf(n)] || 0, now - 30 * DAY);
+        const idle = bizMs(since, now);
+        return { n, off, last: last[n] || 0, since, idle, state: off ? "off" : !lim ? "ok" : idle >= lim ? "idle" : idle >= lim * 0.7 ? "near" : "ok" };
+    });
+    const onDuty = rows.filter(r => !r.off);
+    return { lim, rows, onDuty, idle: rows.filter(r => r.state === "idle"), near: rows.filter(r => r.state === "near"), off: rows.filter(r => r.off),
+        allIdle: onDuty.length > 0 && onDuty.every(r => r.state === "idle") };
+}
+function renderIdleWatch() {
+    const el = $("idleWatch"); if (!el) return;
+    const ready = dataReady.execs && dataReady.walkins;
+    lastIdle = ready ? idleReport() : null;
+    if (!isManager() || !ready || !executives.length) { el.hidden = true; return; }
+    const r = lastIdle, H = idleLimitH();
+    el.hidden = false;
+    const head = (sub, chips) => `<div class="panel-head"><h3 class="panel-title"><span class="ic">⏱</span>Inactivity watch</h3>${chips || ""}</div>${sub ? `<p class="panel-sub" style="margin:-4px 0 12px">${sub}</p>` : ""}`;
+    if (!r.lim) { el.className = "panel watch calm"; el.innerHTML = head("", `<button class="btn ghost sm" type="button" onclick="openAdmin()">Alerts are off · turn on</button>`); return; }
+    const chips = `<div class="iw-chips"><span class="iw-chip ok">${r.onDuty.length - r.idle.length - r.near.length} active</span>${r.near.length ? `<span class="iw-chip near">${r.near.length} close</span>` : ""}<span class="iw-chip ${r.idle.length ? "bad" : ""}">${r.idle.length} idle ${H}h+</span><span class="iw-chip">${r.off.length} off duty · skipped</span></div>`;
+    const list = r.rows.filter(x => x.state === "idle" || x.state === "near").sort((a, b) => b.idle - a.idle);
+    const skip = r.off.length ? `<p class="iw-skip">Not tracked while off duty: <b>${r.off.map(x => esc(x.n)).join(", ")}</b></p>` : "";
+    if (!list.length) {
+        el.className = "panel watch calm";
+        el.innerHTML = head("", chips) + `<p class="iw-ok" style="margin:10px 0 0">✓ Everyone on duty has logged an entry within the last ${H} opening hours.</p>` + skip;
+        return;
+    }
+    el.className = "panel watch" + (r.idle.length ? " alert" : "");
+    el.innerHTML = head(`On-duty executives with no entry for ${H}+ opening hours (${pad(BIZ_OPEN)}:00–${pad(BIZ_CLOSE)}:00). Off-duty staff are skipped.`, chips)
+        + (r.allIdle ? `<p class="iw-all">⚠️ Nobody on duty at ${esc(STORE_NAME)} has logged anything for ${H}+ opening hours.</p>` : "")
+        + `<div class="iw-list">${list.map(x => `<div class="iw-row ${x.state}">
+            <span class="avatar" style="--av:${avColor(x.n)}">${esc(initials(x.n))}</span>
+            <b>${esc(x.n)}</b><span class="iw-pill">${x.state === "idle" ? "Idle" : "Close"}</span>
+            <small>${fmtIdle(x.idle)} without an entry · ${x.last ? "last " + esc(bcWhen(x.last)) : "no entries yet"}</small>
+            <span class="iw-bar"><i style="width:${Math.min(100, (x.idle / r.lim) * 100).toFixed(0)}%"></i></span></div>`).join("")}</div>` + skip;
+}
+// One notification per executive per idle stretch (re-arms as soon as they log again).
+const LS_IDLE_NOTE = () => `${window.STORE_ID}_idle_notified`;
+function checkIdleAlerts() {
+    if (!isManager() || !lastIdle || !lastIdle.lim) return;
+    let done = {};
+    try { done = JSON.parse(localStorage.getItem(LS_IDLE_NOTE()) || "{}") || {}; } catch (e) {}
+    const fresh = lastIdle.idle.filter(r => done[r.n] !== r.since);
+    if (!fresh.length) return;
+    const H = idleLimitH(), names = fresh.map(r => r.n);
+    const title = lastIdle.allIdle ? `⚠️ No activity at ${STORE_NAME} for ${H}h+` : `⏱ ${names.length} executive${names.length === 1 ? "" : "s"} inactive ${H}h+ · ${STORE_NAME}`;
+    const body = fresh.map(r => `${r.n} — ${fmtIdle(r.idle)} without an entry`).join("\n") + "\nOff-duty staff are not included.";
+    sysNotify(title, body, "idle-" + window.STORE_ID, { sticky: true });
+    ringBell();
+    fresh.forEach(r => { done[r.n] = r.since; });
+    try { localStorage.setItem(LS_IDLE_NOTE(), JSON.stringify(done)); } catch (e) {}
+}
+async function saveIdleHours() {
+    const v = parseInt($("idleHoursSel").value, 10);
+    try { await window.dbSet(R("settings/idleHours"), isFinite(v) ? v : DEFAULT_IDLE_H); toast(v ? `⏱ Inactivity alert set to ${v} hours` : "Inactivity alerts switched off"); }
+    catch (e) { alert(`Couldn't save. Your Firebase rules need to allow read/write on stores/${window.STORE_ID}/settings.`); }
+}
+function renderIdleAdmin() {
+    const sel = $("idleHoursSel"); if (!sel) return;
+    if (document.activeElement !== sel) sel.value = String(idleLimitH());
+    const b = $("idleBadge"); if (b) { const h = idleLimitH(); b.textContent = h ? `${h} h` : "Off"; b.className = "adm-badge " + (h ? "ok" : ""); }
+}
+
+// ================================================================
+//  v3 · MY INSIGHTS — fills the space beside an executive's own card
+// ================================================================
+function renderMePanel() {
+    const el = $("mePanel"), wrap = $("teamWrap"), me = getCurrentExec();
+    if (!el || !wrap) return;
+    const solo = !isManager() && executives.includes(me) && !!A;
+    wrap.classList.toggle("solo", solo); el.hidden = !solo;
+    if (!solo) return;
+    const s = execStats(me), many = NOUN[catFilter][1], one = NOUN[catFilter][0];
+    const ranked = executives.map(n => ({ n, v: Math.max(0, (A.exec[n] || {}).month || 0) })).sort((x, y) => (y.v - x.v) || x.n.localeCompare(y.n));
+    const pos = ranked.findIndex(r => r.n === me), rank = s.month > 0 ? pos + 1 : 0;
+    // usual day = average of the 28 days before today (only days since the first record)
+    let sum28 = 0, n28 = 0;
+    for (let i = 1; i <= 28; i++) { const d = addDays(A.sod, -i); if (isFinite(A.firstTs) && +d < new Date(A.firstTs).setHours(0, 0, 0, 0)) break; sum28 += Math.max(0, s.byDay[dkey(d)] || 0); n28++; }
+    const usual = n28 ? sum28 / n28 : 0;
+    const first = String(me).split(/\s+/)[0];
+
+    const bars = [], days = 14; let bmax = 1;
+    for (let i = days - 1; i >= 0; i--) { const v = Math.max(0, s.byDay[dkey(addDays(A.sod, -i))] || 0); bars.push(v); bmax = Math.max(bmax, v); }
+    const tot14 = bars.reduce((a, b) => a + b, 0);
+
+    const notes = [];
+    if (rank === 1 && ranked[1]) notes.push(["🏆", ranked[1].v < s.month ? `You're <b>leading the team</b> by ${fmt(s.month - ranked[1].v)} ${s.month - ranked[1].v === 1 ? one : many}. Keep it up!` : `You're <b>tied for the lead</b> with ${esc(ranked[1].n)}.`]);
+    else if (rank > 1) { const ab = ranked[pos - 1], gap = ab.v - s.month + 1; notes.push(["🎯", `<b>${fmt(gap)} more</b> to pass ${esc(ab.n)} for #${pos}.`]); }
+    else notes.push(["🌱", `No ${many} logged this month yet — the next one has your name on it.`]);
+    if (usual > 0) notes.push(["⏱️", s.today >= usual ? `<b>${fmt(s.today)}</b> today — already above your usual day of ${r1(usual)}. 🚀` : `<b>${fmt(s.today)}</b> today; your usual full day is about <b>${r1(usual)}</b>.`]);
+    if (s.peakH >= 0) notes.push(["⚡", `Your busiest walk-in hour is <b>${hourRange(s.peakH)}</b> — be on the floor then.`]);
+    if (A.m > 0 && s.month > 0) notes.push(["📊", `You handled <b>${Math.round(s.share * 100)}%</b> of the team's ${many} this month.`]);
+    const target = +settings.monthlyTarget || 0, onDuty = executives.filter(n => !lockedUsers[n]).length || 1;
+    let goal = "";
+    if (target && catFilter === "all") {
+        const fair = Math.ceil(target / onDuty), p = Math.min(100, (s.month / fair) * 100);
+        goal = `<div><div class="me-x" style="margin:0 0 6px"><span>Your share of the team target · ${fmt(s.month)} of ${fmt(fair)}</span><span>${Math.round((s.month / fair) * 100)}%</span></div><div class="me-goal"><i style="width:${p}%"></i></div></div>`;
+    }
+
+    const delta = s.lastSame > 0 || s.month > 0 ? deltaChip(s.month, s.lastSame) : "";
+    el.innerHTML = `
+        <div class="me-head"><div><small>Your insights · ${esc(A.now.toLocaleString("en-US", { month: "long" }))}</small><h3>Hi ${esc(first)} 👋</h3></div>
+            <span class="me-rank${rank ? "" : " none"}">${rank ? `${rank <= 3 ? ["🥇", "🥈", "🥉"][rank - 1] : "🏅"} #${rank} of ${ranked.length}` : "Not ranked yet"}</span></div>
+        <div class="me-tiles">
+            <div class="me-tile"><span>Today</span><b>${fmt(s.today)}</b><small>${usual ? `usual day ≈ ${r1(usual)}` : cap(many)}</small></div>
+            <div class="me-tile"><span>This month</span><b>${fmt(s.month)} ${delta}</b><small>vs same point last month</small></div>
+            <div class="me-tile"><span>This week</span><b>${fmt(s.week)}</b><small>since Sunday</small></div>
+            <div class="me-tile"><span>Avg / active day</span><b>${r1(s.avg)}</b><small>${s.activeDays} active day${s.activeDays === 1 ? "" : "s"} this month</small></div>
+            <div class="me-tile"><span>Best day</span><b>${s.best.k ? fmt(s.best.v) : "—"}</b><small>${s.best.k ? shortDate(s.best.k) : "no entries yet"}</small></div>
+            <div class="me-tile"><span>Streak</span><b>${s.streak ? "🔥 " + s.streak : "0"}</b><small>day${s.streak === 1 ? "" : "s"} in a row</small></div>
+        </div>
+        <div class="me-row">
+            <div class="me-chart"><h4>Last 14 days <em>${fmt(tot14)} ${tot14 === 1 ? one : many}</em></h4>
+                <div class="me-bars">${bars.map((v, i) => `<i class="${i === days - 1 ? "t" : v ? "" : "z"}" style="height:${v ? Math.max(8, (v / bmax) * 100) : 4}%" title="${shortDate(dkey(addDays(A.sod, i - days + 1)))}: ${v}"></i>`).join("")}</div>
+                <div class="me-x"><span>${shortDate(dkey(addDays(A.sod, -(days - 1))))}</span><span>Today</span></div>
+                ${catFilter === "all" && s.mw + s.mp > 0 ? `<div class="me-mix"><div class="split"><i class="w" style="width:${(s.mw / (s.mw + s.mp)) * 100}%"></i><i class="p" style="width:${(s.mp / (s.mw + s.mp)) * 100}%"></i></div>
+                    <div class="split-lg" style="margin-top:5px"><span class="w">🚶 <b>${fmt(s.mw)}</b> walk-in</span><span class="p">📞 <b>${fmt(s.mp)}</b> phone</span></div></div>` : ""}
+            </div>
+            <div class="me-notes"><h4>Tips for you</h4>${notes.slice(0, 4).map(n => `<div class="me-note"><i>${n[0]}</i><span>${n[1]}</span></div>`).join("")}${goal}</div>
+        </div>`;
+}
+
+// ================================================================
+//  v3 · INSTALL THE APP — shown every time the page opens in a browser
+//  tab (not the installed app). "Not now" hides it until next time.
+// ================================================================
+(function installPrompt() {
+    const bar = $("installBar"); if (!bar || isStandalone()) return;
+    try { if (sessionStorage.getItem("install_snooze")) return; } catch (e) {}
+    const ua = navigator.userAgent, safariMac = !isIOS && /safari/i.test(ua) && !/chrome|chromium|crios|fxios|edg|android/i.test(ua);
+    let deferred = null, shown = false;
+    const shareIc = `<span class="sh"><svg width="12" height="14" viewBox="0 0 12 14" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V1M3 3.5 6 1l3 2.5M2 6.5H1v6.5h10V6.5h-1"/></svg></span>`;
+    function show(mode) {
+        if (shown && mode !== "native") return; shown = true;
+        const txt = mode === "native" ? "Opens full-screen from your home screen and shows alerts."
+            : mode === "ios" ? `Tap ${shareIc} <b style="display:inline;font-size:inherit">Share</b>, then <b style="display:inline;font-size:inherit">Add to Home Screen</b> — needed for alerts on iPhone.`
+            : `In Safari choose <b style="display:inline;font-size:inherit">File → Add to Dock</b> to use it as an app.`;
+        bar.innerHTML = `<img class="ib-ic" src="${NOTIF_ICON}" alt="" onerror="this.style.visibility='hidden'">
+            <div class="ib-txt"><b>Install the ${esc(STORE_NAME)} app</b><small>${txt}</small></div>
+            ${mode === "native" ? `<button class="ib-go" type="button" data-ib="go">Install</button>` : ""}
+            <button class="ib-x" type="button" data-ib="x" aria-label="Not now">✕</button>`;
+        bar.hidden = false; document.body.classList.add("has-ib");
+        requestAnimationFrame(() => requestAnimationFrame(() => bar.classList.add("show")));
+    }
+    function hide(snooze) {
+        bar.classList.remove("show"); document.body.classList.remove("has-ib");
+        setTimeout(() => { bar.hidden = true; }, 400);
+        if (snooze) try { sessionStorage.setItem("install_snooze", "1"); } catch (e) {}
+    }
+    bar.addEventListener("click", e => {
+        const b = e.target.closest("[data-ib]"); if (!b) return;
+        if (b.dataset.ib === "x") return hide(true);
+        if (deferred) { deferred.prompt(); Promise.resolve(deferred.userChoice).then(c => { if (c && c.outcome === "accepted") hide(false); deferred = null; }).catch(() => {}); }
+    });
+    window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); deferred = e; show("native"); });
+    window.addEventListener("appinstalled", () => { hide(false); try { toast("✅ App installed — open it from your home screen.", 4000); } catch (e) {} });
+    if (isIOS) setTimeout(() => show("ios"), 1500);
+    else if (safariMac) setTimeout(() => show("mac"), 1500);
+})();
 </script>
 </body>
 </html>
