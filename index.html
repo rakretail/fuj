@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="4.2">
+<meta name="app-version" content="3.1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Fujairah Showroom · Tracker</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0A1324">
 <link rel="apple-touch-icon" href="rakwalkin.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
@@ -959,9 +959,9 @@ body.dark[data-look="blue"]{
     --gold:#3B82F6; --gold-ink:#93C5FD; --gold-soft:rgba(59,130,246,.18); --btn:#3B82F6; --btn-on:#FFFFFF;
     --hero-a:#0B1A40; --hero-b:#1A3A8C; --hero-ink:#F3F7FF; --hero-muted:#AFC2EA; --hero-ln:rgba(255,255,255,.08); --hero-soft:rgba(255,255,255,.06);
 }
-body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg)!important;letter-spacing:0}
+body{font-family:Poppins,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg)!important;letter-spacing:0}
 .num,.kpi-num,.today-num,.ctl-num,.lb-count,#time,.goal-top b,.st-tile>b,.me-tile>b,.det-stat b,.ch-val strong,.share-center b,.peak-window,
-.panel-title,.section-label,.brand-txt b,h1,h2,h3{font-family:Manrope,Inter,sans-serif}
+.panel-title,.section-label,.brand-txt b,h1,h2,h3{font-family:Poppins,sans-serif}
 .container{max-width:1320px;padding:18px 22px 8px}
 
 /* ---- the RAK Ceramics mark: official artwork, white on dark / ink on light ---- */
@@ -995,7 +995,7 @@ body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:
 .viewtabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:0 14px}
 .viewtabs::-webkit-scrollbar{display:none}
 .viewtabs button{flex:none;min-height:46px;padding:0 13px;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);
-    font:500 .84rem Inter,sans-serif;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:9px}
+    font:500 .84rem Poppins,sans-serif;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:9px}
 .viewtabs button:hover{color:var(--text)}
 .viewtabs button.active{color:var(--text);border-bottom-color:var(--gold);font-weight:600}
 .viewtabs svg,.side-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
@@ -1127,7 +1127,7 @@ body:not(.dark) .me-rank{color:#3A2A00!important}
 /* ---- notification centre ---- */
 .np{border-radius:18px;box-shadow:0 24px 60px -12px rgba(5,10,20,.45)}
 .np-tabs{display:flex;gap:2px;padding:4px 12px 0;border-bottom:1px solid var(--line)}
-.np-tabs button{min-height:40px;padding:0 10px;border:0;border-bottom:2px solid transparent;background:none;color:var(--muted);font:600 .78rem Inter,sans-serif;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.np-tabs button{min-height:40px;padding:0 10px;border:0;border-bottom:2px solid transparent;background:none;color:var(--muted);font:600 .78rem Poppins,sans-serif;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
 .np-tabs button.active{color:var(--text);border-bottom-color:var(--gold)}
 .np-tabs em{font-style:normal;min-width:18px;height:18px;border-radius:9px;background:var(--soft);font-size:.66rem;display:inline-grid;place-items:center;padding:0 5px}
 .np-av{background:var(--gold-soft)!important;color:var(--gold-ink)}
@@ -1167,7 +1167,7 @@ body.dark #toast button{color:var(--bg);border-color:color-mix(in srgb,var(--bg)
 #adminPanel.active{transform:none!important;opacity:1;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s,visibility 0s!important}
 .adm-head{grid-column:1/-1;padding:14px 24px;background:var(--side)}
 .adm-title .ic{background:var(--gold-soft)!important;color:var(--gold-ink);box-shadow:none!important;border-radius:12px}
-.adm-title h2{font-family:Manrope,Inter,sans-serif;font-weight:700}
+.adm-title h2{font-family:Poppins,sans-serif;font-weight:700}
 .adm-tabs{flex-direction:column;align-items:stretch;gap:3px;padding:16px 12px;border-bottom:0;border-right:1px solid var(--line);overflow-y:auto;background:var(--side)}
 .adm-tabs button{flex:0 0 auto!important;justify-content:flex-start!important;min-height:44px;padding:0 14px!important;border-radius:10px;font-size:.86rem;font-weight:500;color:var(--text)}
 .adm-tabs button span{width:22px;text-align:center}
@@ -1179,7 +1179,7 @@ body.dark #toast button{color:var(--bg);border-color:color-mix(in srgb,var(--bg)
 .adm-sec[hidden]{display:none!important}
 .adm-sec>.adm-help,.adm-sec>.adm-wide{grid-column:1/-1}
 .adm-sec-h{grid-column:1/-1;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:2px}
-.adm-sec-h h3{margin:0;font:700 1.35rem Manrope,Inter,sans-serif}
+.adm-sec-h h3{margin:0;font:700 1.35rem Poppins,sans-serif}
 .adm-sec-h p{margin:2px 0 0;font-size:.8rem;color:var(--muted)}
 .adm-card{border-radius:14px;padding:18px}
 .adm-count{color:var(--gold-ink)}
@@ -1187,12 +1187,12 @@ body.dark #toast button{color:var(--bg);border-color:color-mix(in srgb,var(--bg)
 .adm-badge.ok{color:var(--up)}
 .ad-hero{grid-column:1/-1;border-radius:18px;padding:22px 24px;border:1px solid var(--line);color:var(--hero-ink);
     background:radial-gradient(70% 140% at 95% -30%,var(--hero-b) 0,transparent 60%),linear-gradient(155deg,var(--hero-b),var(--hero-a));display:flex;flex-direction:column;gap:16px}
-.ad-hero h3{margin:0;font:700 1.35rem Manrope,Inter,sans-serif}
+.ad-hero h3{margin:0;font:700 1.35rem Poppins,sans-serif}
 .ad-hero p{margin:3px 0 0;font-size:.82rem;color:var(--hero-muted)}
 .ad-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 .ad-tile{background:var(--hero-soft);border:1px solid var(--hero-ln);border-radius:13px;padding:14px;min-width:0}
 .ad-tile span{display:block;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--hero-muted)}
-.ad-tile b{display:block;font:700 1.5rem Manrope,Inter,sans-serif;margin:4px 0 2px;font-variant-numeric:tabular-nums}
+.ad-tile b{display:block;font:700 1.5rem Poppins,sans-serif;margin:4px 0 2px;font-variant-numeric:tabular-nums}
 .ad-tile small{display:block;font-size:.72rem;color:var(--hero-muted)}
 .ad-tile.warn b{color:var(--warn)} .ad-tile.bad b{color:var(--down)} .ad-tile.ok b{color:var(--up)}
 .ad-chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -1239,7 +1239,7 @@ body.dark #toast button{color:var(--bg);border-color:color-mix(in srgb,var(--bg)
 .topbar .viewtabs{grid-column:1/-1;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:4px 0 0;flex-direction:row}
 .topbar .viewtabs::-webkit-scrollbar{display:none}
 .topbar .viewtabs button{flex:none;min-height:34px;padding:0 15px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted);
-    font:600 .78rem Inter,sans-serif;display:inline-flex;align-items:center;gap:7px;opacity:1;width:auto}
+    font:600 .78rem Poppins,sans-serif;display:inline-flex;align-items:center;gap:7px;opacity:1;width:auto}
 .topbar .viewtabs button:hover{color:var(--text);border-color:var(--gold)}
 .topbar .viewtabs button.active{background:var(--gold);border-color:var(--gold);color:var(--btn-on,#0b0f12)}
 .topbar .viewtabs button.active svg{stroke:currentColor}
@@ -1255,6 +1255,30 @@ body{display:block}
 @media (max-width:900px){.ep-pair{grid-template-columns:minmax(0,1fr)}}
 .kpis{align-items:stretch}.kpi{height:100%}
 .row3{align-items:stretch}.row3>.panel{height:calc(100% - 16px)}
+/* Teal light: the original white / glossy teal look */
+body:not(.dark)[data-look="teal-light"]{
+    --primary:#006666; --primary-2:#00897b; --accent:#00a88f; --amber:#B45309;
+    --walk:#0d9488; --phone:#6366f1;
+    --bg:#f1f6f6; --side:#FFFFFF; --card:#FFFFFF; --text:#0f2727; --muted:#5f7979;
+    --line:rgba(0,80,80,.10); --soft:rgba(0,102,102,.055);
+    --up:#0a9f6a; --down:#e0425a; --warn:#B45309; --on:#FFFFFF; --brand-red:#e0425a;
+    --gold:#006666; --gold-ink:#006666; --gold-soft:rgba(0,102,102,.12); --btn:#006666; --btn-on:#FFFFFF;
+    --hero-a:#004d4d; --hero-b:#00a88f; --hero-ink:#FFFFFF; --hero-muted:rgba(255,255,255,.82); --hero-ln:rgba(255,255,255,.16); --hero-soft:rgba(255,255,255,.12);
+    --shadow:0 1px 2px rgba(0,50,50,.04),0 10px 28px -10px rgba(0,60,60,.18);
+    --shadow-lg:0 2px 6px rgba(0,50,50,.07),0 22px 48px -14px rgba(0,60,60,.24);
+}
+body:not(.dark)[data-look="teal-light"] .panel.peak,body:not(.dark)[data-look="teal-light"] .peak{background:linear-gradient(135deg,#004d4d,#006666 45%,#00897b)!important;color:#fff}
+body:not(.dark)[data-look="teal-light"] .peak .panel-title,body:not(.dark)[data-look="teal-light"] .peak .panel-sub,body:not(.dark)[data-look="teal-light"] .peak-window,body:not(.dark)[data-look="teal-light"] .peak-sub{color:#fff!important}
+body:not(.dark)[data-look="teal-light"] .hero .loc{color:#c9f7e4}
+body:not(.dark)[data-look="teal-light"] .hero .feed-pill{color:#fff!important;background:rgba(255,255,255,.16)!important;border-color:rgba(255,255,255,.3)!important}
+#heroWho{display:none!important}
+.kpi .kpi-num,.today-num,#time,.ctl-num,.lb-count,.ms-t b{font-weight:800}
+/* Live Feed: scrolling line again, with the red live dot */
+.ticker:not(.hq) .ticker-wrap{position:static!important;opacity:1!important;height:auto!important;pointer-events:auto!important;flex:1;min-width:0;overflow:hidden}
+.feed-line,.feed-count{display:none!important}
+#smart-insight{animation:ticker 240s linear infinite;font-size:.9rem;font-weight:500;color:var(--hero-ink);cursor:pointer}
+#smart-insight.paused{animation-play-state:paused}
+.ticker:not(.hq) .live-dot{background:#ff4d4d!important;box-shadow:0 0 8px #ff4d4d!important;animation:blink 1.2s ease-in-out infinite!important}
 #teamNote,#forecastNote,.watch>p.panel-sub,.fe-hint,.compare-note,.st-box>small,#alDelNote{display:none!important}
 @media (max-width:720px){
     .topbar .brand-txt small,.topbar button[title="Full screen"]{display:none}
@@ -1264,6 +1288,8 @@ body{display:block}
 #toast.show{transform:translate(-50%,0)}
 .np-push{margin:10px 14px 0;padding:10px 12px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:.76rem;line-height:1.4;color:var(--muted);display:flex;gap:10px;align-items:center}
 .np-push>div{flex:1;min-width:0} .np-push b{display:block;color:var(--text);font-size:.8rem} .np-push .err{color:var(--down);font-weight:600}
+.kpi .kpi-num,.today-num,#time,#heroToday,.ad-tile b,.ms-t b{font-weight:800}
+button,input,select,textarea{font-family:inherit}
 </style>
 </head>
 <body>
@@ -1836,6 +1862,14 @@ function renderPushRow() {
 }
 document.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("#bellBtn")) setTimeout(renderPushRow, 30); });
 
+// Live Feed: steady reading speed whatever its length; tap to pause / resume.
+(function feedSpeed() {
+    const el = document.getElementById("smart-insight"); if (!el) return;
+    const set = () => { const w = el.scrollWidth; if (w > 0) el.style.animationDuration = Math.max(60, Math.round(w / 45)) + "s"; };
+    setTimeout(set, 3000);
+    el.addEventListener("animationiteration", () => setTimeout(set, 60));
+    el.addEventListener("click", () => el.classList.toggle("paused"));
+})();
 // Executives: their own entry card sits straight under the clock; managers keep the overview first.
 (function placeCard() {
     function place() {
@@ -3519,7 +3553,7 @@ function buildTicker() {
     if (hour >= 12 && hour < 17) { gi = "☀️"; gw = "Good afternoon"; }
     else if (hour >= 17 && hour < 22) { gi = "🌇"; gw = "Good evening"; }
     else if (hour >= 22 || hour < 5) { gi = "🌙"; gw = "Late shift, legends"; }
-    const greeting = `${gi} <span class="feed-pill blue">Team Fujairah</span> ${gw}, Fujairah Showroom — let's make today legendary!`;
+    const greeting = `${gi} <span class="feed-pill blue">TEAM FUJAIRAH</span> ${gw}, Fujairah Showroom — let's make today legendary!`;
 
     add("today", dailyTotal > 0
         ? `🚀 <span class="feed-pill green">TODAY</span> ${fmt(dailyTotal)} walk-in${s(dailyTotal)} served so far — momentum is building! 📈`
@@ -4636,26 +4670,26 @@ function renderMePanel() {
 
 
     // ---------- Themes: Teal (default) · Gold · Blue · Light ----------
-    const LOOKS = ["teal", "gold", "blue", "light"], LS_LOOK = "ep_look";
-    function currentLook() { return document.body.classList.contains("dark") ? (document.body.dataset.look || "teal") : "light"; }
+    const LOOKS = ["teal-light", "teal"], LS_LOOK = "ep_look";
+    function currentLook() { return document.body.dataset.look || (document.body.classList.contains("dark") ? "teal" : "light"); }
     function applyLook(look, save) {
         if (!LOOKS.includes(look)) look = "teal";
-        const dark = look !== "light";
+        const dark = look !== "light" && look !== "teal-light";
         document.body.classList.toggle("dark", dark);
-        if (dark) document.body.dataset.look = look;
+        document.body.dataset.look = look;
         try { if (save) { localStorage.setItem(LS_LOOK, look); localStorage.setItem(LS_THEME, dark ? "dark" : "light"); } } catch (e) {}
         document.querySelectorAll("[data-th]").forEach(b => b.setAttribute("aria-pressed", b.dataset.th === look));
-        const m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = { teal: "#061518", gold: "#0A0A0B", blue: "#08122B", light: "#F4F7FB" }[look];
+        const m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = { "teal-light": "#006666", teal: "#061518", gold: "#0A0A0B", light: "#F4F7FB" }[look];
         if (save) setTimeout(() => { try { renderAll(); if (!$q("detailModal").classList.contains("hidden") && window.__detName) openDetail(window.__detName); } catch (e) {} }, 50);
     }
     (function initLook() {
         let look = null; try { look = localStorage.getItem(LS_LOOK); } catch (e) {}
-        if (!LOOKS.includes(look)) { let t = null; try { t = localStorage.getItem(LS_THEME); } catch (e) {} look = t === "light" ? "light" : "teal"; }
+        if (!LOOKS.includes(look)) { let t = null; try { t = localStorage.getItem(LS_THEME); } catch (e) {} look = t === "dark" ? "teal" : "teal-light"; }
         applyLook(look, false);
     })();
     window.setLook = l => applyLook(l, true);
     // the 🌓 button now steps through the four themes
-    window.toggleDark = function () { const i = LOOKS.indexOf(currentLook()); applyLook(LOOKS[(i + 1) % LOOKS.length], true); toast(`Theme: ${["Teal", "Gold", "Blue", "Light"][(i + 1) % LOOKS.length]}`, 1500); };
+    window.toggleDark = function () { const i = LOOKS.indexOf(currentLook()); applyLook(LOOKS[(i + 1) % LOOKS.length], true); toast(`Theme: ${["Light", "Dark"][(i + 1) % LOOKS.length]}`, 1500); };
     document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-th]"); if (b) applyLook(b.dataset.th, true); });
 
     // ---------- Sidebar: showroom name, user, unread count ----------
