@@ -1270,8 +1270,49 @@ body:not(.dark)[data-look="teal-light"]{
 body:not(.dark)[data-look="teal-light"] .panel.peak,body:not(.dark)[data-look="teal-light"] .peak{background:linear-gradient(135deg,#004d4d,#006666 45%,#00897b)!important;color:#fff}
 body:not(.dark)[data-look="teal-light"] .peak .panel-title,body:not(.dark)[data-look="teal-light"] .peak .panel-sub,body:not(.dark)[data-look="teal-light"] .peak-window,body:not(.dark)[data-look="teal-light"] .peak-sub{color:#fff!important}
 body:not(.dark)[data-look="teal-light"] .hero .loc{color:#c9f7e4}
-body:not(.dark)[data-look="teal-light"] .hero .feed-pill{color:#fff!important;background:rgba(255,255,255,.16)!important;border-color:rgba(255,255,255,.3)!important}
 #heroWho{display:none!important}
+@media (min-width:721px){.topbar .top-right{flex-wrap:nowrap}}
+@media (min-width:721px) and (max-width:1100px){.executives:not(.solo){grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+/* ---- section tabs under the clock card: crystal glass ---- */
+.viewtabs.down{display:flex;gap:6px;margin:0 0 18px;padding:6px;border-radius:16px;overflow-x:auto;scrollbar-width:none;
+    background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+    border:1px solid rgba(0,102,102,.10);box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 8px 22px -16px rgba(0,60,60,.35)}
+.viewtabs.down::-webkit-scrollbar{display:none}
+.viewtabs.down button{flex:none;min-height:38px;padding:0 16px;border:1px solid transparent;border-radius:12px;background:transparent;color:var(--muted);
+    font:600 .8rem Poppins,sans-serif;display:inline-flex;align-items:center;gap:8px;width:auto;opacity:1;transition:background .2s,color .2s}
+.viewtabs.down button:hover{color:var(--text);background:rgba(0,102,102,.05)}
+.viewtabs.down button.active{color:#005c58;border-color:rgba(20,184,166,.35);
+    background:linear-gradient(180deg,rgba(153,246,228,.55),rgba(94,234,212,.22));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 14px -8px rgba(13,148,136,.55)}
+.viewtabs.down button.active svg{stroke:#0d9488}
+.viewtabs.down svg{width:16px;height:16px}
+.viewtabs.down button[hidden]{display:none}
+body.dark .viewtabs.down{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+body.dark .viewtabs.down button:hover{background:rgba(255,255,255,.05)}
+body.dark .viewtabs.down button.active{color:#c5f8ef;border-color:rgba(45,212,191,.35);background:linear-gradient(180deg,rgba(45,212,191,.28),rgba(20,184,166,.10));box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+body.dark .viewtabs.down button.active svg{stroke:#5eead4}
+/* ---- Teal light: deep teal → blue-teal clock card (reference colours), glossy ---- */
+body:not(.dark)[data-look="teal-light"]{--hero-a:#06555a;--hero-b:#1b6a82;--btn:#0b6b6b}
+body:not(.dark)[data-look="teal-light"] .hero{background:radial-gradient(55% 140% at 0% 0%,rgba(255,255,255,.10),transparent 60%),
+    linear-gradient(110deg,#28625f 0%,#0b585a 36%,#06555a 55%,#145f72 78%,#1d6c86 100%)!important;
+    border:1px solid rgba(255,255,255,.10)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 18px 40px -22px rgba(4,60,64,.6)!important}
+body:not(.dark)[data-look="teal-light"] .hero::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,0) 40%)}
+body:not(.dark)[data-look="teal-light"] .hero .ticker:not(.hq){background:rgba(0,0,0,.16)!important;border-top-color:rgba(255,255,255,.08)!important}
+body:not(.dark)[data-look="teal-light"] .catswitch button.active,body:not(.dark)[data-look="teal-light"] .btn:not(.ghost):not(.danger){
+    background:linear-gradient(180deg,#127a77,#0a5f5e)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 6px 14px -8px rgba(6,85,90,.6)!important;border-color:transparent!important}
+.viewtabs.down button.active{color:#fff!important;border-color:transparent!important;background:linear-gradient(180deg,#127a77,#0a5f5e)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 6px 14px -8px rgba(6,85,90,.6)!important}
+.viewtabs.down button.active svg{stroke:#fff!important}
+/* Live Feed titles: each type keeps its own colour */
+.ticker .feed-pill{border:0!important;color:#fff!important;font-weight:800!important;box-shadow:none!important}
+.ticker .feed-pill.gold{background:linear-gradient(135deg,#ffd86b,#f7971e)!important;color:#4a2900!important}
+.ticker .feed-pill.green{background:linear-gradient(135deg,#00d68f,#00a86b)!important}
+.ticker .feed-pill.red{background:linear-gradient(135deg,#ff6b6b,#ee0979)!important}
+.ticker .feed-pill.blue{background:linear-gradient(135deg,#4facfe,#0083d1)!important}
+.ticker .feed-pill.purple{background:linear-gradient(135deg,#b06ab3,#4568dc)!important}
+.ticker .feed-pill.boss,.ticker .feed-pill.urg{background:linear-gradient(135deg,#c8102e,#ff5a5f)!important}
+.ticker .feed-pill.mgr{background:#fff!important;color:#004d4d!important}
 .kpi .kpi-num,.today-num,#time,.ctl-num,.lb-count,.ms-t b{font-weight:800}
 /* Live Feed: scrolling line again, with the red live dot */
 .ticker:not(.hq) .ticker-wrap{position:static!important;opacity:1!important;height:auto!important;pointer-events:auto!important;flex:1;min-width:0;overflow:hidden}
@@ -1391,14 +1432,6 @@ button,input,select,textarea{font-family:inherit}
             <button type="button" data-target="#activityLog" id="secNavLog" hidden>Log</button>
             <button type="button" data-target="#secRecords">Export</button>
         </nav>
-    <nav class="viewtabs" id="viewTabs" aria-label="Sections" role="tablist">
-            <button type="button" role="tab" data-view="dash" class="active"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</button>
-            <button type="button" role="tab" data-view="analysis"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 16v-5M10 16V7M14 16V9M18 16V5"/></svg>Analysis</button>
-            <button type="button" role="tab" data-view="studio" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Analysis Studio</button>
-            <button type="button" role="tab" data-view="calrec" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>Calendar &amp; Records</button>
-            <button type="button" role="tab" data-view="log" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Activity log</button>
-            <button type="button" role="tab" data-view="export"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Export</button>
-        </nav>
     </div>
 </header>
 
@@ -1423,6 +1456,14 @@ button,input,select,textarea{font-family:inherit}
         </div>
         <span class="hero-progress"><i id="clk-progress-fill"></i></span>
     </section>
+    <nav class="viewtabs down" id="viewTabs" aria-label="Sections" role="tablist">
+            <button type="button" role="tab" data-view="dash" class="active"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</button>
+            <button type="button" role="tab" data-view="analysis"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 16v-5M10 16V7M14 16V9M18 16V5"/></svg>Analysis</button>
+            <button type="button" role="tab" data-view="studio" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Analysis Studio</button>
+            <button type="button" role="tab" data-view="calrec" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>Calendar &amp; Records</button>
+            <button type="button" role="tab" data-view="log" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Activity log</button>
+            <button type="button" role="tab" data-view="export"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Export</button>
+        </nav>
 
     <div class="view" data-view="dash">
     <div class="section-label" id="secOverview" data-sec><span>Overview</span><em id="catNote">Showing walk-ins + phone inquiries</em></div>
