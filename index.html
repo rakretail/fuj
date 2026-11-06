@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="3.1">
+<meta name="app-version" content="3.3">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Fujairah Showroom · Tracker</title>
 <link rel="manifest" href="manifest.json">
@@ -1329,6 +1329,133 @@ body:not(.dark)[data-look="teal-light"] .catswitch button.active,body:not(.dark)
 #toast.show{transform:translate(-50%,0)}
 .np-push{margin:10px 14px 0;padding:10px 12px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:.76rem;line-height:1.4;color:var(--muted);display:flex;gap:10px;align-items:center}
 .np-push>div{flex:1;min-width:0} .np-push b{display:block;color:var(--text);font-size:.8rem} .np-push .err{color:var(--down);font-weight:600}
+
+/* ---- v3.2 · leave / hours ---- */
+.tag.leave{background:linear-gradient(135deg,#fde68a,#f59e0b);color:#5b3a00;border:0;font-weight:700}
+.lv-btn{flex:0 0 auto;width:26px;height:26px;border-radius:9px;border:1px solid var(--line);background:var(--card);font-size:13px;line-height:1;cursor:pointer;display:inline-grid;place-items:center;padding:0}
+.lv-btn:hover{border-color:var(--primary)}
+.iw-chip.leave{background:rgba(245,158,11,.14);color:#a15c00}
+body.dark .iw-chip.leave{color:#fbbf24}
+.lv-card h3{margin:0 0 10px}
+.lv-who{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:.95rem}
+.lv-who .avatar{width:34px;height:34px;font-size:12px}
+.lv-row,.hrs-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.lv-row input[type=date]{box-sizing:border-box;max-width:100%;padding-left:10px;padding-right:8px;font-size:.88rem}
+.lv-row label,.hrs-row label{display:flex;flex-direction:column;gap:5px;font-size:.72rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.lv-row .field,.hrs-row .field{width:100%;min-width:0}
+.lv-days{margin:10px 0 0;font-size:.85rem;font-weight:700;color:var(--primary);min-height:1.2em}
+.lv-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.lv-act .btn{flex:1 1 auto}
+.danger-t{color:#e0425a!important}
+.hrs-days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0}
+.dchip{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);font:700 .78rem/1.1 inherit;cursor:pointer}
+.dchip small{font-size:.62rem;font-weight:600;color:var(--primary)}
+.dchip.off{background:repeating-linear-gradient(135deg,rgba(224,66,90,.07) 0 6px,transparent 6px 12px);border-color:rgba(224,66,90,.35);color:var(--muted)}
+.dchip.off small{color:#e0425a}
+#hoursCard .btn.wide{width:100%;margin-bottom:10px}
+
+/* ---- v3.2 · glossy login with a light sweep ---- */
+.pin-overlay{overflow:hidden;background:radial-gradient(700px 420px at 12% 0%,rgba(255,255,255,.16),transparent 60%),radial-gradient(600px 420px at 100% 100%,rgba(29,108,134,.75),transparent 60%),
+    linear-gradient(135deg,#0b585a 0%,#06555a 45%,#145f72 75%,#1d6c86 100%)!important}
+.pin-overlay::before{content:"";position:absolute;top:-50%;bottom:-50%;left:-60%;width:45%;pointer-events:none;transform:skewX(-18deg);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.10) 40%,rgba(255,255,255,.22) 50%,rgba(255,255,255,.10) 60%,transparent);animation:sweepX 7s ease-in-out infinite}
+.pin-overlay::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(2px 2px at 20% 30%,rgba(255,255,255,.5),transparent),radial-gradient(1.5px 1.5px at 70% 20%,rgba(255,255,255,.45),transparent),
+    radial-gradient(2px 2px at 85% 70%,rgba(255,255,255,.4),transparent),radial-gradient(1.5px 1.5px at 35% 80%,rgba(255,255,255,.35),transparent);animation:twinkle 4s ease-in-out infinite alternate}
+.pin-card{position:relative;overflow:hidden;z-index:1;background:linear-gradient(160deg,rgba(255,255,255,.97),rgba(240,250,249,.93))!important;
+    border:1px solid rgba(255,255,255,.7)!important;box-shadow:inset 0 1px 0 #fff,0 30px 80px -20px rgba(0,30,35,.6),0 0 0 1px rgba(255,255,255,.08)!important;color:#0f2727}
+body.dark .pin-card{background:linear-gradient(160deg,rgba(16,40,42,.94),rgba(9,26,28,.92))!important;border-color:rgba(255,255,255,.10)!important;color:#e4f3f2;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 30px 80px -20px rgba(0,0,0,.7)!important}
+.pin-card::before{content:"";position:absolute;top:0;bottom:0;left:-80%;width:50%;pointer-events:none;transform:skewX(-20deg);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:sweepCard 5.5s ease-in-out 1s infinite}
+body.dark .pin-card::before{background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent)}
+.pin-card>*{position:relative}
+.pin-btn:not(.secondary){position:relative;overflow:hidden;background:linear-gradient(180deg,#1a8a86 0%,#0b6b6b 50%,#075a5b 100%)!important;color:#fff!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.12),0 10px 22px -10px rgba(6,85,90,.8)!important}
+.pin-btn:not(.secondary)::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;transform:skewX(-20deg);pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);animation:sweepCard 3.2s ease-in-out infinite}
+.pin-input:focus{box-shadow:0 0 0 4px rgba(18,122,119,.18)}
+@keyframes sweepX{0%{left:-60%}55%,100%{left:120%}}
+@keyframes sweepCard{0%{left:-80%}45%,100%{left:130%}}
+@keyframes twinkle{from{opacity:.35}to{opacity:1}}
+
+/* ---- v3.2 · main page: a light strike across the background + clock card sheen ---- */
+.bg-flash{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.bg-flash::before{content:"";position:absolute;top:-30%;bottom:-30%;left:-40%;width:22%;transform:skewX(-24deg);opacity:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.0) 20%,rgba(255,255,255,.42) 50%,rgba(255,255,255,0) 80%,transparent);
+    mix-blend-mode:soft-light;animation:strike 11s cubic-bezier(.6,0,.3,1) 2.5s infinite}
+.bg-flash::after{content:"";position:absolute;inset:0;opacity:0;background:radial-gradient(1200px 500px at 60% 0%,rgba(94,234,212,.10),transparent 70%);animation:flashGlow 11s ease-out 2.5s infinite}
+body.dark .bg-flash::before{mix-blend-mode:screen;background:linear-gradient(90deg,transparent,rgba(94,234,212,.0) 20%,rgba(94,234,212,.09) 50%,rgba(94,234,212,0) 80%,transparent)}
+@keyframes strike{0%{left:-40%;opacity:0}2%{opacity:1}13%{left:130%;opacity:1}14%,100%{left:130%;opacity:0}}
+@keyframes flashGlow{0%,1%{opacity:0}4%{opacity:1}16%,100%{opacity:0}}
+.hero-sheen{position:absolute;top:0;bottom:0;left:-50%;width:35%;pointer-events:none;z-index:1;transform:skewX(-20deg);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);animation:sweepCard 8s ease-in-out 1.5s infinite}
+.pin-overlay.hidden~.bg-flash{display:block}
+@media (prefers-reduced-motion:reduce){.pin-overlay::before,.pin-overlay::after,.pin-card::before,.pin-btn::after,.bg-flash,.hero-sheen{animation:none!important;display:none!important}}
+
+/* ---- v3.3 · notifications: clean glass cards like the app ---- */
+:root{--ab-bg:rgba(255,255,255,.88);--ab-line:rgba(0,70,70,.10);--ab-ink:#0f2727;--ab-mute:#5f7979;--ab-sh:0 18px 44px -18px rgba(4,50,52,.38),0 2px 6px -2px rgba(4,50,52,.10)}
+body.dark{--ab-bg:rgba(18,36,38,.9);--ab-line:rgba(255,255,255,.09);--ab-ink:#e8f6f4;--ab-mute:#93b3b0;--ab-sh:0 18px 44px -16px rgba(0,0,0,.7)}
+.ab-logo{flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(160deg,#16807c,#06555a);color:#fff;
+    font:800 7px/1 Poppins,sans-serif;letter-spacing:.3px;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+/* toast */
+#toast{display:flex!important;align-items:center;gap:10px;width:max-content;max-width:min(440px,calc(100vw - 24px));padding:9px 10px 9px 9px!important;border-radius:16px!important;
+    background:var(--ab-bg)!important;color:var(--ab-ink)!important;border:1px solid var(--ab-line)!important;box-shadow:var(--ab-sh)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);font-weight:600;font-size:.86rem;line-height:1.35;overflow:hidden;
+    transition:transform .45s cubic-bezier(.2,1.2,.3,1),opacity .25s ease!important}
+#toast .t-ic{flex:none;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-size:15px;font-weight:800;color:#fff;
+    background:linear-gradient(160deg,#16807c,#06555a);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+#toast.bad .t-ic{background:linear-gradient(160deg,#ef5a6f,#c0283f)}
+#toast .t-tx{min-width:0;padding-right:6px}
+#toast button{flex:none;background:rgba(11,107,107,.10)!important;color:#0b6b6b!important;border:0!important;border-radius:10px!important;padding:7px 13px!important;font-weight:800!important;letter-spacing:.2px!important}
+body.dark #toast button{background:rgba(94,234,212,.12)!important;color:#7ff0dc!important}
+#toast .t-bar{position:absolute;left:0;bottom:0;height:2px;width:100%;background:linear-gradient(90deg,#16807c,#5eead4);transform-origin:left;transform:scaleX(0)}
+#toast.show .t-bar{animation:tbar var(--t-ms,2200ms) linear forwards}
+#toast.bad .t-bar{background:linear-gradient(90deg,#c0283f,#ef5a6f)}
+@keyframes tbar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+/* in-app banner (new message) */
+#abWrap{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 12px);transform:translateX(-50%);z-index:6100;width:min(420px,calc(100vw - 20px));display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.ab{pointer-events:auto;position:relative;display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 12px;padding:12px 14px 12px 12px;border-radius:20px;background:var(--ab-bg);color:var(--ab-ink);
+    border:1px solid var(--ab-line);box-shadow:var(--ab-sh);-webkit-backdrop-filter:blur(20px) saturate(1.7);backdrop-filter:blur(20px) saturate(1.7);cursor:pointer;overflow:hidden;
+    animation:abIn .5s cubic-bezier(.2,1.25,.3,1) both;touch-action:pan-y}
+.ab.out{animation:abOut .3s ease forwards}
+.ab-top{grid-column:1/-1;display:flex;align-items:center;gap:7px;font-size:.66rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ab-mute);margin-bottom:4px}
+.ab-top .ab-k{color:var(--ab-tone,#0b6b6b)} .ab-top time{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:600}
+.ab-av{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.82rem;background:linear-gradient(160deg,var(--ab-tone2,#16807c),var(--ab-tone,#06555a))}
+.ab-b{min-width:0}
+.ab-b b{display:block;font-size:.92rem;font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ab-b p{margin:2px 0 0;font-size:.86rem;line-height:1.4;color:var(--ab-ink);opacity:.86;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ab-b em{font-style:normal;font-size:.72rem;font-weight:700;color:var(--ab-mute)}
+.ab-act{grid-column:2;display:flex;gap:8px;margin-top:8px}
+.ab-act button{border:0;border-radius:10px;padding:7px 14px;font:800 .78rem/1 inherit;cursor:pointer;background:rgba(11,107,107,.10);color:#0b6b6b}
+.ab-act button.pri{background:linear-gradient(180deg,#127a77,#0a5f5e);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
+body.dark .ab-act button{background:rgba(255,255,255,.08);color:#cfeee9}
+.ab[data-tone=team]{--ab-tone:#3f46c8;--ab-tone2:#6d74f5}
+.ab-bar{position:absolute;left:0;bottom:0;height:2px;width:100%;background:linear-gradient(90deg,var(--ab-tone,#0b6b6b),transparent);transform-origin:left;animation:tbar var(--ab-ms,7000ms) linear forwards}
+.ab:hover .ab-bar{animation-play-state:paused}
+@keyframes abIn{from{opacity:0;transform:translateY(-26px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes abOut{to{opacity:0;transform:translateY(-22px) scale(.97)}}
+/* message pop-up */
+.modal-card.bc-card{max-width:420px!important;border-radius:26px!important;background:var(--ab-bg)!important;border:1px solid var(--ab-line)!important;
+    -webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);box-shadow:0 30px 70px -24px rgba(0,30,35,.55)!important;color:var(--ab-ink)}
+#bcModal{background:rgba(4,30,32,.38)!important;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.bc-band{height:0!important}
+.bc-card::before{content:"";position:absolute;inset:0 0 auto 0;height:120px;pointer-events:none;border-radius:26px 26px 0 0;
+    background:radial-gradient(120% 100% at 0% 0%,color-mix(in srgb,var(--tone) 16%,transparent),transparent 70%)}
+.bc-card{position:relative}
+.bc-app{position:relative;display:flex;align-items:center;gap:8px;padding:16px 20px 0;font-size:.68rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--ab-mute)}
+.bc-app .bc-appn{margin-right:auto}
+.bc-app .bc-kind{background:color-mix(in srgb,var(--tone) 12%,transparent)!important;color:var(--tone)!important;border:0!important}
+body.dark .bc-app .bc-kind{color:var(--tone2)!important}
+.bc-head{position:relative;padding:14px 20px 0!important}
+.bc-av{width:44px!important;height:44px!important;border-radius:14px!important;background:linear-gradient(160deg,var(--tone2),var(--tone))!important}
+.bc-who b{font-size:1.05rem!important}
+.bc-text{margin:12px 20px 0!important;padding:0!important;background:none!important;border:0!important;font-size:1.04rem!important;line-height:1.6!important;color:var(--ab-ink)!important;font-weight:500!important}
+.bc-foot{padding:18px 20px 20px!important}
+body #bcModal .bc-card .btn.bc-ok{border-radius:14px!important;min-height:46px;background:linear-gradient(180deg,color-mix(in srgb,var(--tone) 82%,#fff),var(--tone))!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 10px 20px -10px var(--tone)!important}
+#bcModal[data-tone="urgent"] .bc-card{box-shadow:0 0 0 2px rgba(224,66,90,.35),0 30px 70px -24px rgba(120,10,30,.55)!important}
+#bcModal:not(.hidden) .bc-card{animation:abIn .45s cubic-bezier(.2,1.25,.3,1) both}
+@media (max-width:560px){#bcModal{align-items:flex-start!important;padding-top:calc(env(safe-area-inset-top) + 14px)!important}}
+@media (prefers-reduced-motion:reduce){.ab,#bcModal .bc-card{animation:none!important}#toast .t-bar,.ab-bar{display:none}}
 .kpi .kpi-num,.today-num,#time,#heroToday,.ad-tile b,.ms-t b{font-weight:800}
 button,input,select,textarea{font-family:inherit}
 </style>
@@ -1357,10 +1484,10 @@ button,input,select,textarea{font-family:inherit}
 <div id="bcModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="bcFrom" data-tone="hq">
     <div class="modal-card bc-card">
         <div class="bc-band"></div>
+        <div class="bc-app"><span class="ab-logo" aria-hidden="true">RAK</span><span class="bc-appn">RAK Ceramics</span><span class="bc-kind"><i></i><span id="bcKind">Message</span></span></div>
         <div class="bc-head">
             <span class="bc-av" id="bcAv">—</span>
             <div class="bc-who"><b id="bcFrom">—</b><small id="bcWhen"></small></div>
-            <span class="bc-kind"><i></i><span id="bcKind">Message</span></span>
         </div>
         <p class="bc-text" id="bcText"></p>
         <div class="bc-foot"><span class="bc-count" id="bcCount"></span><button class="btn bc-ok" id="bcOk" type="button" onclick="ackBroadcast()">Got it</button></div>
@@ -1680,7 +1807,7 @@ button,input,select,textarea{font-family:inherit}
         <button type="button" data-tab="msg"><span>📣</span>Communication centre</button>
         <div class="adm-grp">Operations</div>
         <button type="button" data-tab="entries" id="admTabEntries" hidden><span>🗂</span>Entry management</button>
-        <button type="button" data-tab="idle"><span>⏱</span>Inactivity monitoring</button>
+        <button type="button" data-tab="idle"><span>⏱</span>Hours &amp; inactivity</button>
         <button type="button" data-tab="app"><span>⚙️</span>App &amp; system settings</button>
     </nav>
     <div class="adm-body">
@@ -1726,7 +1853,14 @@ button,input,select,textarea{font-family:inherit}
                     <select class="field" id="idleHoursSel" aria-label="Alert after"><option value="3">3 hours</option><option value="4">4 hours</option><option value="5">5 hours</option><option value="6">6 hours</option><option value="7">7 hours</option><option value="8">8 hours</option><option value="9">9 hours</option><option value="10">10 hours</option><option value="0">Off</option></select>
                     <button class="btn" type="submit">Save</button>
                 </form>
-                <div class="adm-help" style="margin:0">Alerts managers when an <b>on-duty</b> executive logs nothing for this many working hours (08:00–22:00). Off-duty staff are skipped.</div>
+                <div class="adm-help" style="margin:0">Alerts managers when an <b>on-duty</b> executive logs nothing for this many opening hours. Off-duty and on-leave staff are skipped.</div>
+            </div>
+            <div class="adm-card" id="hoursCard">
+                <div class="adm-card-head"><b>Showroom hours</b><span class="adm-badge ok" id="hoursBadge">09–21</span></div>
+                <div class="hrs-row"><label>Opens<select class="field" id="hOpen" aria-label="Opens"></select></label><label>Closes<select class="field" id="hClose" aria-label="Closes"></select></label></div>
+                <div class="hrs-days" id="offDaysBox" aria-label="Working days"></div>
+                <button class="btn wide" type="button" onclick="saveHours()">Save hours</button>
+                <div class="adm-help" style="margin:0">Tap a day to mark it <b>off</b>. Inactivity is counted only during opening hours on working days.</div>
             </div>
             <div class="adm-wide" id="admIdleList"></div>
         </section>
@@ -1922,6 +2056,37 @@ document.addEventListener("click", function (e) { if (e.target.closest && e.targ
     place(); setInterval(place, 1500);
 })();
 
+// v3.2 · light strike across the page and a sheen on the clock card
+(function shine() {
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const f = document.createElement("div"); f.className = "bg-flash"; f.setAttribute("aria-hidden", "true"); document.body.appendChild(f);
+    const h = document.querySelector(".hero"); if (h && !h.querySelector(".hero-sheen")) { const s = document.createElement("i"); s.className = "hero-sheen"; s.setAttribute("aria-hidden", "true"); h.appendChild(s); }
+})();
+
+// v3.3 · in-app banner for new messages: who, what, Read — slides in at the top, swipe up / tap ✕ area to dismiss
+function appBanner(o) {
+    if (!o._w) { o._w = 1; setTimeout(() => appBanner(o), 80); return; }                 // let the urgent pop-up open first
+    const bm = document.getElementById("bcModal");
+    if (bm && !bm.classList.contains("hidden")) { setTimeout(() => appBanner(o), 1200); return; }   // show it once that pop-up is closed   // after the urgent pop-up is closed
+    let w = document.getElementById("abWrap");
+    if (!w) { w = document.createElement("div"); w.id = "abWrap"; w.setAttribute("aria-live", "polite"); document.body.appendChild(w); }
+    while (w.children.length >= 2) w.firstChild.remove();
+    const d = document.createElement("div"), ms = o.ms || 8000;
+    d.className = "ab"; d.dataset.tone = o.tone || "hq"; d.style.setProperty("--ab-ms", ms + "ms"); d.setAttribute("role", "status");
+    const when = o.ts ? new Date(o.ts).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) : "now";
+    d.innerHTML = `<div class="ab-top"><span class="ab-logo">RAK</span><span>RAK Ceramics</span>·<span class="ab-k">${esc(o.kind || "Message")}</span><time>${esc(when)}</time></div>
+        <span class="ab-av">${esc(initials(o.who || "RAK"))}</span>
+        <div class="ab-b"><b>${esc(o.who || "")}</b><p>${esc(o.text || "")}</p>${o.more ? `<em>${esc(o.more)}</em>` : ""}</div>
+        <div class="ab-act">${o.fn ? `<button type="button" class="pri" data-ab="go">${esc(o.label || "Open")}</button>` : ""}<button type="button" data-ab="x">Later</button></div><i class="ab-bar"></i>`;
+    let t = null;
+    const close = () => { clearTimeout(t); d.classList.add("out"); setTimeout(() => d.remove(), 320); };
+    d.addEventListener("click", e => { const b = e.target.closest("[data-ab]"); close(); if ((!b || b.dataset.ab === "go") && o.fn) o.fn(); });
+    d.addEventListener("mouseenter", () => clearTimeout(t)); d.addEventListener("mouseleave", () => { t = setTimeout(close, 2500); });
+    let y0 = null; d.addEventListener("touchstart", e => { y0 = e.touches[0].clientY; }, { passive: true });
+    d.addEventListener("touchmove", e => { if (y0 !== null && e.touches[0].clientY - y0 < -24) { y0 = null; close(); } }, { passive: true });
+    w.appendChild(d); t = setTimeout(close, ms);
+}
+
 </script>
 
 <footer>© 2026 Hesper. All rights reserved. · <span id="footVersion"></span></footer>
@@ -2067,7 +2232,7 @@ if ("serviceWorker" in navigator) {
 // ================================================================
 let executives = [];
 let managers = [];
-let lockedUsers = {};
+let lockedUsers = {}, rawLocks = {}, leaveMap = {};   // lockedUsers = off duty OR on annual leave today
 let settings = {};
 let historyData = [];
 let dataReady = { execs: false, walkins: false };
@@ -2111,10 +2276,15 @@ const shortDate = k => { const [y, m, d] = k.split("-"); return new Date(+y, +m 
 
 let toastTimer;
 function toast(msg, ms, action) {
-    const t = $("toast");
-    t.innerHTML = `<span>${esc(msg)}</span>${action ? `<button type="button">${esc(action.label)}</button>` : ""}`;
+    const t = $("toast"); msg = String(msg);
+    const bad = /couldn|can't|cannot|failed|blocked|denied|error|not allowed/i.test(msg);
+    const m = msg.match(/^(\p{Extended_Pictographic}\uFE0F?|✓|✕)\s*/u), ic = m ? m[1] : (bad ? "!" : "✓");
+    if (m) msg = msg.slice(m[0].length);
+    t.className = bad ? "bad" : "";
+    t.style.setProperty("--t-ms", (ms || 2200) + "ms");
+    t.innerHTML = `<span class="t-ic">${esc(ic)}</span><span class="t-tx">${esc(msg)}</span>${action ? `<button type="button">${esc(action.label)}</button>` : ""}<i class="t-bar"></i>`;
     if (action) t.querySelector("button").onclick = () => { t.classList.remove("show"); clearTimeout(toastTimer); action.fn(); };
-    t.classList.add("show");
+    t.classList.remove("show"); void t.offsetWidth; t.classList.add("show");
     clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), ms || 2200);
 }
 
@@ -2359,8 +2529,12 @@ function initAppLogic() {
         renderAll();
         if ($("adminPanel").classList.contains("active")) renderAdmin();
     });
+    window.dbOnValue(R("leave"), snap => {
+        leaveMap = snap.val() || {}; recalcOff(); renderAll();
+        if ($("adminPanel").classList.contains("active")) renderAdmin();
+    }, () => { leaveMap = {}; });
     window.dbOnValue(R("locks"), snap => {
-        lockedUsers = snap.val() || {};
+        rawLocks = snap.val() || {}; recalcOff();
         renderAll();
         if ($("adminPanel").classList.contains("active")) renderAdmin();
     });
@@ -2375,7 +2549,7 @@ function initAppLogic() {
         execDefaultPin = {}; Object.keys(v).forEach(k => { execDefaultPin[k] = !!(v[k] && v[k].pin === DEFAULT_PIN); });
         if ($("adminPanel").classList.contains("active")) renderAdmin();
     }, () => {});
-    window.dbOnValue(R("settings"), snap => { settings = snap.val() || {}; renderAll(); }, () => { settings = {}; });
+    window.dbOnValue(R("settings"), snap => { settings = snap.val() || {}; applyHours(); renderAll(); if ($("adminPanel").classList.contains("active")) renderIdleAdmin(); }, () => { settings = {}; });
     window.dbOnValue(R("broadcasts"), snap => onBroadcasts(snap.val()), () => {});
     window.dbOnValue(R("walkins"), snap => {
         const rows = [];
@@ -2550,6 +2724,7 @@ function execStats(name) {
 // ================================================================
 function renderAll() {
     if (!window.__appBooted) return;
+    recalcOff();
     document.body.classList.toggle("is-loading", !(dataReady.execs && dataReady.walkins));
     document.body.dataset.cat = catFilter;
     recompute();
@@ -2690,8 +2865,9 @@ function renderGrid() {
         const n = esc(name), sig = `${s.tw}|${s.tp}`;
         next[name] = sig;
         const bump = ready && prevCard[name] !== undefined && prevCard[name] !== sig;
-        const meta = [rank[name] ? `#${rank[name]} this month` : "No entries this month", s.streak > 1 ? `🔥 ${s.streak}d streak` : ""].filter(Boolean).join(" · ");
-        const status = manager
+        const away = onLeave(name), lvTxt = lvNote(name);
+        const meta = [!away && lvTxt ? lvTxt : "", rank[name] ? `#${rank[name]} this month` : "No entries this month", s.streak > 1 ? `🔥 ${s.streak}d streak` : ""].filter(Boolean).join(" · ");
+        const status = away ? `<span class="tag leave" title="${esc(lvTxt)}">🌴 On leave</span>` : (manager || isMe)
             ? `<button class="duty ${locked ? "off" : "on"}" data-act="lock" data-name="${n}" title="Tap to ${locked ? "activate" : "set off duty"}"><i></i><span>${locked ? "OFF DUTY" : "ACTIVE"}</span></button>`
             : locked ? `<span class="tag view">Off duty</span>` : isMe ? `<span class="tag you">You</span>` : `<span class="tag view ro-tag">View</span>`;
         return `
@@ -2700,7 +2876,7 @@ function renderGrid() {
                 <span class="avatar" style="--av:${avColor(name)}">${esc(initials(name))}</span>
                 <div class="card-who">
                     <button class="card-name ${name.length > 22 ? "long" : ""}" data-act="detail" data-name="${n}" title="${n} — view details">${n}</button>
-                    <div class="card-sub">${status}<span class="card-meta" title="${esc(meta)}">${meta}</span></div>
+                    <div class="card-sub">${status}${isMe ? `<button class="lv-btn" type="button" data-act="leave" data-name="${n}" title="Annual leave" aria-label="Annual leave">🌴</button>` : ""}<span class="card-meta" title="${esc(meta)}">${meta}</span></div>
                 </div>
             </div>
             <div class="card-mid"><div><span class="today-num">${s.today}</span><span class="today-lbl">${todayLbl}</span></div>${sparkSvg(s.spark)}</div>
@@ -2718,6 +2894,7 @@ $("grid").addEventListener("click", e => {
     if (b.dataset.act === "inc") update(name, 1, b.dataset.type);
     else if (b.dataset.act === "dec") update(name, -1, b.dataset.type);
     else if (b.dataset.act === "lock") toggleLock(name);
+    else if (b.dataset.act === "leave") openLeave(name);
     else if (b.dataset.act === "detail") openDetail(name);
 });
 
@@ -3677,7 +3854,7 @@ function buildTicker() {
     else if (A.m >= 500) add("milestone", `🎊 <span class="feed-pill green">MILESTONE</span> ${fmt(A.m)} walk-ins this month — only ${fmt(1000 - A.m)} more to reach 1,000! Push! 💥`);
     else if (A.m >= 100) add("milestone", `🎈 <span class="feed-pill blue">CENTURY+</span> ${fmt(A.m)} walk-ins logged this month. Onwards! 🚀`);
 
-    const closing = `👩‍💻 <span class="feed-pill green">Team Fujairah</span> Converting 'maybe' into 'invoice' — one smile at a time. 💚`;
+    const closing = `👩‍💻 <span class="feed-pill green">TEAM FUJAIRAH</span> Converting 'maybe' into 'invoice' — one smile at a time. 💚`;
     const middle = messages.map(m => ({ html: m.html, o: tickerRand("order:" + m.key) })).sort((a, b) => a.o - b.o).map(m => m.html);
     // Manager's messages to the team lead the feed, and come round again half-way through.
     const team = activeTeamMsgs().map(b => `<span class="feed-pill mgr${b.urgent ? " urg" : ""}">${esc(bcSender(b).toUpperCase())}</span><span class="feed-mgr">${esc(b.text.replace(/\s+/g, " "))}</span>`);
@@ -3772,7 +3949,10 @@ function showNextBroadcast() {
     if (fresh.length) {
         fresh.forEach(x => bcQuiet.add(x.id));
         const one = fresh[fresh.length - 1];
-        toast(fresh.length === 1 ? `New message from ${bcSender(one)}` : `${fresh.length} new messages`, 6000, { label: "Read", fn: () => openBroadcast(one.id) });
+        appBanner({ who: bcSender(one), kind: isTeamMsg(one) ? "Team message" : "Head office", text: fresh.length === 1 ? one.text : `${one.text}`,
+            more: fresh.length > 1 ? `+${fresh.length - 1} more` : "", tone: isTeamMsg(one) ? "team" : "hq", ts: one.ts,
+            label: "Read", fn: () => openBroadcast(one.id) });
+        playTone("message");
     }
     const b = bcManual ? bcQueue.find(x => x.id === bcManual) : bcQueue.find(x => x.urgent);
     if (!b) { if (!m.classList.contains("hidden")) { m.classList.add("hidden"); maybeApplyPending(); } bcShown = null; return; }
@@ -3986,9 +4166,10 @@ function renderAdmin() {
         const month = st ? Math.max(0, st.month) : 0, today = st ? Math.max(0, st.today) : 0;
         return `<div class="adm-person ${locked ? "off" : ""}">
             <span class="avatar" style="--av:${avColor(name)}">${esc(initials(name))}</span>
-            <div class="adm-person-txt"><b>${n}</b><small>${execDefaultPin[name] ? `<em class="adm-pill">Default PIN</em>` : ""}${locked ? "Off duty · " : ""}${fmt(today)} today · ${fmt(month)} this month</small></div>
+            <div class="adm-person-txt"><b>${n}</b><small>${execDefaultPin[name] ? `<em class="adm-pill">Default PIN</em>` : ""}${lvNote(name) ? esc(lvNote(name)) + " · " : locked ? "Off duty · " : ""}${fmt(today)} today · ${fmt(month)} this month</small></div>
             <div class="adm-actions">
                 <button type="button" class="adm-switch ${locked ? "" : "on"}" data-act="lock" data-name="${n}" role="switch" aria-checked="${!locked}" title="${locked ? "Off duty — tap to set on duty" : "On duty — tap to set off duty"}"><i></i></button>
+                <button type="button" class="adm-icon" data-act="leave" data-name="${n}" title="Annual leave for ${n}">🌴</button>
                 <button type="button" class="adm-icon" data-act="reset" data-kind="executives" data-name="${n}" title="Reset ${n}'s PIN to 1234">🔑</button>
                 <button type="button" class="adm-icon danger" data-act="remove-exec" data-name="${n}" title="Remove ${n}">🗑</button>
             </div></div>`;
@@ -4013,6 +4194,7 @@ $("adminPanel").addEventListener("click", e => {
     const b = e.target.closest("button[data-act]"); if (!b || b.disabled) return;
     const name = b.dataset.name, act = b.dataset.act;
     if (act === "lock") toggleLock(name);
+    else if (act === "leave") openLeave(name);
     else if (act === "reset") resetPin(b.dataset.kind, name);
     else if (act === "remove-exec") deleteExecutive(name);
     else if (act === "remove-mgr") deleteManager(name);
@@ -4138,9 +4320,73 @@ async function deleteExecutive(name) {
     } catch (e) { alert("Couldn't fully remove that person. Please try again."); }
 }
 
+// ---------- v3.2 · annual leave ----------
+const todayISO = (d = new Date()) => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+const fmtISO = s => new Date(s + "T00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+function leaveOf(name) { const v = leaveMap[keyOf(name)]; return v && v.from && v.to ? v : null; }
+function onLeave(name, iso) { const v = leaveOf(name); iso = iso || todayISO(); return !!(v && v.from <= iso && iso <= v.to); }
+function leaveBack(name) {   // start of the first day back, once the leave is over (idle clock restarts there)
+    const v = leaveOf(name); if (!v) return 0;
+    const t = new Date(v.to + "T00:00").getTime() + DAY; return t <= Date.now() ? t : 0;
+}
+function lvNote(name) {
+    const v = leaveOf(name); if (!v) return "";
+    if (onLeave(name)) return `🌴 On leave · back ${fmtISO(todayISO(new Date(new Date(v.to + "T00:00").getTime() + DAY)))}`;
+    const t = todayISO(); if (v.from > t && new Date(v.from + "T00:00") - Date.now() < 45 * DAY) return `🌴 Leave ${fmtISO(v.from)} – ${fmtISO(v.to)}`;
+    return "";
+}
+function recalcOff() { const o = Object.assign({}, rawLocks); executives.forEach(n => { if (onLeave(n)) o[n] = true; }); lockedUsers = o; }
+function canManageSelf(name) { return isManager() || (!!name && name === getCurrentExec()); }
+function leaveModal() {
+    let m = $("leaveModal"); if (m) return m;
+    m = document.createElement("div"); m.id = "leaveModal"; m.className = "modal-overlay hidden";
+    m.innerHTML = `<div class="modal-card lv-card" role="dialog" aria-modal="true" aria-labelledby="lvTitle">
+        <h3 id="lvTitle">🌴 Annual leave</h3>
+        <p class="lv-who"><span class="avatar" id="lvAv"></span><b id="lvName"></b></p>
+        <div class="lv-row"><label>From<input type="date" class="field" id="lvFrom"></label><label>To<input type="date" class="field" id="lvTo"></label></div>
+        <p class="lv-days" id="lvDays"></p>
+        <div class="pin-error" id="lvErr"></div>
+        <div class="lv-act"><button class="btn" type="button" id="lvSave">Save leave</button><button class="btn ghost danger-t" type="button" id="lvClear" hidden>Cancel leave</button><button class="btn ghost" type="button" id="lvClose">Close</button></div>
+    </div>`;
+    document.body.appendChild(m);
+    const days = () => { const f = $("lvFrom").value, t = $("lvTo").value; if (!f || !t || t < f) { $("lvDays").textContent = ""; return; }
+        const n = Math.round((new Date(t + "T00:00") - new Date(f + "T00:00")) / DAY) + 1; $("lvDays").textContent = `${n} day${n === 1 ? "" : "s"}`; };
+    $("lvFrom").addEventListener("change", () => { if ($("lvTo").value < $("lvFrom").value) $("lvTo").value = $("lvFrom").value; $("lvTo").min = $("lvFrom").value; days(); });
+    $("lvTo").addEventListener("change", days);
+    m.addEventListener("click", e => { if (e.target === m || e.target.id === "lvClose") m.classList.add("hidden"); });
+    $("lvSave").addEventListener("click", saveLeave); $("lvClear").addEventListener("click", clearLeave);
+    return m;
+}
+function openLeave(name) {
+    if (!canManageSelf(name)) return;
+    const m = leaveModal(), v = leaveOf(name), t = todayISO();
+    m.dataset.name = name; $("lvName").textContent = name;
+    $("lvAv").textContent = initials(name); $("lvAv").style.setProperty("--av", avColor(name));
+    $("lvFrom").value = v && v.to >= t ? v.from : t; $("lvTo").value = v && v.to >= t ? v.to : t; $("lvTo").min = $("lvFrom").value;
+    $("lvClear").hidden = !(v && v.to >= t); $("lvErr").textContent = ""; $("lvFrom").dispatchEvent(new Event("change"));
+    m.classList.remove("hidden");
+}
+async function saveLeave() {
+    const m = leaveModal(), name = m.dataset.name, f = $("lvFrom").value, t = $("lvTo").value;
+    if (!f || !t) { $("lvErr").textContent = "Pick both dates."; return; }
+    if (t < f) { $("lvErr").textContent = "The end date is before the start date."; return; }
+    if (t < todayISO()) { $("lvErr").textContent = "That leave has already finished."; return; }
+    try { await window.dbSet(R("leave/" + keyOf(name)), { name, from: f, to: t, by: getCurrentExec() || "", ts: Date.now() });
+        m.classList.add("hidden"); toast(`🌴 Leave saved · ${fmtISO(f)} – ${fmtISO(t)}`); }
+    catch (e) { $("lvErr").textContent = "Couldn't save. Please try again."; }
+}
+async function clearLeave() {
+    const m = leaveModal(), name = m.dataset.name;
+    try { await window.dbRemove(R("leave/" + keyOf(name)));
+        Promise.resolve(window.dbSet(R("settings/dutyTs/" + keyOf(name)), Date.now())).catch(() => {});
+        m.classList.add("hidden"); toast(`${name} is back from leave`); }
+    catch (e) { $("lvErr").textContent = "Couldn't cancel. Please try again."; }
+}
+
 function toggleLock(name) {
-    if (!isManager()) return;
-    const next = !lockedUsers[name];
+    if (!canManageSelf(name)) return;
+    if (onLeave(name)) { openLeave(name); return; }
+    const next = !rawLocks[name];
     Promise.resolve(window.dbSet(R("locks/" + name), next))
         .then(() => { toast(next ? `${name} set off duty` : `${name} is back on duty`);
             Promise.resolve(window.dbSet(R("settings/dutyTs/" + keyOf(name)), Date.now())).catch(() => {}); })
@@ -4262,7 +4508,7 @@ const isStandalone = () => { try { return matchMedia("(display-mode: standalone)
 async function sysNotify(title, body, tag, opts) {
     opts = opts || {};
     if (!notifOK()) return false;
-    const o = { body: String(body || "").slice(0, 300), tag, icon: NOTIF_ICON, badge: NOTIF_ICON, renotify: true, requireInteraction: !!opts.sticky, data: { url: location.href } };
+    const o = { body: String(body || "").slice(0, 300), tag, icon: NOTIF_ICON, badge: "notif-badge.png", renotify: true, silent: false, timestamp: Date.now(), requireInteraction: !!opts.sticky, data: { url: location.href } };
     // Desktop: a page notification (tapping it brings this window forward).
     try {
         const n = new Notification(title, o);
@@ -4296,13 +4542,13 @@ function askNotif() {
     }
     Promise.resolve(Notification.requestPermission()).then(p => {
         renderNotif(); updateBell();
-        if (p === "granted") { sysNotify("Notifications are on", `${STORE_NAME} · you'll be notified of new messages.`, "alerts-on"); playTone("message", true); }
+        if (p === "granted") { sysNotify("✅ Notifications are on", `${STORE_NAME} · new messages will appear here.`, "alerts-on"); playTone("message", true); }
         else if (p === "denied") toast("Notifications are blocked. Allow them for this site in the browser settings.", 4500);
     }).catch(() => {});
 }
 function testNotif() {
     playTone("message", true);
-    sysNotify(`Test · ${STORE_NAME}`, "This is how a new message will appear.", "test").then(ok => { if (!ok) toast("Couldn't show a notification on this device.", 3000); });
+    sysNotify(`Head office · ${STORE_NAME}`, "This is how a new message will look on this device.", "test").then(ok => { if (!ok) toast("Couldn't show a notification on this device.", 3000); });
 }
 
 // Once per session after login: a small card offering to switch notifications on (needs a tap — browsers require it).
@@ -4344,24 +4590,28 @@ function unlockAudio() {
 ["pointerdown", "keydown", "touchend"].forEach(t => window.addEventListener(t, unlockAudio, true));
 // "message": a soft three-note chime · "urgent": a brighter double call
 function playTone(kind, force) {
+    // "message": a soft two-note ping · "urgent": a bright three-pulse call, played twice
     if (!force && !soundOn()) return;
     const c = getAudio(); if (!c || c.state === "closed") return;
     try {
         const urgent = kind === "urgent", t0 = c.currentTime + 0.03;
-        const out = c.createGain(); out.gain.value = urgent ? 0.34 : 0.28; out.connect(c.destination);
-        const notes = urgent ? [[880, 0], [1318.5, 0.13], [880, 0.4], [1318.5, 0.53]] : [[783.99, 0], [1046.5, 0.12], [1567.98, 0.24]];
-        const len = urgent ? 0.5 : 1.1;
+        const out = c.createGain(); out.gain.value = urgent ? 0.36 : 0.3; out.connect(c.destination);
+        const comp = c.createDynamicsCompressor ? c.createDynamicsCompressor() : null; if (comp) { out.disconnect(); out.connect(comp); comp.connect(c.destination); }
+        const notes = urgent
+            ? [[987.77, 0], [1318.51, .11], [1760, .22], [987.77, .62], [1318.51, .73], [1760, .84]]
+            : [[1174.66, 0], [1567.98, .14]];
+        const len = urgent ? .32 : .9;
         notes.forEach(([f, at]) => {
             const s = t0 + at;
-            [[1, "sine", 1], [2, "sine", 0.22], [3, "triangle", 0.06]].forEach(([mul, type, lvl]) => {
+            [[1, "sine", 1], [2.01, "sine", .18], [4.2, "sine", .05]].forEach(([mul, type, lvl]) => {   // bell-like partials
                 const o = c.createOscillator(), g = c.createGain();
                 o.type = type; o.frequency.value = f * mul;
-                g.gain.setValueAtTime(0.0001, s); g.gain.exponentialRampToValueAtTime(lvl, s + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, s + len / mul);
+                g.gain.setValueAtTime(0.0001, s); g.gain.exponentialRampToValueAtTime(lvl, s + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, s + len / Math.sqrt(mul));
                 o.connect(g); g.connect(out); o.start(s); o.stop(s + len + 0.05);
             });
         });
     } catch (e) {}
-    try { if (navigator.vibrate) navigator.vibrate(kind === "urgent" ? [120, 60, 120, 60, 120] : [80, 50, 80]); } catch (e) {}
+    try { if (navigator.vibrate) navigator.vibrate(kind === "urgent" ? [160, 70, 160, 70, 160] : [60, 40, 60]); } catch (e) {}
 }
 function chime() { playTone("message"); }
 function toggleSound() {
@@ -4386,7 +4636,7 @@ function notifyBroadcasts() {
     if (!notifOK() || pushIsOn()) return;                         // phone/computer alerts handle it
     fresh.slice(0, 3).forEach(b => {
         done.add(b.id);
-        sysNotify(`${b.urgent ? "🚨 " : ""}${bcSender(b)}${isTeamMsg(b) ? " · Team" : ""}`, b.text, "bc-" + b.id, { sticky: !!b.urgent, onclick: showNextBroadcast });
+        sysNotify(b.urgent ? `🔴 Urgent · ${bcSender(b)}` : `${bcSender(b)} · ${isTeamMsg(b) ? "Team" : "Head office"}`, b.text, "bc-" + b.id, { sticky: !!b.urgent, onclick: showNextBroadcast });
     });
     try { const live = new Set(broadcasts.map(b => b.id)); localStorage.setItem(LS_BC_NOTE(), JSON.stringify([...done].filter(x => live.has(x)))); } catch (e) {}
 }
@@ -4475,7 +4725,42 @@ document.addEventListener("click", e => {
 //  Off-duty executives are skipped, and their clock restarts when they
 //  are switched back on duty (settings/dutyTs/{name}).
 // ================================================================
-const BIZ_OPEN = 9, BIZ_CLOSE = 21, DEFAULT_IDLE_H = 10;   // idle time only counts 08:00–22:00
+let BIZ_OPEN = 9, BIZ_CLOSE = 21; const DEFAULT_IDLE_H = 10;   // opening hours: settings/workHours {open, close}
+const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"], DAY_LBL = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+function applyHours() {
+    const w = settings.workHours || {}; let o = parseInt(w.open, 10), c = parseInt(w.close, 10);
+    if (!(o >= 0 && o <= 23)) o = 9; if (!(c > o && c <= 24)) c = Math.max(o + 1, 21);
+    BIZ_OPEN = o; BIZ_CLOSE = c;
+}
+function isOffDay(d) { return !!(settings.offDays || {})[DAY_KEYS[new Date(d).getDay()]]; }
+let hoursDraft = null;
+function renderHoursAdmin() {
+    const o = $("hOpen"), c = $("hClose"), box = $("offDaysBox"); if (!o || !c || !box) return;
+    if (!o.options.length) {
+        for (let h = 0; h <= 23; h++) o.add(new Option(pad(h) + ":00", h));
+        for (let h = 1; h <= 24; h++) c.add(new Option(pad(h) + ":00", h));
+        const dirty = () => { hoursDraft = hoursDraft || { off: Object.assign({}, settings.offDays || {}) }; };
+        o.addEventListener("change", dirty); c.addEventListener("change", dirty);
+        box.addEventListener("click", e => { const b = e.target.closest("button[data-day]"); if (!b) return;
+            hoursDraft = hoursDraft || { off: Object.assign({}, settings.offDays || {}) };
+            hoursDraft.off[b.dataset.day] = !hoursDraft.off[b.dataset.day]; renderHoursAdmin(); });
+    }
+    if (!hoursDraft) { o.value = String(BIZ_OPEN); c.value = String(BIZ_CLOSE); }
+    const off = hoursDraft ? hoursDraft.off : (settings.offDays || {});
+    box.innerHTML = DAY_KEYS.map((k, i) => `<button type="button" class="dchip ${off[k] ? "off" : ""}" data-day="${k}" aria-pressed="${!off[k]}">${DAY_LBL[i]}<small>${off[k] ? "Off" : "Open"}</small></button>`).join("");
+    const so = settings.offDays || {}, offs = DAY_KEYS.filter(k => so[k]).map(k => DAY_LBL[DAY_KEYS.indexOf(k)]);
+    const b = $("hoursBadge"); if (b) b.textContent = `${pad(BIZ_OPEN)}–${pad(BIZ_CLOSE)}${offs.length ? " · " + offs.join(", ") + " off" : ""}`;
+}
+async function saveHours() {
+    const o = parseInt($("hOpen").value, 10), c = parseInt($("hClose").value, 10);
+    const src = hoursDraft ? hoursDraft.off : (settings.offDays || {}), off = {};
+    DAY_KEYS.forEach(k => { if (src[k]) off[k] = true; });
+    if (!(c > o)) { alert("Closing time must be after opening time."); return; }
+    if (Object.keys(off).length >= 7) { alert("At least one day must be a working day."); return; }
+    try { await window.dbSet(R("settings/workHours"), { open: o, close: c }); await window.dbSet(R("settings/offDays"), Object.keys(off).length ? off : null);
+        hoursDraft = null; toast(`🕘 Hours saved · ${pad(o)}:00–${pad(c)}:00`); }
+    catch (e) { alert(`Couldn't save. Your Firebase rules need to allow read/write on stores/${window.STORE_ID}/settings.`); }
+}   // idle time only counts 08:00–22:00
 const keyOf = n => String(n).replace(/[.#$\[\]\/]/g, "_");
 function idleLimitH() { const v = settings.idleHours; if (v === 0 || v === "0") return 0; return +v > 0 ? +v : DEFAULT_IDLE_H; }
 // Opening-hours time between two moments (nights don't count).
@@ -4483,6 +4768,7 @@ function bizMs(from, to) {
     if (!(to > from)) return 0;
     let t = 0, d = new Date(from); d.setHours(0, 0, 0, 0);
     for (let i = 0; +d < to && i < 400; i++, d = addDays(d, 1)) {
+        if (isOffDay(d)) continue;                      // showroom closed that day
         const o = new Date(d); o.setHours(BIZ_OPEN, 0, 0, 0);
         const c = new Date(d); c.setHours(BIZ_CLOSE, 0, 0, 0);
         const a = Math.max(from, +o), b = Math.min(to, +c);
@@ -4504,12 +4790,12 @@ function idleReport() {
         for (const n of [h.executive, h.submittedBy]) if (n && (!last[n] || h.timestamp > last[n])) last[n] = h.timestamp;
     }
     const rows = executives.map(n => {
-        const off = !!lockedUsers[n], since = Math.max(last[n] || 0, +duty[keyOf(n)] || 0, now - 30 * DAY);
+        const leave = onLeave(n), off = !!lockedUsers[n], since = Math.max(last[n] || 0, +duty[keyOf(n)] || 0, leaveBack(n), now - 30 * DAY);
         const idle = bizMs(since, now);
-        return { n, off, last: last[n] || 0, since, idle, state: off ? "off" : !lim ? "ok" : idle >= lim ? "idle" : idle >= lim * 0.7 ? "near" : "ok" };
+        return { n, off, leave, last: last[n] || 0, since, idle, state: off ? "off" : !lim ? "ok" : idle >= lim ? "idle" : idle >= lim * 0.7 ? "near" : "ok" };
     });
     const onDuty = rows.filter(r => !r.off);
-    return { lim, rows, onDuty, idle: rows.filter(r => r.state === "idle"), near: rows.filter(r => r.state === "near"), off: rows.filter(r => r.off),
+    return { lim, rows, onDuty, idle: rows.filter(r => r.state === "idle"), near: rows.filter(r => r.state === "near"), off: rows.filter(r => r.off), leave: rows.filter(r => r.leave),
         allIdle: onDuty.length > 0 && onDuty.every(r => r.state === "idle") };
 }
 function renderIdleWatch() {
@@ -4521,7 +4807,7 @@ function renderIdleWatch() {
     el.hidden = false;
     const head = (sub, chips) => `<div class="panel-head"><h3 class="panel-title"><span class="ic">⏱</span>Inactivity watch</h3>${chips || ""}</div>${sub ? `<p class="panel-sub" style="margin:-4px 0 12px">${sub}</p>` : ""}`;
     if (!r.lim) { el.className = "panel watch calm"; el.innerHTML = head("", `<button class="btn ghost sm" type="button" onclick="openAdmin()">Alerts are off · turn on</button>`); return; }
-    const chips = `<div class="iw-chips"><span class="iw-chip ok">${r.onDuty.length - r.idle.length - r.near.length} active</span>${r.near.length ? `<span class="iw-chip near">${r.near.length} close</span>` : ""}<span class="iw-chip ${r.idle.length ? "bad" : ""}">${r.idle.length} idle ${H}h+</span><span class="iw-chip">${r.off.length} off duty · skipped</span></div>`;
+    const chips = `<div class="iw-chips"><span class="iw-chip ok">${r.onDuty.length - r.idle.length - r.near.length} active</span>${r.near.length ? `<span class="iw-chip near">${r.near.length} close</span>` : ""}<span class="iw-chip ${r.idle.length ? "bad" : ""}">${r.idle.length} idle ${H}h+</span><span class="iw-chip">${r.off.length - r.leave.length} off duty</span>${r.leave.length ? `<span class="iw-chip leave">🌴 ${r.leave.length} on leave</span>` : ""}${isOffDay(new Date()) ? `<span class="iw-chip">Closed today</span>` : ""}</div>`;
     const list = r.rows.filter(x => x.state === "idle" || x.state === "near").sort((a, b) => b.idle - a.idle);
     const skip = r.off.length ? `<p class="iw-skip">Not tracked while off duty: <b>${r.off.map(x => esc(x.n)).join(", ")}</b></p>` : "";
     if (!list.length) {
@@ -4560,6 +4846,7 @@ async function saveIdleHours() {
     catch (e) { alert(`Couldn't save. Your Firebase rules need to allow read/write on stores/${window.STORE_ID}/settings.`); }
 }
 function renderIdleAdmin() {
+    renderHoursAdmin();
     const sel = $("idleHoursSel"); if (!sel) return;
     if (document.activeElement !== sel) sel.value = String(idleLimitH());
     const b = $("idleBadge"); if (b) { const h = idleLimitH(); b.textContent = h ? `${h} h` : "Off"; b.className = "adm-badge " + (h ? "ok" : ""); }
