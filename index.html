@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="4.1">
+<meta name="app-version" content="4.2">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Fujairah Showroom · Tracker</title>
 <link rel="manifest" href="manifest.json">
@@ -1821,12 +1821,18 @@ function pushSend(stores, id) {
     if (!pushReady()) return;
     try { fetch(PUSH_SENDER_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ stores: stores, id: id }) }).catch(function () {}); } catch (e) {}
 }
+function pushTest() {
+    var id = null; try { id = localStorage.getItem(pushLsKey()); } catch (e) {}
+    if (!id) { toast("Turn alerts on first.", 2500); return; }
+    try { fetch(PUSH_SENDER_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ test: true, stores: [window.STORE_ID], tid: id }) }).catch(function () {}); } catch (e) {}
+    toast("Test sent — close the app now; it arrives in about 20 seconds.", 6000);
+}
 function renderPushRow() {
     var el = document.getElementById("npPush"); if (!el) return;
     var on = pushIsOn();
     el.innerHTML = '<div class="np-push"><div><b>' + (on ? "Alerts on this device: on" : "Get alerts even when the app is closed") + "</b>"
         + (pushErr ? '<span class="err">' + esc(pushErr) + "</span>" : "") + "</div>"
-        + (on ? '<button class="btn ghost sm" type="button" onclick="pushDisable()">Turn off</button>' : '<button class="btn sm" type="button" onclick="pushEnable(false)">Turn on</button>') + "</div>";
+        + (on ? '<button class="btn sm" type="button" onclick="pushTest()">Send test</button><button class="btn ghost sm" type="button" onclick="pushDisable()">Turn off</button>' : '<button class="btn sm" type="button" onclick="pushEnable(false)">Turn on</button>') + "</div>";
 }
 document.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("#bellBtn")) setTimeout(renderPushRow, 30); });
 
@@ -4302,7 +4308,7 @@ function notifyBroadcasts() {
     if (!fresh.length) return;
     const unrung = fresh.filter(b => !bcRung.has(b.id));
     if (unrung.length) { unrung.forEach(b => bcRung.add(b.id)); ringBell(); }
-    if (!notifOK()) return;
+    if (!notifOK() || pushIsOn()) return;                         // phone/computer alerts handle it
     fresh.slice(0, 3).forEach(b => {
         done.add(b.id);
         sysNotify(`${b.urgent ? "🚨 " : ""}${bcSender(b)}${isTeamMsg(b) ? " · Team" : ""}`, b.text, "bc-" + b.id, { sticky: !!b.urgent, onclick: showNextBroadcast });
@@ -4468,7 +4474,7 @@ function checkIdleAlerts() {
     const H = idleLimitH(), names = fresh.map(r => r.n);
     const title = lastIdle.allIdle ? `⚠️ No activity at ${STORE_NAME} for ${H}h+` : `⏱ ${names.length} executive${names.length === 1 ? "" : "s"} inactive ${H}h+ · ${STORE_NAME}`;
     const body = fresh.map(r => `${r.n} — ${fmtIdle(r.idle)} without an entry`).join("\n") + "\nOff-duty staff are not included.";
-    sysNotify(title, body, "idle-" + window.STORE_ID, { sticky: true });
+    if (!pushIsOn()) sysNotify(title, body, "idle-" + window.STORE_ID, { sticky: true });
     ringBell();
     fresh.forEach(r => { done[r.n] = r.since; });
     try { localStorage.setItem(LS_IDLE_NOTE(), JSON.stringify(done)); } catch (e) {}
