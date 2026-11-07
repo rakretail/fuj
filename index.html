@@ -3058,7 +3058,7 @@ function renderGrid() {
         const bump = ready && prevCard[name] !== undefined && prevCard[name] !== sig;
         const away = onLeave(name), lvTxt = lvNote(name);
         const meta = [!away && lvTxt ? lvTxt : "", rank[name] ? `#${rank[name]} this month` : "No entries this month", s.streak > 1 ? `🔥 ${s.streak}d streak` : ""].filter(Boolean).join(" · ");
-        const status = away ? `<span class="tag leave" title="${esc(lvTxt)}"> 🌴 On leave</span>` : (manager || isMe)
+        const status = away ? `<span class="tag leave" title="${esc(lvTxt)}"> ✈️🌴 On leave</span>` : (manager || isMe)
             ? `<button class="duty ${locked ? "off" : "on"}" data-act="lock" data-name="${n}" title="Tap to ${locked ? "activate" : "set off duty"}"><i></i><span>${locked ? "OFF DUTY" : "ACTIVE"}</span></button>`
             : locked ? `<span class="tag view">Off duty</span>` : isMe ? `<span class="tag you">You</span>` : `<span class="tag view ro-tag">View</span>`;
         return `
@@ -3067,7 +3067,7 @@ function renderGrid() {
                 <span class="avatar" style="--av:${avColor(name)}">${esc(initials(name))}</span>
                 <div class="card-who">
                     <button class="card-name ${name.length > 22 ? "long" : ""}" data-act="detail" data-name="${n}" title="${n} — view details">${n}</button>
-                    <div class="card-sub">${status}${isMe || manager ? `<button class="lv-btn" type="button" data-act="leave" data-name="${n}" title="Annual leave${isMe ? "" : " for " + n}" aria-label="Annual leave">✈️🌴</button>` : ""}<span class="card-meta" title="${esc(meta)}">${meta}</span></div>
+                    <div class="card-sub">${status}${isMe || manager ? `<button class="lv-btn" type="button" data-act="leave" data-name="${n}" title="Annual leave${isMe ? "" : " for " + n}" aria-label="Annual leave">🌴</button>` : ""}<span class="card-meta" title="${esc(meta)}">${meta}</span></div>
                 </div>
             </div>
             <div class="card-mid"><div><span class="today-num">${s.today}</span><span class="today-lbl">${todayLbl}</span></div>${sparkSvg(s.spark)}</div>
@@ -4360,7 +4360,7 @@ function renderAdmin() {
             <div class="adm-person-txt"><b>${n}</b><small>${execDefaultPin[name] ? `<em class="adm-pill">Default PIN</em>` : ""}${lvNote(name) ? esc(lvNote(name)) + " · " : locked ? "Off duty · " : ""}${fmt(today)} today · ${fmt(month)} this month</small></div>
             <div class="adm-actions">
                 <button type="button" class="adm-switch ${locked ? "" : "on"}" data-act="lock" data-name="${n}" role="switch" aria-checked="${!locked}" title="${locked ? "Off duty — tap to set on duty" : "On duty — tap to set off duty"}"><i></i></button>
-                <button type="button" class="adm-icon" data-act="leave" data-name="${n}" title="Annual leave for ${n}">🌴</button>
+                <button type="button" class="adm-icon" data-act="leave" data-name="${n}" title="Annual leave for ${n}">✈️🌴</button>
                 <button type="button" class="adm-icon" data-act="reset" data-kind="executives" data-name="${n}" title="Reset ${n}'s PIN to 1234">🔑</button>
                 <button type="button" class="adm-icon danger" data-act="remove-exec" data-name="${n}" title="Remove ${n}">🗑</button>
             </div></div>`;
