@@ -4360,7 +4360,7 @@ function renderAdmin() {
             <div class="adm-person-txt"><b>${n}</b><small>${execDefaultPin[name] ? `<em class="adm-pill">Default PIN</em>` : ""}${lvNote(name) ? esc(lvNote(name)) + " · " : locked ? "Off duty · " : ""}${fmt(today)} today · ${fmt(month)} this month</small></div>
             <div class="adm-actions">
                 <button type="button" class="adm-switch ${locked ? "" : "on"}" data-act="lock" data-name="${n}" role="switch" aria-checked="${!locked}" title="${locked ? "Off duty — tap to set on duty" : "On duty — tap to set off duty"}"><i></i></button>
-                <button type="button" class="adm-icon" data-act="leave" data-name="${n}" title="Annual leave for ${n}">✈️🌴</button>
+                <button type="button" class="adm-icon" data-act="leave" data-name="${n}" title="Annual leave for ${n}">🌴</button>
                 <button type="button" class="adm-icon" data-act="reset" data-kind="executives" data-name="${n}" title="Reset ${n}'s PIN to 1234">🔑</button>
                 <button type="button" class="adm-icon danger" data-act="remove-exec" data-name="${n}" title="Remove ${n}">🗑</button>
             </div></div>`;
@@ -4522,7 +4522,7 @@ function leaveBack(name) {   // start of the first day back, once the leave is o
 }
 function lvNote(name) {
     const v = leaveOf(name); if (!v) return "";
-    if (onLeave(name)) return `🌴 On leave · back ${fmtISO(todayISO(new Date(new Date(v.to + "T00:00").getTime() + DAY)))}`;
+    if (onLeave(name)) return `✈️🌴 On leave · back ${fmtISO(todayISO(new Date(new Date(v.to + "T00:00").getTime() + DAY)))}`;
     const t = todayISO(); if (v.from > t && new Date(v.from + "T00:00") - Date.now() < 45 * DAY) return `🌴 Leave ${fmtISO(v.from)} – ${fmtISO(v.to)}`;
     return "";
 }
