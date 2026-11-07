@@ -3067,7 +3067,7 @@ function renderGrid() {
                 <span class="avatar" style="--av:${avColor(name)}">${esc(initials(name))}</span>
                 <div class="card-who">
                     <button class="card-name ${name.length > 22 ? "long" : ""}" data-act="detail" data-name="${n}" title="${n} — view details">${n}</button>
-                    <div class="card-sub">${status}${isMe || manager ? `<button class="lv-btn" type="button" data-act="leave" data-name="${n}" title="Annual leave${isMe ? "" : " for " + n}" aria-label="Annual leave">🌴</button>` : ""}<span class="card-meta" title="${esc(meta)}">${meta}</span></div>
+                    <div class="card-sub">${status}${isMe || manager ? `<button class="lv-btn" type="button" data-act="leave" data-name="${n}" title="Annual leave${isMe ? "" : " for " + n}" aria-label="Annual leave">✈️🌴</button>` : ""}<span class="card-meta" title="${esc(meta)}">${meta}</span></div>
                 </div>
             </div>
             <div class="card-mid"><div><span class="today-num">${s.today}</span><span class="today-lbl">${todayLbl}</span></div>${sparkSvg(s.spark)}</div>
