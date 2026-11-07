@@ -3058,7 +3058,7 @@ function renderGrid() {
         const bump = ready && prevCard[name] !== undefined && prevCard[name] !== sig;
         const away = onLeave(name), lvTxt = lvNote(name);
         const meta = [!away && lvTxt ? lvTxt : "", rank[name] ? `#${rank[name]} this month` : "No entries this month", s.streak > 1 ? `🔥 ${s.streak}d streak` : ""].filter(Boolean).join(" · ");
-        const status = away ? `<span class="tag leave" title="${esc(lvTxt)}"> ✈️✈️🌴🏖️🏖️ On leave</span>` : (manager || isMe)
+        const status = away ? `<span class="tag leave" title="${esc(lvTxt)}"> ✈️🌴 On leave</span>` : (manager || isMe)
             ? `<button class="duty ${locked ? "off" : "on"}" data-act="lock" data-name="${n}" title="Tap to ${locked ? "activate" : "set off duty"}"><i></i><span>${locked ? "OFF DUTY" : "ACTIVE"}</span></button>`
             : locked ? `<span class="tag view">Off duty</span>` : isMe ? `<span class="tag you">You</span>` : `<span class="tag view ro-tag">View</span>`;
         return `
@@ -3067,7 +3067,7 @@ function renderGrid() {
                 <span class="avatar" style="--av:${avColor(name)}">${esc(initials(name))}</span>
                 <div class="card-who">
                     <button class="card-name ${name.length > 22 ? "long" : ""}" data-act="detail" data-name="${n}" title="${n} — view details">${n}</button>
-                    <div class="card-sub">${status}${isMe || manager ? `<button class="lv-btn" type="button" data-act="leave" data-name="${n}" title="Annual leave${isMe ? "" : " for " + n}" aria-label="Annual leave">✈️🌴🏖️</button>` : ""}<span class="card-meta" title="${esc(meta)}">${meta}</span></div>
+                    <div class="card-sub">${status}${isMe || manager ? `<button class="lv-btn" type="button" data-act="leave" data-name="${n}" title="Annual leave${isMe ? "" : " for " + n}" aria-label="Annual leave">✈️🌴</button>` : ""}<span class="card-meta" title="${esc(meta)}">${meta}</span></div>
                 </div>
             </div>
             <div class="card-mid"><div><span class="today-num">${s.today}</span><span class="today-lbl">${todayLbl}</span></div>${sparkSvg(s.spark)}</div>
@@ -4360,7 +4360,7 @@ function renderAdmin() {
             <div class="adm-person-txt"><b>${n}</b><small>${execDefaultPin[name] ? `<em class="adm-pill">Default PIN</em>` : ""}${lvNote(name) ? esc(lvNote(name)) + " · " : locked ? "Off duty · " : ""}${fmt(today)} today · ${fmt(month)} this month</small></div>
             <div class="adm-actions">
                 <button type="button" class="adm-switch ${locked ? "" : "on"}" data-act="lock" data-name="${n}" role="switch" aria-checked="${!locked}" title="${locked ? "Off duty — tap to set on duty" : "On duty — tap to set off duty"}"><i></i></button>
-                <button type="button" class="adm-icon" data-act="leave" data-name="${n}" title="Annual leave for ${n}">✈️🌴🏖️</button>
+                <button type="button" class="adm-icon" data-act="leave" data-name="${n}" title="Annual leave for ${n}">✈️🌴</button>
                 <button type="button" class="adm-icon" data-act="reset" data-kind="executives" data-name="${n}" title="Reset ${n}'s PIN to 1234">🔑</button>
                 <button type="button" class="adm-icon danger" data-act="remove-exec" data-name="${n}" title="Remove ${n}">🗑</button>
             </div></div>`;
@@ -4522,8 +4522,8 @@ function leaveBack(name) {   // start of the first day back, once the leave is o
 }
 function lvNote(name) {
     const v = leaveOf(name); if (!v) return "";
-    if (onLeave(name)) return `✈️🌴🏖️ On leave · back ${fmtISO(todayISO(new Date(new Date(v.to + "T00:00").getTime() + DAY)))}`;
-    const t = todayISO(); if (v.from > t && new Date(v.from + "T00:00") - Date.now() < 45 * DAY) return `✈️🌴🏖️ Leave ${fmtISO(v.from)} – ${fmtISO(v.to)}`;
+    if (onLeave(name)) return `✈️🌴 On leave · back ${fmtISO(todayISO(new Date(new Date(v.to + "T00:00").getTime() + DAY)))}`;
+    const t = todayISO(); if (v.from > t && new Date(v.from + "T00:00") - Date.now() < 45 * DAY) return `✈️🌴 Leave ${fmtISO(v.from)} – ${fmtISO(v.to)}`;
     return "";
 }
 function recalcOff() { const o = Object.assign({}, rawLocks); executives.forEach(n => { if (onLeave(n)) o[n] = true; }); lockedUsers = o; }
@@ -4532,7 +4532,7 @@ function leaveModal() {
     let m = $("leaveModal"); if (m) return m;
     m = document.createElement("div"); m.id = "leaveModal"; m.className = "modal-overlay hidden";
     m.innerHTML = `<div class="modal-card lv-card" role="dialog" aria-modal="true" aria-labelledby="lvTitle">
-        <h3 id="lvTitle">✈️🌴🏖️ Annual leave</h3>
+        <h3 id="lvTitle">✈️🌴 Annual leave</h3>
         <p class="lv-who"><span class="avatar" id="lvAv"></span><b id="lvName"></b></p>
         <div class="lv-row"><label>From<input type="date" class="field" id="lvFrom"></label><label>To<input type="date" class="field" id="lvTo"></label></div>
         <p class="lv-days" id="lvDays"></p>
@@ -4563,7 +4563,7 @@ async function saveLeave() {
     if (t < f) { $("lvErr").textContent = "The end date is before the start date."; return; }
     if (t < todayISO()) { $("lvErr").textContent = "That leave has already finished."; return; }
     try { await window.dbSet(R("leave/" + keyOf(name)), { name, from: f, to: t, by: getCurrentExec() || "", ts: Date.now() });
-        m.classList.add("hidden"); toast(`✈️🌴🏖️ Leave saved · ${fmtISO(f)} – ${fmtISO(t)}`); }
+        m.classList.add("hidden"); toast(`✈️🌴 Leave saved · ${fmtISO(f)} – ${fmtISO(t)}`); }
     catch (e) { $("lvErr").textContent = "Couldn't save. Please try again."; }
 }
 async function clearLeave() {
@@ -4999,7 +4999,7 @@ function renderIdleWatch() {
     el.hidden = false;
     const head = (sub, chips) => `<div class="panel-head"><h3 class="panel-title"><span class="ic">⏱</span>Inactivity watch</h3>${chips || ""}</div>${sub ? `<p class="panel-sub" style="margin:-4px 0 12px">${sub}</p>` : ""}`;
     if (!r.lim) { el.className = "panel watch calm"; el.innerHTML = head("", `<button class="btn ghost sm" type="button" onclick="openAdmin()">Alerts are off · turn on</button>`); return; }
-    const chips = `<div class="iw-chips"><span class="iw-chip ok">${r.onDuty.length - r.idle.length - r.near.length} active</span>${r.near.length ? `<span class="iw-chip near">${r.near.length} close</span>` : ""}<span class="iw-chip ${r.idle.length ? "bad" : ""}">${r.idle.length} idle ${H}h+</span><span class="iw-chip">${r.off.length - r.leave.length} off duty</span>${r.leave.length ? `<span class="iw-chip leave">✈️🌴🏖️ ${r.leave.length} on leave</span>` : ""}${isOffDay(new Date()) ? `<span class="iw-chip">Closed today</span>` : ""}</div>`;
+    const chips = `<div class="iw-chips"><span class="iw-chip ok">${r.onDuty.length - r.idle.length - r.near.length} active</span>${r.near.length ? `<span class="iw-chip near">${r.near.length} close</span>` : ""}<span class="iw-chip ${r.idle.length ? "bad" : ""}">${r.idle.length} idle ${H}h+</span><span class="iw-chip">${r.off.length - r.leave.length} off duty</span>${r.leave.length ? `<span class="iw-chip leave">✈️🌴 ${r.leave.length} on leave</span>` : ""}${isOffDay(new Date()) ? `<span class="iw-chip">Closed today</span>` : ""}</div>`;
     const list = r.rows.filter(x => x.state === "idle" || x.state === "near").sort((a, b) => b.idle - a.idle);
     const skip = r.off.length ? `<p class="iw-skip">Not tracked while off duty: <b>${r.off.map(x => esc(x.n)).join(", ")}</b></p>` : "";
     if (!list.length) {
